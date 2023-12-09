@@ -1,0 +1,10 @@
+.content-area {
+    margin-top: -60px;
+}
+
+.content-area p {
+    width: 220px;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px;
+}
