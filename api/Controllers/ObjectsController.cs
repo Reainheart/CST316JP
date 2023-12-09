@@ -22,7 +22,6 @@ namespace WebAppApi.Controllers
         {
             try
             {
-                var objects = new List<Objects>();
                 var url = Environment.GetEnvironmentVariable("SupabaseURL");
                 var key = Environment.GetEnvironmentVariable("SupabaseAnonKey");
 
@@ -32,10 +31,14 @@ namespace WebAppApi.Controllers
                 };
 
                 var supabase = new Supabase.Client(url, key, options);
-                var result = await supabase.From<Objects>().Get();
-                objects = result.Models.ToList();
+                var result = await supabase
+                    .From<Objects>()
+                    .Select("StructureName, StructureDescription")
+                    .Get();
                 
-                return Ok(objects);
+                var models = result.Models;
+
+                return Ok(models);
             }
             catch (Exception ex)
             {

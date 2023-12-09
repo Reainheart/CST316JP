@@ -1,7 +1,9 @@
-﻿using Postgrest.Models;
+﻿using Postgrest.Attributes;
+using Postgrest.Models;
 
 namespace WebAppApi.Models
 {
+    [Table("Examples")]
     public class Examples : BaseModel
     {
         public int CodeID { get; set; }

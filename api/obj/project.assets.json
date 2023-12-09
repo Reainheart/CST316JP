@@ -3306,19 +3306,26 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\milad\\.nuget\\packages\\": {}
+    "C:\\Users\\noahe\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\CST316\\api\\WebAppApi\\WebAppApi.csproj",
+      "projectUniqueName": "C:\\Users\\noahe\\OneDrive - Oregon Institute of Technology\\CST 316\\Assign 5 DatabaseEDU\\DatabaseEDU\\api\\WebAppApi.csproj",
       "projectName": "WebAppApi",
-      "projectPath": "C:\\CST316\\api\\WebAppApi\\WebAppApi.csproj",
-      "packagesPath": "C:\\Users\\milad\\.nuget\\packages\\",
-      "outputPath": "C:\\CST316\\api\\WebAppApi\\obj\\",
+      "projectPath": "C:\\Users\\noahe\\OneDrive - Oregon Institute of Technology\\CST 316\\Assign 5 DatabaseEDU\\DatabaseEDU\\api\\WebAppApi.csproj",
+      "packagesPath": "C:\\Users\\noahe\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\noahe\\OneDrive - Oregon Institute of Technology\\CST 316\\Assign 5 DatabaseEDU\\DatabaseEDU\\api\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\milad\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\noahe\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3326,6 +3333,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -3380,7 +3388,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
       }
     }
   }
