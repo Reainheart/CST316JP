@@ -56,17 +56,17 @@ const Home = () => {
                         </Button>
                         <Button
                             variant="secondary"
-                            onClick={() => handleLanguageClick("Java")}
-                            active={selectedLanguage === "Java"}
-                        >
-                            Java
-                        </Button>
-                        <Button
-                            variant="secondary"
                             onClick={() => handleLanguageClick("Python")}
                             active={selectedLanguage === "Python"}
                         >
                             Python
+                        </Button>
+                        <Button
+                            variant="secondary"
+                            onClick={() => handleLanguageClick("Java")}
+                            active={selectedLanguage === "Java"}
+                        >
+                            Java
                         </Button>
                     </ButtonGroup>
                 </div>
