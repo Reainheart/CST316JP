@@ -10,8 +10,10 @@ function App() {
     return (
         <>
             <Header />
-            <Home />
-            <CanvasComponent />
+            <div className="flex-container">
+                <CanvasComponent />
+                <Home />
+            </div>
         </>
     );
 }

@@ -136,10 +136,7 @@ const CanvasComponent = () => {
 
     // render the canvas and the popup (if the mouse is inside the node)
     return (
-        <div
-            className="d-flex justify-content-left align-items-center"
-            style={{ height: "340px", margin: "30px" }}
-        >
+        <>
             <canvas
                 ref={canvasRef}
                 width={canvasSize.width}
@@ -164,7 +161,7 @@ const CanvasComponent = () => {
                     <p>{structureData[0].StructureDescription}</p>
                 </div>
             )}
-        </div>
+        </>
     );
 };
 export default CanvasComponent;

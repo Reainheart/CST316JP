@@ -43,9 +43,9 @@ const Home = () => {
     };
 
     return (
-        <div className="container">
-            <div className="row button_wrapper">
-                <div className="col-12 d-flex justify-content-end m-4 p-5">
+        <>
+            <div>
+                <div>
                     <ButtonGroup aria-label="Language Selector">
                         <Button
                             variant="secondary"
@@ -70,11 +70,11 @@ const Home = () => {
                         </Button>
                     </ButtonGroup>
                 </div>
-                <div className="content-area col-12 d-flex justify-content-end">
+                <div >
                     <pre>{currentExample}</pre>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 
