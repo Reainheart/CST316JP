@@ -70,12 +70,18 @@ const Home = () => {
                         </Button>
                     </ButtonGroup>
                 </div>
-                <div >
-                    <pre 
-                    style={{
-                        width: "25em"
-                    }}
-                    >{currentExample}</pre>
+                <div>
+                    <pre
+                        style={{
+                            width: "25em",
+                            border: "1px solid black",
+                            borderRadius: "10px",
+                            marginTop: "1em",
+                            padding: "1em",
+                        }}
+                    >
+                        {currentExample}
+                    </pre>
                 </div>
             </div>
         </>

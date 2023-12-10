@@ -61,8 +61,8 @@ const CanvasComponent = () => {
     // update popup position (under the node)
     const updatePopupPosition = (node) => {
         setPopupPosition({
-            top: (node.y + 175),
-            left: node.x + (150 + node.size),
+            top: node.y + 175,
+            left: node.x + (115 + node.size),
         });
     };
 
