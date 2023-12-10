@@ -71,7 +71,11 @@ const Home = () => {
                     </ButtonGroup>
                 </div>
                 <div >
-                    <pre>{currentExample}</pre>
+                    <pre 
+                    style={{
+                        width: "25em"
+                    }}
+                    >{currentExample}</pre>
                 </div>
             </div>
         </>
