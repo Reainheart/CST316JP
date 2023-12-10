@@ -1,4 +1,6 @@
 # Database Educational Resource
+To create an application to present data structures through a visual editor to provide a visual tool of how data structures are built and can work together.
+
 ## Group Members
 Alex Shibley: 
 - Database Admin
