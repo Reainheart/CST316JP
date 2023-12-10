@@ -7,6 +7,7 @@ const CanvasComponent = () => {
     const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 }); // popup position (under the node)
     const [canvasSize, setCanvasSize] = useState({ width: 1200, height: 700 }); // canvas size
     const [showPopup, setShowPopup] = useState(false); // show popup or not (when hovering over the node)
+    const [structureData, setStructureData] = useState(null); // data structure data
 
     useEffect(() => {
         // set canvas size based on the window size
@@ -32,6 +33,13 @@ const CanvasComponent = () => {
 
         window.addEventListener("resize", checkSize);
 
+        const fetchData = async () => {
+            const response = await fetch("http://localhost:5022/api/Objects");
+            const data = await response.json();
+            setStructureData(data);
+        };
+        fetchData();
+
         return () => window.removeEventListener("resize", checkSize);
     }, []);
 
@@ -53,8 +61,8 @@ const CanvasComponent = () => {
     // update popup position (under the node)
     const updatePopupPosition = (node) => {
         setPopupPosition({
-            top: node.y + node.size + 120,
-            left: node.x + node.size / 2
+            top: node.y + node.size + 200,
+            left: node.x + node.size / 2,
         });
     };
 
@@ -150,9 +158,10 @@ const CanvasComponent = () => {
                         top: `${popupPosition.top}px`,
                         left: `${popupPosition.left}px`,
                         zIndex: 100,
-                    }} className="popup"
+                    }}
+                    className="popup"
                 >
-                    <p>Hovering over the node blah blah blah</p>
+                    <p>{structureData[0].StructureDescription}</p>
                 </div>
             )}
         </div>

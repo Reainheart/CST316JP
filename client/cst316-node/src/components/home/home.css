@@ -2,9 +2,16 @@
     margin-top: -60px;
 }
 
-.content-area p {
+.content-area {
     width: 220px;
     border: 1px solid black;
     border-radius: 5px;
     padding: 10px;
+    margin-left: 83%;
+}
+
+@media (max-width: 768px) {
+    .content-area {
+        margin-left: 0;
+    }
 }
