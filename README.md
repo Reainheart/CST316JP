@@ -35,6 +35,8 @@ Noah Etchemendy:
 5. Run 'npm run dev'
 
 This should place you with these two resources to see in your default browser.
-API: http://localhost:5022/swagger/index.html
-Client: http://localhost:5173/
+
+>API: http://localhost:5022/swagger/index.html
+
+>Client: http://localhost:5173/
    
