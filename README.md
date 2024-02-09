@@ -1,28 +1,24 @@
-# Database Educational Resource
+# Datastructure Educational Resource
 To create an application to present data structures through a visual editor to provide a visual tool of how data structures are built and can work together.
 
 ## Group Members
 Alex Shibley: 
-- Database Admin
-- Database Engineer
+- Q&A Lead
+- Programmer
 
 Cameron McHatton: 
-- UI Engineer
+- Architect
+- Programmer
 
 Milad Ale Ali: 
-- API Enginner
+- Product Owner
+- Programmer
 
 Noah Etchemendy: 
-- Product Owner 
-- Git Management 
-- Project Manager (PM)
+- Scrum Master
+- Programmer
 
 # Running the Project
-## Start the API 
-1. Launch the ./api/WebAppApi.sln with Visual studio
-2. Trust the application
-3. Run the project
-
 ## Start the Client
 ### Requirements Node.js 
 - https://nodejs.org/en/learn/getting-started/how-to-install-nodejs
