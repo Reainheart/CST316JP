@@ -164,4 +164,5 @@ const CanvasComponent = () => {
         </>
     );
 };
+
 export default CanvasComponent;

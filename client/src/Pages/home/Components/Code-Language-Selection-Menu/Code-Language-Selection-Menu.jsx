@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import "./home.css";
-import Button from "react-bootstrap/Button";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
+import React, { useState, useRef, useEffect } from "react";
+import "./Code-Language-Selection-Menu.css";
 
-const Home = () => {
+const CodeLanguageSelector = () => {
+    const canvasRef = useRef(null); // reference to the canvas element
     const [selectedLanguage, setSelectedLanguage] = useState("C++");
+
     const [examples, setExamples] = useState([]);
     const [currentExample, setCurrentExample] = useState("");
 
@@ -40,11 +40,8 @@ const Home = () => {
 
     const handleLanguageClick = (language) => {
         setSelectedLanguage(language);
-    };
-
-    return (
-        <>
-            <div>
+        return (
+            <>
                 <div>
                     <ButtonGroup aria-label="Language Selector">
                         <Button
@@ -83,9 +80,9 @@ const Home = () => {
                         {currentExample}
                     </pre>
                 </div>
-            </div>
-        </>
-    );
-};
+            </>
+        );
+    };
+}   
 
-export default Home;
+export default CodeLanguageSelector;
