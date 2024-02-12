@@ -1,3 +1,3 @@
-import { Home } from './home/Home.jsx'
+import Home from './home/Home.jsx'
 
 export default Home

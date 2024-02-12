@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./Code-Language-Selection-Menu.css";
+import Button from "react-bootstrap/Button";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
 
 const CodeLanguageSelector = () => {
     const canvasRef = useRef(null); // reference to the canvas element
