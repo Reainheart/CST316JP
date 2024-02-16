@@ -1,17 +1,25 @@
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import  Header from "./Global/header/Header";
+import Header from "./Global/header/Header";
+import Footer from "./Global/footer/Footer";
 import Home from "./Pages";
 
 
 function App() {
     return (
         <>
-            <Header />
-            <div className="flex-container">
+            <header>
+                <Header />
+            </header>
+            <div className="PageContent" >
+                
                 <Home />
+                
             </div>
+            <footer>
+                <Footer />
+            </footer>
         </>
     );
 }

@@ -7,8 +7,10 @@ const Home = () => {
     return (
         <>
             <div>
-                <CanvasComponent />
+                <CanvasComponent className="canvas"/>
+                <span className="learning-tool-menu"> Menu here</span>
             </div>
+
         </>
     );
 };

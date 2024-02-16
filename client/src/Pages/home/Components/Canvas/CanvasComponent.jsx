@@ -5,43 +5,22 @@ const CanvasComponent = () => {
     const canvasRef = useRef(null); // reference to the canvas element
     const [node, setNode] = useState(null); // node object
     const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 }); // popup position (under the node)
-    const [canvasSize, setCanvasSize] = useState({ width: 1200, height: 700 }); // canvas size
+    const [canvasSize, setCanvasSize] = useState({ width: window.innerWidth, height: window.innerHeight }); // canvas size
     const [showPopup, setShowPopup] = useState(false); // show popup or not (when hovering over the node)
     const [structureData, setStructureData] = useState(null); // data structure data
 
-    useEffect(() => {
-        // set canvas size based on the window size
-        const checkSize = () => {
-            if (window.innerWidth < 590) {
-                setCanvasSize({ width: 200, height: 700 });
-            } else if (window.innerWidth < 770) {
-                setCanvasSize({ width: 300, height: 700 });
-            } else if (window.innerWidth < 995) {
-                setCanvasSize({ width: 400, height: 700 });
-            } else if (window.innerWidth < 1180) {
-                setCanvasSize({ width: 600, height: 700 });
-            } else if (window.innerWidth < 1400) {
-                setCanvasSize({ width: 800, height: 700 });
-            } else if (window.innerWidth < 1610) {
-                setCanvasSize({ width: 1000, height: 700 });
-            } else {
-                setCanvasSize({ width: 1200, height: 700 });
-            }
-        };
+    // useEffect(() => {
+    //     // set canvas size based on the window size
+    //     const checkSize = () => {
+    //         setCanvasSize({ width: window.innerWidth, height: window.innerHeight });
+    //     };
 
-        checkSize();
+    //     checkSize();
 
-        window.addEventListener("resize", checkSize);
+    //     window.addEventListener("resize", checkSize);
 
-        const fetchData = async () => {
-            const response = await fetch("http://localhost:5022/api/Objects");
-            const data = await response.json();
-            setStructureData(data);
-        };
-        fetchData();
-
-        return () => window.removeEventListener("resize", checkSize);
-    }, []);
+    //     return () => window.removeEventListener("resize", checkSize);
+    // }, []);
 
     // create a node object
     const createNode = (x, y) => {
@@ -141,10 +120,6 @@ const CanvasComponent = () => {
                 ref={canvasRef}
                 width={canvasSize.width}
                 height={canvasSize.height}
-                style={{
-                    border: "2px solid black",
-                    borderRadius: "10px",
-                }}
                 onClick={handleClick}
                 onMouseMove={handleMouseMove}
             />
