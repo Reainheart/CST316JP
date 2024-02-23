@@ -1,11 +1,31 @@
 const express = require('express');
+const supabaseUserSession = require('./SupabaseClient').GetSupabaseUserSession;
 const app = express();
 const port = 3000;
 
-app.get('/', (req, res) => {
-    res.send('Hello World');
+app.use(express.json());
+
+
+app.get('/GetStructures', require('./SB/GetStructures'));
+
+app.get('/', async (req, res) => {
+    try {
+
+        const { data, error } = await supabaseUserSession()
+            .from('Objects')
+            .select('StructureName, StructureDescription');
+        
+        if (error) {
+            throw new Error(error.message);
+        }
+
+        res.json(data);
+
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 });
 
 app.listen(port, () => {
-    console.log('Example app listening on port ${port}');
+    console.log(`Example app listening on port ${port}`);
 });
