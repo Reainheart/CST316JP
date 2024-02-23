@@ -32,5 +32,4 @@ function GetSupabaseUserSession (){
         }, 2000);
       });
 }
-
 module.exports = {anonSupabaseClient, CreateSupabaseUserClient, GetSupabaseUserSession}
