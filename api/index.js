@@ -5,6 +5,9 @@ const port = 3000;
 
 app.use(express.json());
 
+
+app.get('/GetStructures', require('./SB/GetStructures'));
+
 app.get('/', async (req, res) => {
     try {
 
