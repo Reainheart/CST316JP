@@ -4,6 +4,7 @@ import "./App.css";
 import Header from "./Global/header/Header";
 import Footer from "./Global/footer/Footer";
 import Home from "./Pages";
+import InstructionalPage from "./Pages/Instruct-Page/Instruct-Page";
 
 function App() {
     let component;
@@ -19,7 +20,7 @@ function App() {
             component = <h1>About</h1>;
             break;
         case "/instructional-page":
-            component = <h1>Instructional Page</h1>;
+            component = <InstructionalPage />;
             break;
         default:
             component = <h1>404 Not Found</h1>;
@@ -28,13 +29,15 @@ function App() {
 
     return (
         <>
-            <header>
-                <Header />
-            </header>
-            <div className="PageContent">{component}</div>
-            <footer>
-                <Footer />
-            </footer>
+            <div className="PageContent">
+                <header>
+                    <Header />
+                </header>
+                <div>{component}</div>
+                <footer>
+                    <Footer />
+                </footer>
+            </div>
         </>
     );
 }
