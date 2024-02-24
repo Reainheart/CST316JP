@@ -1,3 +1,4 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
@@ -7,38 +8,27 @@ import Home from "./Pages";
 import InstructionalPage from "./Pages/Instruct-Page/Instruct-Page";
 
 function App() {
-    let component;
-
-    switch (window.location.pathname) {
-        case "/":
-            component = <Home />;
-            break;
-        case "/home":
-            component = <Home />;
-            break;
-        case "/about":
-            component = <h1>About</h1>;
-            break;
-        case "/instructional-page":
-            component = <InstructionalPage />;
-            break;
-        default:
-            component = <h1>404 Not Found</h1>;
-            break;
-    }
-
     return (
-        <>
+        <Router>
             <div className="PageContent">
                 <header>
                     <Header />
                 </header>
-                <div>{component}</div>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/about" element={<h1>About</h1>} />
+                    <Route
+                        path="/instructional-page"
+                        element={<InstructionalPage />}
+                    />
+                    <Route path="*" element={<h1>404 Not Found</h1>} />
+                </Routes>
                 <footer>
                     <Footer />
                 </footer>
             </div>
-        </>
+        </Router>
     );
 }
 
