@@ -29,13 +29,15 @@ function App() {
 
     return (
         <>
-            <header>
-                <Header />
-            </header>
-            <div className="PageContent">{component}</div>
-            <footer>
-                <Footer />
-            </footer>
+            <div className="PageContent">
+                <header>
+                    <Header />
+                </header>
+                <div>{component}</div>
+                <footer>
+                    <Footer />
+                </footer>
+            </div>
         </>
     );
 }
