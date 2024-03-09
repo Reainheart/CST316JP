@@ -1,8 +1,7 @@
 .flex-container {
     display: flex;
-    justify-content: center;
     height: fit-content;
-}
+  }
 
 .learning-tool-menu {
     width: 33%;

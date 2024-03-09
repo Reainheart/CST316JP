@@ -8,9 +8,5 @@
 }
 
 canvas {
-    width: 66%;
-    height: max-content;
     border: 3px solid orange;
-    border-radius: 5px;
-    margin-right: 2em;
 }
