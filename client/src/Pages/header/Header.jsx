@@ -1,10 +1,9 @@
-import React from "react";
 import "./header.css";
-import { NavLink as RouterNavLink, useLocation } from "react-router-dom";
+import { NavLink as RouterNavLink } from "react-router-dom";
 import { Container, Nav, Navbar } from "react-bootstrap";
 
 const Header = () => {
-    const location = useLocation();
+    //const location = useLocation(); , useLocation
     const activeStyle = {
         color: "black",
         textDecoration: "underline",
