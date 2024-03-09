@@ -2,9 +2,9 @@ module.exports = async (req, res) => {
     try {
         const SupabaseClient = require('../SupabaseClient');
         const { data, error } = await SupabaseClient.anonSupabaseClient
-            .from('LearnPages')
-            .select('title, information')
-            .eq('title', 'About Nodes');
+            .from('Objects')
+            .select('StructureName, StructureDescription')
+            .eq('StructureName', 'Array');
         
         if (error) {
             throw new Error(error.message);
