@@ -9,6 +9,8 @@ app.get('/GetStructures', require('./SB/GetStructures'));
 
 app.get('/GetNode', require('./SB/GetNode'));
 
+app.get('/GetArray', require('./SB/GetArray'));
+
 app.get('/GetSampleCodeNode', require('./SB/GetSampleCodeNode'));
 
 app.get('/GetNodeLearnPage', require('./SB/GetNodeLearnPage'));
