@@ -12,7 +12,10 @@ const CodeView = () => {
         <>
             <Card>
                 <div className="card-header">
-                    <CodeLanguageSelector selectedLanguage={selectedLanguage} setSelectedLanguage={setSelectedLanguage} />
+                    <CodeLanguageSelector
+                        selectedLanguage={selectedLanguage}
+                        setSelectedLanguage={setSelectedLanguage}
+                    />
                 </div>
                 <div className="card-body">
                     <CodeViewWindow selectedLanguage={selectedLanguage} />
@@ -20,6 +23,6 @@ const CodeView = () => {
             </Card>
         </>
     );
-}
+};
 
 export default CodeView;
