@@ -15,7 +15,10 @@ app.get('/GetSampleCodeNode', require('./SB/GetSampleCodeNode'));
 
 app.get('/GetNodeLearnPage', require('./SB/GetNodeLearnPage'));
 
+app.get('/GetArrayLearnPage', require('./SB/GetArrayLearnPage'));
+
+app.get('/GetSampleCodeArray', require('./SB/GetSampleCodeArray'));
+
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });
-
