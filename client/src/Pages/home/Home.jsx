@@ -3,7 +3,7 @@ import "./home.css";
 import Header from "./../header/Header";
 
 import CanvasComponent from "./Components/Canvas/CanvasComponent"
-
+import LearningToolMenu from "./Components/Learning-Tool-Menu/Learning-Tool-Menu-View/Learning-Tool-Menu/Learning-Tool-Menu"
 const Home = () => {
 
     const headerHeight = 61;
@@ -29,6 +29,7 @@ const Home = () => {
             <Header/>
             <div className="flex-container">
                 <CanvasComponent className="canvas" HomeWidth={canvasWidth} HomeHeight={canvasHeight}/>
+                <LearningToolMenu/>
             </div>
         </div>
     );
