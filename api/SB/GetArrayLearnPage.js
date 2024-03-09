@@ -4,8 +4,8 @@ module.exports = async (req, res) => {
         const { data, error } = await SupabaseClient.anonSupabaseClient
             .from('LearnPages')
             .select('title, information')
-            .eq('title', 'About Nodes');
-        
+            .eq('title', 'About Arrays');
+            
         if (error) {
             throw new Error(error.message);
         }
