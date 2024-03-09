@@ -1,0 +1,11 @@
+.flex-container {
+    display: flex;
+    justify-content: center;
+    height: fit-content;
+  }
+
+.learning-tool-menu {
+    width: 33%;
+    border: 1px solid greenyellow;
+    border-radius: 5px;
+}
