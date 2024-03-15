@@ -7,6 +7,18 @@ import CodeLanguageSelector from "./Code-Language-Selection-Menu/Code-Language-S
 const CodeView = () => {
     //const canvasRef = useRef(null); // reference to the canvas element
     const [selectedLanguage, setSelectedLanguage] = useState("C++");
+    const [selectedLanguageCode, setSelectedLanguageCode] = useState("API Not Called");
+
+    useEffect(() => {
+        // set canvas size based on the window size
+        const fetchData = async () => {
+            const response = await fetch("https://api.example.com/data.json");
+            const jsonData = await response.json();
+            // JSON.parse does not evaluate the attacker's scripts.
+            return JSON.parse(jsonData);
+        };
+        fetchData();
+    }, [setSelectedLanguageCode]);
 
     return (
         <>
@@ -18,7 +30,10 @@ const CodeView = () => {
                     />
                 </div>
                 <div className="card-body">
-                    <CodeViewWindow selectedLanguage={selectedLanguage} />
+                    <CodeViewWindow
+                        selectedLanguage={selectedLanguage}
+                        selectedLanguageCode={selectedLanguageCode}
+                    />
                 </div>
             </Card>
         </>
@@ -26,3 +41,4 @@ const CodeView = () => {
 };
 
 export default CodeView;
+//... rest of the above code.
