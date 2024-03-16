@@ -10,10 +10,10 @@ on:
 jobs:
     github-project-issue-to-sheets:
         runs-on: ubuntu-latest
-        name: github-project-issue-to-sheets
+        name: OmniNode
         steps:
-        - name: github-project-issue-to-sheets
-          id: github-project-issue-to-sheets
+        - name: OmniNode
+          id: OmniNode
           uses: ViRGiL175/github-project-issue-to-sheets@dev
           with:
             google-api-service-account-credentials: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_DATA }}
