@@ -1,24 +1,43 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./Code-View.css";
 import Card from "react-bootstrap/card";
 import CodeViewWindow from "./Code-View-Window/Code-View-Window";
 import CodeLanguageSelector from "./Code-Language-Selection-Menu/Code-Language-Selection-Menu";
 
 const CodeView = () => {
-    //const canvasRef = useRef(null); // reference to the canvas element
     const [selectedLanguage, setSelectedLanguage] = useState("C++");
-    const [selectedLanguageCode, setSelectedLanguageCode] = useState("API Not Called");
+    const [selectedLanguageCode, setSelectedLanguageCode] = useState(
+        "Select a language to view the example."
+    );
 
     useEffect(() => {
-        // set canvas size based on the window size
         const fetchData = async () => {
-            const response = await fetch("https://api.example.com/data.json");
-            const jsonData = await response.json();
-            // JSON.parse does not evaluate the attacker's scripts.
-            return JSON.parse(jsonData);
+            try {
+                const url = "http://localhost:3000/GetSampleCodeNode";
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(
+                        `Network response was not ok: ${response.status} ${response.statusText}`
+                    );
+                }
+                const jsonData = await response.json();
+                const languageData = jsonData.find(
+                    (item) => item.Language === selectedLanguage
+                );
+                setSelectedLanguageCode(
+                    languageData
+                        ? languageData.Example
+                        : `No example code found for ${selectedLanguage}`
+                );
+            } catch (error) {
+                console.error("Fetching error:", error);
+                setSelectedLanguageCode(
+                    `Failed to load data: ${error.message}`
+                );
+            }
         };
         fetchData();
-    }, [setSelectedLanguageCode]);
+    }, [selectedLanguage]); // This will re-fetch when selectedLanguage changes
 
     return (
         <>
@@ -41,4 +60,3 @@ const CodeView = () => {
 };
 
 export default CodeView;
-//... rest of the above code.
