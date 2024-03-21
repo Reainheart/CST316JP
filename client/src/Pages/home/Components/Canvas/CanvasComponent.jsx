@@ -24,19 +24,12 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
     };
 
     return (
-        <div
-            style={{
-                position: "relative",
-                width: HomeWidth,
-                height: HomeHeight,
-            }}
-        >
+        <>
             <canvas
                 ref={canvasRef}
                 width={HomeWidth}
                 height={HomeHeight}
                 onClick={handleClick}
-                style={{ position: "absolute" }}
             />
             {nodes.map((node) => (
                 <Node
@@ -47,7 +40,7 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
                     onClick={handleNodeClick(node.id)}
                 />
             ))}
-        </div>
+        </>
     );
 };
 
