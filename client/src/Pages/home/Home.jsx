@@ -6,13 +6,16 @@ import CanvasComponent from "./Components/Canvas/CanvasComponent"
 import LearningToolMenu from "./Components/Learning-Tool-Menu/Learning-Tool-Menu"
 const Home = () => {
 
-    const headerHeight = 61;
+    const headerHeight = 55;
+    const [canvasWidth, setcanvasWidth] = useState(window.innerWidth*6/8);
     const [canvasHeight, setcanvasHeight] = useState(window.innerHeight-headerHeight);
+    const [learningToolMenuWidth, setlearningToolMenuWidth] = useState(window.innerWidth*2/8);
+    const [learningToolMenuHeight, setlearningToolMenuHeight] = useState(window.innerHeight-headerHeight);
 
     const onReSize = () => {
-        setcanvasWidth(window.innerWidth*2/3);
+        setcanvasWidth(window.innerWidth*6/8);
         setcanvasHeight(window.innerHeight-headerHeight);
-        setlearningToolMenuWidth(window.innerWidth*1/3);
+        setlearningToolMenuWidth(window.innerWidth*2/8);
         setlearningToolMenuHeight(window.innerHeight-headerHeight);
     };
 
@@ -28,8 +31,8 @@ const Home = () => {
         <div>
             <Header/>
             <div className="flex-container">
-                <CanvasComponent className="canvas" HomeHeight={canvasHeight}/>
-                <LearningToolMenu/>
+                <CanvasComponent className="canvas" HomeWidth={canvasWidth} HomeHeight={canvasHeight}/>
+                <LearningToolMenu className="learning-tool-menu" HomeWidth={learningToolMenuWidth} HomeHeight={learningToolMenuHeight}/>
             </div>
         </div>
     );

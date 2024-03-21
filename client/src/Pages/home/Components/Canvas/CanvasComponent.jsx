@@ -27,7 +27,7 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
         <>
             <canvas
                 ref={canvasRef}
-                //width={HomeWidth}
+                width={HomeWidth}
                 height={HomeHeight}
                 onClick={handleClick}
             />

@@ -2,7 +2,7 @@
 import React from "react";
 import CodeView from "../Code-View/Code-View";
 
-const LearningToolViewWindow = ({ selectedView, HomeWidth, HomeHeight }) => {
+const LearningToolViewWindow = ({ selectedView }) => {
     const renderViewContent = () => {
         switch (selectedView) {
             case "Code View":
