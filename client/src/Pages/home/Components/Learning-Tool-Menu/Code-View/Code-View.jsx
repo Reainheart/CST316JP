@@ -6,9 +6,11 @@ import CodeLanguageSelector from "./Code-Language-Selection-Menu/Code-Language-S
 
 const CodeView = () => {
     const [selectedLanguage, setSelectedLanguage] = useState("C++");
-    const [selectedLanguageCode, setSelectedLanguageCode] = useState(
-        "Select a language to view the example."
-    );
+    const [codeLines, setCodeLines] = useState([]);
+
+    const processData = (code) => {
+        return code.split("\\n").map((line) => line.replace(/\\t/g, "    "));
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -24,20 +26,18 @@ const CodeView = () => {
                 const languageData = jsonData.find(
                     (item) => item.Language === selectedLanguage
                 );
-                setSelectedLanguageCode(
+                setCodeLines(
                     languageData
-                        ? languageData.Example
-                        : `No example code found for ${selectedLanguage}`
+                        ? processData(languageData.Example)
+                        : ["No example code found for " + selectedLanguage]
                 );
             } catch (error) {
                 console.error("Fetching error:", error);
-                setSelectedLanguageCode(
-                    `Failed to load data: ${error.message}`
-                );
+                setCodeLines([`Failed to load data: ${error.message}`]);
             }
         };
         fetchData();
-    }, [selectedLanguage]); // This will re-fetch when selectedLanguage changes
+    }, [selectedLanguage]);
 
     return (
         <>
@@ -49,10 +49,7 @@ const CodeView = () => {
                     />
                 </div>
                 <div className="card-body">
-                    <CodeViewWindow
-                        selectedLanguage={selectedLanguage}
-                        selectedLanguageCode={selectedLanguageCode}
-                    />
+                    <CodeViewWindow codeLines={codeLines} />
                 </div>
             </Card>
         </>

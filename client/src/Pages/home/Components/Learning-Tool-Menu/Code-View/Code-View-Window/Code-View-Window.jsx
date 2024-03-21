@@ -2,15 +2,18 @@
 //import React, { useState, useRef, useEffect } from "react";
 //import "./Code-View-Window.css";
 
-
-const CodeViewWindow = (props) => {
-
+const CodeViewWindow = ({ codeLines }) => {
     return (
-        <>
-            <h5 className="card-title">{props.selectedLanguage}</h5>
-            <p className="card-text">{props.selectedLanguageCode}</p>
-        </>
+        <pre className="code-view-container">
+            {codeLines.map((line, index) => (
+                // Render each line inside a <code> tag
+                <code key={index}>
+                    {line}
+                    <br />
+                </code>
+            ))}
+        </pre>
     );
-}
+};
 
 export default CodeViewWindow;
