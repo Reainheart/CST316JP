@@ -8,7 +8,7 @@ const CodeViewWindow = (props) => {
     return (
         <>
             <h5 className="card-title">{props.selectedLanguage}</h5>
-            <p className="card-text">{props.selectedLanguageCode}</p>
+            <pre className="card-text">{props.selectedLanguageCode}</pre>
         </>
     );
 }

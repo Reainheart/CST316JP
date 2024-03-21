@@ -31,7 +31,7 @@ const Home = () => {
         <div>
             <Header/>
             <div className="flex-container">
-                <CanvasComponent className="canvas" HomeWidth={canvasWidth} HomeHeight={canvasHeight}/>
+                <CanvasComponent className="canvas" HomeHeight={canvasHeight}/>
                 <LearningToolMenu/>
             </div>
         </div>
