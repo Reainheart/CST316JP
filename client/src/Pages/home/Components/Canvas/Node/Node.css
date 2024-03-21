@@ -12,6 +12,7 @@
     user-select: none; /* Prevents text selection */
     text-align: center; /* Ensures text is centered if it wraps */
     overflow: hidden; /* Prevents content from spilling outside */
+    border-radius: 90%;
 }
 .node p {
     line-height: 100px; /* Match the height of the container */
