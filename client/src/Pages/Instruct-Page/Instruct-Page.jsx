@@ -3,10 +3,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./Instruct-Page.css";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
+import Header from "./../header/Header";
+
 
 const InstructionalPage = () => {
     return (
-        <>
+        <div>
+            <Header/>
             <div>
                 <h1>Learn</h1>
                 <p>Instructions here</p>
@@ -49,7 +52,7 @@ const InstructionalPage = () => {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

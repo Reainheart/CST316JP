@@ -7,10 +7,7 @@ import LearningToolMenu from "./Components/Learning-Tool-Menu/Learning-Tool-Menu
 const Home = () => {
 
     const headerHeight = 61;
-    const [canvasWidth, setcanvasWidth] = useState(window.innerWidth*2/3);
     const [canvasHeight, setcanvasHeight] = useState(window.innerHeight-headerHeight);
-    const [learningToolMenuWidth, setlearningToolMenuWidth] = useState(window.innerWidth*1/3);
-    const [learningToolMenuHeight, setlearningToolMenuHeight] = useState(window.innerHeight-headerHeight);
 
     const onReSize = () => {
         setcanvasWidth(window.innerWidth*2/3);

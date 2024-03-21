@@ -9,8 +9,8 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
 
     const handleClick = (event) => {
         const rect = canvasRef.current.getBoundingClientRect();
-        const x = event.clientX - rect.left - 50; // Centering the node, assuming node's width/height is 100px
-        const y = event.clientY - rect.top - 50; // Adjust values as per your Node component's size
+        const x = event.clientX - rect.left - 40; // Centering the node, assuming node's width/height is 80px
+        const y = event.clientY - rect.top; // Adjust values as per your Node component's size
 
         // Adding a new node. Each node needs a unique key/id.
         const newNode = { id: Math.random(), x, y, text: "Node" };
