@@ -24,7 +24,12 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
 
     return (
         <>
-            <canvas ref={canvasRef} height={HomeHeight} onClick={handleClick} />
+            <canvas
+                ref={canvasRef}
+                width={HomeWidth}
+                height={HomeHeight}
+                onClick={handleClick}
+            />
             {nodes.map((node) => (
                 <Node
                     key={node.id}

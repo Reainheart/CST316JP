@@ -8,6 +8,6 @@
 }
 
 canvas {
-    border: 3px solid orange;
-    flex-grow: 3;
+    background-color: gray;
+    background-image: linear-gradient(to bottom right, rgb(5, 6, 15), rgb(0, 14, 14));
 }

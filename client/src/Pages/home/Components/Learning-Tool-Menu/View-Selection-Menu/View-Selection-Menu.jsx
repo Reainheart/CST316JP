@@ -8,20 +8,23 @@ const ViewSelectionMenu = ({ setSelectedView }) => {
     };
 
     return (
-        <ButtonGroup aria-label="View Selector">
+        <ButtonGroup className="btn-group" role="group" aria-label="View Selector">
             <Button
+                className="btn btn-primary"
                 variant="secondary"
                 onClick={() => handleViewClick("Code View")}
             >
                 Code View
             </Button>
             <Button
+                className="btn btn-primary"
                 variant="secondary"
                 onClick={() => handleViewClick("Memory View")}
             >
                 Memory View
             </Button>
             <Button
+                className="btn btn-primary"
                 variant="secondary"
                 onClick={() => handleViewClick("Function View")}
             >
