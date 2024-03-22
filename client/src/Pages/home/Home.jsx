@@ -6,7 +6,7 @@ import CanvasComponent from "./Components/Canvas/CanvasComponent"
 import LearningToolMenu from "./Components/Learning-Tool-Menu/Learning-Tool-Menu"
 const Home = () => {
 
-    const headerHeight = 55;
+    const headerHeight = 56;
     const [canvasWidth, setcanvasWidth] = useState(window.innerWidth*6/8);
     const [canvasHeight, setcanvasHeight] = useState(window.innerHeight-headerHeight);
     const [learningToolMenuWidth, setlearningToolMenuWidth] = useState(window.innerWidth*2/8);
