@@ -1,4 +1,3 @@
-// LearningToolViewWindow.jsx
 import React from "react";
 import CodeView from "../Code-View/Code-View";
 
