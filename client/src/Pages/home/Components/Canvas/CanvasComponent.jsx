@@ -27,7 +27,7 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
     };
 
     const findObjectOnCanvasById = (id) => {
-        
+
         for (const node of nodes) {
             console.log(node);
             if (node.id == id) {
@@ -36,25 +36,26 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
         }
 
         return null
-        
+
     }
 
     const handleClickOnObject = (id) => {
+        //debugger
         // If the object is selected
         if (selectedObjects.has(id)) {
-            selectedObjects.delete(id)
-            return 'Object was deleted';
+            return selectedObjects.delete(id);
         }
         const currentObject = findObjectOnCanvasById(id)
 
         // Shouldnt happen... but should be good
         if (currentObject != null) {
             // map the id of selected object
-            selectedObjects[id] = currentObject
-            return selectedObjects[id].id + ' was added';
+            selectedObjects.set(id, currentObject)
+            console.log(selectedObjects[id] + ' was added')
+        } else {
+            console.log('Current object not found')
         }
 
-        console.log('Current object not found')
     }
 
     const handleObjectClick = (id) => (event) => {
@@ -81,7 +82,7 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
                     x={node.x}
                     y={node.y}
                     text={node.text}
-                    onClick={handleObjectClick(node.id, node)}
+                    onClick={handleObjectClick(node.id)}
                 />
             ))}
         </>
