@@ -10,7 +10,7 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
 
     const handleCavasClick = (event) => {
 
-        if (selectedObjects.length !== 0){
+        if (selectedObjects.length !== 0) {
             setSelectedObjects(new Map());
         }
 
@@ -23,20 +23,47 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
 
         console.log(newNode)
         setNodes([...nodes, newNode]);
-        
+
     };
 
-    const handleObjectClick = (id, object) => (event) => {
+    const findObjectOnCanvasById = (id) => {
+        
+        for (const node of nodes) {
+            console.log(node);
+            if (node.id == id) {
+                return node;
+            }
+        }
+
+        return null
+        
+    }
+
+    const handleClickOnObject = (id) => {
+        // If the object is selected
+        if (selectedObjects.has(id)) {
+            selectedObjects.delete(id)
+            return 'Object was deleted';
+        }
+        const currentObject = findObjectOnCanvasById(id)
+
+        // Shouldnt happen... but should be good
+        if (currentObject != null) {
+            // map the id of selected object
+            selectedObjects[id] = currentObject
+            return selectedObjects[id].id + ' was added';
+        }
+
+        console.log('Current object not found')
+    }
+
+    const handleObjectClick = (id) => (event) => {
         // console.log(event)
         // console.log(id)
         event.stopPropagation();
-        
-        // If the object is not selected
-        if (!selectedObjects.has(id)) {
-            // append to the list of selected objects
-            selectedObjects[id] = object
-        }
-        
+
+        handleClickOnObject(id);
+
         console.log(selectedObjects)
     };
 
