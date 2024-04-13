@@ -6,12 +6,12 @@ import "./canvasComponent.css";
 const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
     const canvasRef = useRef(null);
     const [nodes, setNodes] = useState([]); // State to track nodes
-    const [selectedObjects, setSelectedObjects] = useState(new Map()); // State to track selected objects
+    const selectedObjects = useRef(new Map()); // State to track selected objects
 
     const handleCavasClick = (event) => {
 
         if (selectedObjects.length !== 0) {
-            setSelectedObjects(new Map());
+            selectedObjects.current.clear
         }
 
         const rect = canvasRef.current.getBoundingClientRect();
@@ -27,9 +27,7 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
     };
 
     const findObjectOnCanvasById = (id) => {
-
         for (const node of nodes) {
-            console.log(node);
             if (node.id == id) {
                 return node;
             }
@@ -42,16 +40,16 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
     const handleClickOnObject = (id) => {
         //debugger
         // If the object is selected
-        if (selectedObjects.has(id)) {
-            return selectedObjects.delete(id);
+        if (selectedObjects.current.has(id)) {
+            return selectedObjects.current.delete(id);
         }
         const currentObject = findObjectOnCanvasById(id)
 
         // Shouldnt happen... but should be good
         if (currentObject != null) {
             // map the id of selected object
-            selectedObjects.set(id, currentObject)
-            console.log(selectedObjects[id] + ' was added')
+            selectedObjects.current.set(id, currentObject)
+            console.log(selectedObjects.current.get(id).id + ' was added')
         } else {
             console.log('Current object not found')
         }
