@@ -60,7 +60,9 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
         // console.log(event)
         // console.log(id)
         event.stopPropagation();
+        // logic for if multiple things are selected 
 
+        // logic for if there is a single or no node selected etc
         handleClickOnObject(id);
 
         console.log(selectedObjects)
