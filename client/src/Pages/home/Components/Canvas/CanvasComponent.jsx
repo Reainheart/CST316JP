@@ -1,25 +1,43 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
+import PropTypes from 'prop-types'
 import Node from "./Node/Node";
 import "./canvasComponent.css";
 
 const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
     const canvasRef = useRef(null);
     const [nodes, setNodes] = useState([]); // State to track nodes
+    const [selectedObjects, setSelectedObjects] = useState([]); // State to track selected objects
 
-    const handleClick = (event) => {
+    const handleCavasClick = (event) => {
+
+        if (selectedObjects.length !== 0){
+            setSelectedObjects([]);
+        }
+
         const rect = canvasRef.current.getBoundingClientRect();
         const x = event.clientX - rect.left - 40; // Centering the node (node's width and height are 80px)
         const y = event.clientY - rect.top;
 
         // Adds a new node. Each node has a unique key/id
-        const newNode = { id: Math.random(), x, y, text: "Node" };
+        const newNode = { id: Math.floor(Math.random() * 999999), x, y, text: "Node" };
+
+        console.log(newNode)
         setNodes([...nodes, newNode]);
+        
     };
 
-    // Function to handle node click (remove the node upon user click)
-    const handleNodeClick = (id) => (event) => {
+    const handleObjectClick = (id, object) => (event) => {
+        // console.log(event)
+        // console.log(id)
         event.stopPropagation();
-        setNodes(nodes.filter((node) => node.id !== id));
+        
+        // If the object is not selected
+        if (!selectedObjects.includes(id)) {
+            // append to the list of selected objects
+            selectedObjects[id] = object
+        }
+        
+        console.log(selectedObjects)
     };
 
     return (
@@ -28,7 +46,7 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
                 ref={canvasRef}
                 width={HomeWidth}
                 height={HomeHeight}
-                onClick={handleClick}
+                onClick={handleCavasClick}
             />
             {nodes.map((node) => (
                 <Node
@@ -36,11 +54,15 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
                     x={node.x}
                     y={node.y}
                     text={node.text}
-                    onClick={handleNodeClick(node.id)}
+                    onClick={handleObjectClick(node.id, node)}
                 />
             ))}
         </>
     );
+};
+CanvasComponent.propTypes = {
+    HomeWidth: PropTypes.number.isRequired,
+    HomeHeight: PropTypes.number.isRequired
 };
 
 export default CanvasComponent;
