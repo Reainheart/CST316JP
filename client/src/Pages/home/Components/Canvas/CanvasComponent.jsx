@@ -11,7 +11,7 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
     const handleCavasClick = (event) => {
 
         if (selectedObjects.length !== 0) {
-            selectedObjects.current.clear
+            selectedObjects.current.clear()
         }
 
         const rect = canvasRef.current.getBoundingClientRect();
@@ -36,8 +36,7 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
         return null
 
     }
-
-    const handleClickOnObject = (id) => {
+    const handleCtrlClickOnObject = (id) => {
         //debugger
         // If the object is selected
         if (selectedObjects.current.has(id)) {
@@ -53,17 +52,31 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
         } else {
             console.log('Current object not found')
         }
+    }
 
+    const handleClickOnObject = (id) => {
+        //debugger
+        // If the object is selected
+
+        //console.log(selectedObjects.current)
+        const currentObject = findObjectOnCanvasById(id)
+
+        // if anything is selected, Reset the selected objects on a new selection
+        if (selectedObjects.current.size > 0){ 
+            selectedObjects.current.clear()
+        }
+
+        // map the id of selected object
+        selectedObjects.current.set(id, currentObject)
+        console.log(selectedObjects.current.get(id).id + ' was added')
     }
 
     const handleObjectClick = (id) => (event) => {
-        // console.log(event)
+        console.log(event)
         // console.log(id)
         event.stopPropagation();
-        // logic for if multiple things are selected 
-
-        // logic for if there is a single or no node selected etc
-        handleClickOnObject(id);
+        
+        event.ctrlKey ? handleCtrlClickOnObject(id) : handleClickOnObject(id)
 
         console.log(selectedObjects)
     };
