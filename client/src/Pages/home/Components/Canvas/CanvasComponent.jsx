@@ -6,12 +6,12 @@ import "./canvasComponent.css";
 const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
     const canvasRef = useRef(null);
     const [nodes, setNodes] = useState([]); // State to track nodes
-    const [selectedObjects, setSelectedObjects] = useState([]); // State to track selected objects
+    const [selectedObjects, setSelectedObjects] = useState(new Map()); // State to track selected objects
 
     const handleCavasClick = (event) => {
 
         if (selectedObjects.length !== 0){
-            setSelectedObjects([]);
+            setSelectedObjects(new Map());
         }
 
         const rect = canvasRef.current.getBoundingClientRect();
@@ -32,7 +32,7 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
         event.stopPropagation();
         
         // If the object is not selected
-        if (!selectedObjects.includes(id)) {
+        if (!selectedObjects.has(id)) {
             // append to the list of selected objects
             selectedObjects[id] = object
         }
