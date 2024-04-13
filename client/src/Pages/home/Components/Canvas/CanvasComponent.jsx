@@ -8,6 +8,15 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
     const [nodes, setNodes] = useState([]); // State to track nodes
     const selectedObjects = useRef(new Map()); // State to track selected objects
 
+    const findObjectOnCanvasById = (id) => {
+        for (const node of nodes) {
+            if (node.id == id) {
+                return node;
+            }
+        }
+        return null
+    };
+
     const handleCavasClick = (event) => {
 
         if (selectedObjects.length !== 0) {
@@ -26,16 +35,6 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
 
     };
 
-    const findObjectOnCanvasById = (id) => {
-        for (const node of nodes) {
-            if (node.id == id) {
-                return node;
-            }
-        }
-
-        return null
-
-    }
     const handleCtrlClickOnObject = (id) => {
         //debugger
         // If the object is selected
@@ -62,7 +61,7 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
         const currentObject = findObjectOnCanvasById(id)
 
         // if anything is selected, Reset the selected objects on a new selection
-        if (selectedObjects.current.size > 0){ 
+        if (selectedObjects.current.size > 0) {
             selectedObjects.current.clear()
         }
 
@@ -75,7 +74,7 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
         console.log(event)
         // console.log(id)
         event.stopPropagation();
-        
+
         event.ctrlKey ? handleCtrlClickOnObject(id) : handleClickOnObject(id)
 
         console.log(selectedObjects)
