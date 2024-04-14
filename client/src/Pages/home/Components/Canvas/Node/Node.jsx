@@ -1,4 +1,6 @@
 import { useState, useRef, useEffect } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 import "./Node.css";
 import PropTypes from 'prop-types'
 
@@ -6,7 +8,6 @@ const Node = ({ x, y, text, onClick, isSelected }) => {
     const [isActive, setIsActive] = useState(false);
     const nodeRef = useRef(null);
 
-    // Optional: Use effect to handle actions when isSelected changes
     useEffect((isSelected) => {
         setIsActive(isSelected)
     }, [isSelected]);
@@ -25,7 +26,7 @@ const Node = ({ x, y, text, onClick, isSelected }) => {
             {isActive ? (
                 <div>
                     <div className="node-options" style={{ left: x-10.5, top: y-35 }}>
-                        <button>1</button>
+                        <button><FontAwesomeIcon icon="fa-solid fa-copy" /></button>
                         <button>2</button>
                         <button>3</button>
                     </div>
