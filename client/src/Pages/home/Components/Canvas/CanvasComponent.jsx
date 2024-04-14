@@ -95,6 +95,7 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
                     y={node.y}
                     text={node.text}
                     onClick={handleObjectClick(node.id)}
+                    isSelected={selectedObjects.current.has(node.id)}
                 />
             ))}
         </>

@@ -1,23 +1,50 @@
-.node {
+.node, .selected-node {
     position: absolute;
-    width: 80px; /* Adjust size as needed */
-    height: 80px; /* Adjust size as needed */
-    background-color: darkslateblue;
+    width: 80px;
+    height: 80px;
+    background-color: #373b3e;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-
-    border: 1px solid whitesmoke; /* Optional */
-    box-shadow: 0px 0px 8px rgba(255, 255, 255, 0.397); /* Optional for a nicer look */
-    user-select: none; /* Prevents text selection */
-    text-align: center; /* Ensures text is centered if it wraps */
-    overflow: hidden; /* Prevents content from spilling outside */
+    border: 1px solid #bec8d1;
+    box-shadow: 0px 0px 8px rgba(190, 200, 209, 0.397);
+    user-select: none;
+    text-align: center;
+    overflow: hidden;
     border-radius: 90%;
 }
+
 .node p {
-    line-height: 100px; /* Match the height of the container */
+    line-height: 100px;
     font-size: larger;
-    margin: 0; /* Remove default paragraph margins */
-    color: white;
+    margin: 0;
+    color: #e12885;
+}
+
+.node-options {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.node-options button {
+    width: 30px;
+    height: 30px;
+    border: none;
+    background-color: #bec8d1;
+    cursor: pointer;
+    border-radius: 90%;
+    
+}
+
+.selected-node {
+    background-color: #86cecb;
+    border-color: #137a7f;
+    box-shadow: 0 0 10px rgba(19, 122, 127, 0.5);
+}
+
+.node:hover, .selected-node:hover {
+    background-color: #137a7f;
 }
