@@ -12,7 +12,7 @@
     user-select: none;
     text-align: center;
     overflow: hidden;
-    border-radius: 90%;
+    border-radius: 100%;
 }
 
 .node p {

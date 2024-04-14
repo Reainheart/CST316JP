@@ -37,7 +37,7 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
 
     const handleCtrlClickOnObject = (id) => {
         //debugger
-        // If the object is selected
+        // Deselect on self click 
         if (selectedObjects.current.has(id)) {
             return selectedObjects.current.delete(id);
         }
@@ -56,7 +56,11 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
     const handleClickOnObject = (id) => {
         //debugger
         // If the object is selected
-
+        // Deselect on self click 
+        if (selectedObjects.current.has(id)) {
+            selectedObjects.current.clear()
+            return selectedObjects.current.delete(id);
+        }
         //console.log(selectedObjects.current)
         const currentObject = findObjectOnCanvasById(id)
 
@@ -91,6 +95,7 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
             {nodes.map((node) => (
                 <Node
                     key={node.id}
+                    name={node.id}
                     x={node.x}
                     y={node.y}
                     text={node.text}
