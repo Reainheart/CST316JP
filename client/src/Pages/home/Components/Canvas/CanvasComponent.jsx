@@ -12,9 +12,9 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
         const y = event.clientY - rect.top + 60;
         
         const threshold = 50;
-        if(y < threshold + 50 || y > rect.height - threshold + 27) {
+        if(y < threshold + 50 || y > rect.height - threshold + 10) {
             return;
-        } 
+        }
 
         // Adds a new node. Each node has a unique key/id
         const newNode = { id: Math.random(), x, y, text: "Node" };

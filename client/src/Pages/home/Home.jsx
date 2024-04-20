@@ -38,17 +38,6 @@ const Home = () => {
                 <LearningToolMenu className="learning-tool-menu" HomeWidth={learningToolMenuWidth} HomeHeight={learningToolMenuHeight}/>
             </div>
         </div>
-        /*<div className="home-container">
-            <Header/>
-            <Toolbar/> 
-            <div className="content-container">
-                <div className="flex-container">
-                    
-                    <CanvasComponent className="canvas" HomeWidth={canvasWidth} HomeHeight={canvasHeight}/>
-                    <LearningToolMenu className="learning-tool-menu" HomeWidth={learningToolMenuWidth} HomeHeight={learningToolMenuHeight}/>
-                </div>
-            </div>
-        </div>*/
     );
 };
 
