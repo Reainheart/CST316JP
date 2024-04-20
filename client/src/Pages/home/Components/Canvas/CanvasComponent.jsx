@@ -126,17 +126,6 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
                 height={HomeHeight}
                 onClick={handleCavasClick}
             />
-            {nodes.map((node) => (
-                <Node
-                    key={node.id}
-                    name={node.id}
-                    x={node.x}
-                    y={node.y}
-                    text={node.text}
-                    onClick={handleObjectClick(node.id)}
-                    isSelected={selectedObjects.current.has(node.id)}
-                />
-            ))}
             {pointers.map((pointer) => (
                 <Pointer
                     key={pointer.id}
@@ -149,6 +138,18 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
                     connectedToObject={pointer.connectedToObject}
                 />
             ))}
+            {nodes.map((node) => (
+                <Node
+                    key={node.id}
+                    name={node.id}
+                    x={node.x}
+                    y={node.y}
+                    text={node.text}
+                    onClick={handleObjectClick(node.id)}
+                    isSelected={selectedObjects.current.has(node.id)}
+                />
+            ))}
+
         </>
     );
 };

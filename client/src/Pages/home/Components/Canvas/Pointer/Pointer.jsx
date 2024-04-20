@@ -1,16 +1,16 @@
 //for future use
-import { useState } from 'react';
+//import { useState } from 'react';
 import './pointer.css'
 import PropTypes from 'prop-types';
 
 const Pointer = ({ from_x ,from_y, to_x, to_y, connectedFromObject, connectedToObject}) => {
-    const [isNullPointer, setIsNullPointer] = useState(false)
+    //const [isNullPointer, setIsNullPointer] = useState(false)
    
     // Calculate the angle of the arrow
     const angle = Math.atan2(to_y - from_y, to_x - from_x) * 180 / Math.PI;
 
     // Calculate distance between points
-    const distance = Math.sqrt((to_x - from_x) ** 2 + (to_y - from_y) ** 2);
+    const distance = Math.sqrt((to_x - from_x) ** 2 + (to_y - from_y) ** 2) - 40;
 
     return (
         <div>
