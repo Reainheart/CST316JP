@@ -24,7 +24,7 @@ function anchorPointsOnCircle(angleInDegrees, centerX, centerY) {
 const Node = ({ name, x, y, text, onClick, isSelected }) => {
     const [isActive, setIsActive] = useState(false);
     const nodeRef = useRef(null);
-
+    
     useEffect((isSelected) => {
         setIsActive(isSelected)
     }, [isSelected]);

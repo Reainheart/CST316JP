@@ -4,13 +4,20 @@ import Node from "./Node/Node";
 import Pointer from "./Pointer/Pointer";
 import "./canvasComponent.css";
 
+const RADIUS = 40
+const degrees = [];
+const THRESHOLD = 50;
+for (let angle = 0; angle < 360; angle++) {
+    degrees.push(angle);
+}
+
 const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
     const canvasRef = useRef(null);
     const [nodes, setNodes] = useState([]); // State to track nodes
     const [pointers, setPointers] = useState([]); // State to track pointers
     const selectedObjects = useRef(new Map()); // State to track selected objects
 
-    const findObjectOnCanvasById = (id) => {        
+    const findObjectOnCanvasById = (id) => {
         for (const node of nodes) {
             if (node.id == id) {
                 return node;
@@ -26,11 +33,11 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
         }
 
         const rect = canvasRef.current.getBoundingClientRect();
-        const x = event.clientX - rect.left - 40; // Centering the node (node's width and height are 80px)
-        const y = event.clientY - rect.top + 60;
-        
-        const threshold = 50;
-        if(y < threshold + 50 || y > rect.height - threshold + 10) {
+        const x = event.clientX - rect.left - RADIUS; // Centering the node (node's width and height are 80px)
+        const y = event.clientY - rect.top + RADIUS;
+
+
+        if (y < THRESHOLD + RADIUS || y > rect.height - THRESHOLD + 10) {
             return;
         }
 
@@ -78,59 +85,38 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
             return selectedObjects.current.delete(id);
         }
 
-        ClickObjectAction(id)
-    }
-
-    const drawPointerFromObjectToObject = (from_id, to_id) => {
-        const fromObject = findObjectOnCanvasById(from_id)
-        const from_x = fromObject.x
-        const from_y = fromObject.y
-
-        if (to_id) {
-            const toObject = findObjectOnCanvasById(to_id)
-            const to_x = toObject.x
-            const to_y = toObject.y
-            const newPointer = {
-                id: Math.floor(Math.random() * 999999),
-                from_x: from_x,
-                from_y: from_y, 
-                to_x: to_x,
-                to_y: to_y, 
-                connectedFromObject: fromObject,
-                connectedToObject: toObject
-            }
-            setPointers([...pointers, newPointer])
-        }else{
-            const newPointer = {
-                id: Math.floor(Math.random() * 999999),
-                from_x: from_x,
-                from_y: from_y, 
-                to_x: from_x+50,
-                to_y: from_y+50, 
-                connectedFromObject: fromObject
-            }
-            setPointers([...pointers, newPointer])
-        }
-    }
-
-    const ClickObjectAction = (id) => {
-        console.log(selectedObjects.current.size) 
+        console.log(selectedObjects.current.size)
         const currentObject = findObjectOnCanvasById(id)
 
-
         switch (selectedObjects.current.size) {
-            case 1: 
-                drawPointerFromObjectToObject(selectedObjects.current.keys().next().value,id)
-                console.log(selectedObjects.current.size)      
+            case 1:
+                drawPointerFromObjectToObject(selectedObjects.current.keys().next().value, id)
+                console.log(selectedObjects.current.size)
                 break;
             default:
                 selectedObjects.current.set(id, currentObject)
                 console.log(selectedObjects.current.get(id).id + ' was added')
-                console.log(selectedObjects.current.size)  
-                break;   
+                console.log(selectedObjects.current.size)
+                break;
         }
-        
     }
+
+    const drawPointerFromObjectToObject = (from_id, to_id) => {
+        const fromObject = findObjectOnCanvasById(from_id)
+        const toObject = findObjectOnCanvasById(to_id)
+
+        const newPointer = {
+            id: Math.floor(Math.random() * 999999),
+            from_x: fromObject.x + RADIUS,
+            from_y: fromObject.y + RADIUS,
+            to_x: toObject.x + RADIUS,
+            to_y: toObject.y + RADIUS,
+            connectedFromObject: fromObject,
+            connectedToObject: toObject
+        }
+        setPointers([...pointers, newPointer])
+    }
+
 
     return (
         <>
