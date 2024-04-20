@@ -3,9 +3,26 @@ import AnchorPoint from "../AnchorPoint/AnchorPoint";
 import "./Node.css";
 import PropTypes from 'prop-types'
 
+const RADIUS = 30
+const degrees = [];
+
+for (let angle = 0; angle < 360; angle++) {
+    degrees.push(angle);
+}
+
+// Function to calculate point on circumference of a circle given angle
+function anchorPointsOnCircle(angleInDegrees, centerX, centerY) {
+    // Convert angle from degrees to radians
+    const angleInRadians = angleInDegrees * Math.PI / 180;
+
+    const x = (centerX + RADIUS) + RADIUS * Math.cos(angleInRadians);
+    const y = (centerY + RADIUS) + RADIUS * Math.sin(angleInRadians);
+
+    return { x, y };
+}
+
 const Node = ({ name, x, y, text, onClick, isSelected }) => {
     const [isActive, setIsActive] = useState(false);
-
     const nodeRef = useRef(null);
 
     useEffect((isSelected) => {
@@ -31,22 +48,26 @@ const Node = ({ name, x, y, text, onClick, isSelected }) => {
                         <button>2</button>
                         <button>3</button>
                     </div>
-                    <AnchorPoint key={'node_' + name + '_ap_' + 1} x={x + 30} y={y - 10} />
-                    <AnchorPoint key={'node_' + name + '_ap_' + 2} x={x - 10} y={y + 30} />
-                    <AnchorPoint key={'node_' + name + '_ap_' + 3} x={x + 70} y={y + 30} />
-                    <AnchorPoint key={'node_' + name + '_ap_' + 4} x={x + 30} y={y + 70} />
-
+                    {degrees.map((angle) => (
+                        <AnchorPoint
+                            key={'node_' + name + '_ap_' + angle}
+                            x={anchorPointsOnCircle(angle, x, y).x}
+                            y={anchorPointsOnCircle(angle, x, y).y}
+                        />
+                    ))}
                     <div className="selected-node" style={{ left: x, top: y }} onClick={handleNodeClick} ref={nodeRef}>
                         <p>{text}</p>
                     </div>
                 </div>
             ) : (
                 <div>
-                    <AnchorPoint key={'node_' + name + '_ap_' + 1} x={x + 30} y={y - 10} />
-                    <AnchorPoint key={'node_' + name + '_ap_' + 2} x={x - 10} y={y + 30} />
-                    <AnchorPoint key={'node_' + name + '_ap_' + 3} x={x + 70} y={y + 30} />
-                    <AnchorPoint key={'node_' + name + '_ap_' + 4} x={x + 30} y={y + 70} />
-
+                    {degrees.map((angle) => (
+                        <AnchorPoint
+                            key={'node_' + name + '_ap_' + angle}
+                            x={anchorPointsOnCircle(angle, x, y).x}
+                            y={anchorPointsOnCircle(angle, x, y).y}
+                        />
+                    ))}
                     <div className="node" style={{ left: x, top: y }} onClick={handleNodeClick} ref={nodeRef}>
                         <p>{text}</p>
                     </div>

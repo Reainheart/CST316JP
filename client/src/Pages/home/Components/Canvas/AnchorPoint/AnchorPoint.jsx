@@ -1,4 +1,4 @@
-//for future use
+
 // import { useState } from 'react';
 import './AnchorPoint.css'
 import PropTypes from 'prop-types';
