@@ -2,17 +2,21 @@ import React, { useState } from "react";
 import Card from "react-bootstrap/card";
 import LearningToolViewWindow from "./Learning-Tool-View-Window/Learning-Tool-View-Window";
 import ViewSelectionMenu from "./View-Selection-Menu/View-Selection-Menu";
-import './Learning-Tool-Menu.css'
+import "./Learning-Tool-Menu.css";
 
 const LearningToolMenu = ({ HomeWidth, HomeHeight }) => {
     const [selectedView, setSelectedView] = useState("Code View");
 
     return (
-        <div>
-            <Card style={{
-                width: HomeWidth,
-                height: HomeHeight
-            }}>
+        <div style={{ borderColor: "red" }}>
+            <Card
+                style={{
+                    width: HomeWidth,
+                    height: HomeHeight,
+                    borderRadius: "0px",
+                    backgroundColor: "#0b0c10",
+                }}
+            >
                 <div className="card-header">
                     <ViewSelectionMenu setSelectedView={setSelectedView} />
                 </div>
@@ -21,7 +25,6 @@ const LearningToolMenu = ({ HomeWidth, HomeHeight }) => {
                 </div>
             </Card>
         </div>
-
     );
 };
 

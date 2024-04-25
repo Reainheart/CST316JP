@@ -1,14 +1,21 @@
 .navbar {
-    background-color: #6c757d;
+    background-color: #0b0c10;
 }
 
 .brand {
-    color: white !important;
+    color: #66fcf1 !important;
+    font-size: 2rem;
+    font-weight: bold;
 }
 .nav-link {
-    color: #b1b5b5 !important;
+    color: #45a29e !important;
 }
 
 .nav-link.active {
-    color: white !important;
+    color: #66fcf1 !important;
+    font-weight: 1000;
+}
+
+.navbar-toggler {
+    background-color: #66fcf1 !important;
 }
