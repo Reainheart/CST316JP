@@ -7,22 +7,22 @@ p {
 .button-group-container {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centers the children vertically */
-    justify-content: center; /* Center children horizontally, applies if flex-direction is row */
-    width: 100%; /* Adjust based on your layout's max width */
-    margin-bottom: 150px; /* Adds space between the button group and the next element */
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 150px;
 }
 
 .button-group {
-    display: flex; /* Ensures flexbox properties apply to the buttons */
-    flex-direction: row; /* Aligns buttons in a row */
-    flex-wrap: wrap; /* Allows buttons to wrap in small screens */
-    justify-content: center; /* Centers buttons horizontally in the container */
-    gap: 10px; /* Adds space between buttons, if needed */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
 }
 
 .button-group .btn {
-    width: 300px; /* Set a fixed width for all buttons */
-    height: 150px; /* Set a fixed height for all buttons */
-    font-size: 1.5rem; /* Adjust based on your layout's font size */
+    width: 300px;
+    height: 150px;
+    font-size: 1.5rem;
 }
