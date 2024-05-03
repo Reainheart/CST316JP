@@ -4,7 +4,7 @@ import Header from "../Header";
 
 const AboutPage = () => {
     return (
-        <>
+        <div className="about-div">
             <Header />
             <div className="about-text">
                 <h1>About</h1>
@@ -17,7 +17,7 @@ const AboutPage = () => {
                 <h5>Noah Etchemendy</h5>
                 <p>Scrum Master, Architect, & Programmer</p>
             </div>
-        </>
+        </div>
     );
 };
 

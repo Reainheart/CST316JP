@@ -5,11 +5,10 @@ import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Header from "./../header/Header";
 
-
 const InstructionalPage = () => {
     return (
-        <div>
-            <Header/>
+        <div className="instruct-page-content">
+            <Header />
             <div>
                 <h1>Learn</h1>
                 <p>Instructions here</p>

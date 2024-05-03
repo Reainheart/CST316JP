@@ -40,7 +40,7 @@ const CodeView = () => {
     }, [selectedLanguage]); // This will re-fetch when selectedLanguage changes
 
     return (
-        <>
+        <div>
             <Card>
                 <div className="card-header">
                     <CodeLanguageSelector
@@ -55,7 +55,7 @@ const CodeView = () => {
                     />
                 </div>
             </Card>
-        </>
+        </div>
     );
 };
 
