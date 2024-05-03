@@ -4,6 +4,7 @@ import Node from "./Node/Node";
 import Pointer from "./Pointer/Pointer";
 import "./canvasComponent.css";
 
+
 const RADIUS = 40
 const degrees = [];
 const THRESHOLD = 50;
@@ -11,7 +12,7 @@ for (let angle = 0; angle < 360; angle++) {
     degrees.push(angle);
 }
 
-const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
+const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
     const canvasRef = useRef(null);
     const [nodes, setNodes] = useState([]); // State to track nodes
     const [pointers, setPointers] = useState([]); // State to track pointers
@@ -32,20 +33,32 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
             selectedObjects.current.clear()
         }
 
+    const drawCurrentObjectAt = (x, y) => {
+        console.log (objectToDraw)
+        switch (objectToDraw) {
+            case 'Node':
+                drawNewNode(x, y)
+                break;
+        }
+    }
+
+    const drawNewNode = (x, y) => {                
+        // Adds a new node. Each node has a unique key/id
+        const newNode = { id: Math.random(), x, y, text: "Node" };
+        setNodes([...nodes, newNode]);
+    }
+
+    const handleClick = (event) => {
         const rect = canvasRef.current.getBoundingClientRect();
-        const x = event.clientX - rect.left - RADIUS; // Centering the node (node's width and height are 80px)
-        const y = event.clientY - rect.top + RADIUS;
+        const x = event.clientX - rect.left - 40; // Centering the node (node's width and height are 80px)
+        const y = event.clientY - rect.top + 60;
 
-
-        if (y < THRESHOLD + RADIUS || y > rect.height - THRESHOLD + 10) {
+        const threshold = 50;
+        if (y < threshold + 50 || y > rect.height - threshold + 10) {
             return;
         }
 
-        // Adds a new node. Each node has a unique key/id
-        const newNode = { id: Math.floor(Math.random() * 999999), x, y, text: "Node" };
-
-        console.log(newNode)
-        setNodes([...nodes, newNode]);
+        drawCurrentObjectAt(x, y)
     };
 
     const handleCtrlClickOnObject = (id) => {
