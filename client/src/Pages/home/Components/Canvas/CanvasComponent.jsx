@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import PropTypes from 'prop-types'
 import Node from "./Node/Node";
 import Pointer from "./Pointer/Pointer";
+import Array from "./Array/Array";
 import "./canvasComponent.css";
 
 
@@ -16,7 +17,11 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
     const canvasRef = useRef(null);
     const [nodes, setNodes] = useState([]); // State to track nodes
     const [pointers, setPointers] = useState([]); // State to track pointers
+    const [arrays, setArrays] = useState([]); // State to track pointers
     const selectedObjects = useRef(new Map()); // State to track selected objects
+    // Purely by definition, not an object
+    const linkedLists = useRef(new Map()); // A map of the linked lists on canvas
+    const trees = useRef(new Map()); // A map of trees on canvas
 
     const findObjectOnCanvasById = (id) => {
         for (const node of nodes) {
@@ -44,20 +49,27 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
     }
 
     const drawCurrentObjectAt = (x, y) => {
-        console.log (objectToDraw)
+        console.log(objectToDraw)
         switch (objectToDraw) {
             case 'Node':
                 drawNewNode(x, y)
                 break;
+            case 'Array':
+                drawNewArray(x, y)
+                break;
         }
     }
 
-    const drawNewNode = (x, y) => {                
+    const drawNewNode = (x, y) => {
         // Adds a new node. Each node has a unique key/id
         const newNode = { id: Math.random(), x, y, text: "Node" };
         setNodes([...nodes, newNode]);
     }
-
+    const drawNewArray = (x, y) => {
+        // Adds a new node. Each node has a unique key/id
+        const newArray = { id: Math.random(), x, y, text: "Array" };
+        setArrays([...arrays, newArray]);
+    }
     const handleCtrlClickOnObject = (id) => {
         //debugger
         // Deselect on self click 
@@ -127,7 +139,6 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
         setPointers([...pointers, newPointer])
     }
 
-
     return (
         <>
             <canvas
@@ -159,8 +170,8 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
                     isSelected={selectedObjects.current.has(node.id)}
                 />
             ))}
-            {/* {nodes.map((node) => (
-                <Node
+            {arrays.map((node) => (
+                <Array
                     key={node.id}
                     name={node.id}
                     x={node.x}
@@ -169,7 +180,7 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
                     onClick={handleObjectClick(node.id)}
                     isSelected={selectedObjects.current.has(node.id)}
                 />
-            ))} */}
+            ))}
         </>
     );
 };
