@@ -19,6 +19,9 @@ const InstructionalPage = () => {
                             Node
                         </Button>
                         <Button size="large" variant="outline-dark">
+                            Array
+                        </Button>
+                        <Button size="large" variant="outline-dark">
                             Standard Linked List
                         </Button>
                         <Button size="large" variant="outline-dark">
