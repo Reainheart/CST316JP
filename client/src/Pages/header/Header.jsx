@@ -6,7 +6,7 @@ const Header = () => {
     //const location = useLocation(); , useLocation
     const activeStyle = {
         color: "black",
-        textDecoration: "underline",
+        textDecoration: "none",
     };
 
     return (

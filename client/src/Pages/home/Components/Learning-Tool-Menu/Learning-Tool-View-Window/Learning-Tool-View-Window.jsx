@@ -1,5 +1,6 @@
 import React from "react";
 import CodeView from "../Code-View/Code-View";
+import "./Learning-Tool-View-Window.css";
 
 const LearningToolViewWindow = ({ selectedView }) => {
     const renderViewContent = () => {
@@ -16,10 +17,10 @@ const LearningToolViewWindow = ({ selectedView }) => {
     };
 
     return (
-        <>
-            <h5 className="card-title">{selectedView}</h5>
+        <div>
+            <h5 style={{ color: "pink" }}>{selectedView}</h5>
             {renderViewContent()}
-        </>
+        </div>
     );
 };
 

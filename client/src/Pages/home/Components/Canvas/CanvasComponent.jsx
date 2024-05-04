@@ -4,6 +4,7 @@ import Node from "./Node/Node";
 import Pointer from "./Pointer/Pointer";
 import "./canvasComponent.css";
 
+
 const RADIUS = 40
 const degrees = [];
 const THRESHOLD = 50;
@@ -11,7 +12,7 @@ for (let angle = 0; angle < 360; angle++) {
     degrees.push(angle);
 }
 
-const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
+const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
     const canvasRef = useRef(null);
     const [nodes, setNodes] = useState([]); // State to track nodes
     const [pointers, setPointers] = useState([]); // State to track pointers
@@ -31,22 +32,31 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
         if (selectedObjects.length !== 0) {
             selectedObjects.current.clear()
         }
-
         const rect = canvasRef.current.getBoundingClientRect();
-        const x = event.clientX - rect.left - RADIUS; // Centering the node (node's width and height are 80px)
-        const y = event.clientY - rect.top + RADIUS;
+        const x = event.clientX - rect.left - 40; // Centering the node (node's width and height are 80px)
+        const y = event.clientY - rect.top + 60;
 
-
-        if (y < THRESHOLD + RADIUS || y > rect.height - THRESHOLD + 10) {
+        if (y < THRESHOLD + 50 || y > rect.height - THRESHOLD + 10) {
             return;
         }
 
-        // Adds a new node. Each node has a unique key/id
-        const newNode = { id: Math.floor(Math.random() * 999999), x, y, text: "Node" };
+        drawCurrentObjectAt(x, y)
+    }
 
-        console.log(newNode)
+    const drawCurrentObjectAt = (x, y) => {
+        console.log (objectToDraw)
+        switch (objectToDraw) {
+            case 'Node':
+                drawNewNode(x, y)
+                break;
+        }
+    }
+
+    const drawNewNode = (x, y) => {                
+        // Adds a new node. Each node has a unique key/id
+        const newNode = { id: Math.random(), x, y, text: "Node" };
         setNodes([...nodes, newNode]);
-    };
+    }
 
     const handleCtrlClickOnObject = (id) => {
         //debugger
@@ -149,13 +159,24 @@ const CanvasComponent = ({ HomeWidth, HomeHeight }) => {
                     isSelected={selectedObjects.current.has(node.id)}
                 />
             ))}
-
+            {/* {nodes.map((node) => (
+                <Node
+                    key={node.id}
+                    name={node.id}
+                    x={node.x}
+                    y={node.y}
+                    text={node.text}
+                    onClick={handleObjectClick(node.id)}
+                    isSelected={selectedObjects.current.has(node.id)}
+                />
+            ))} */}
         </>
     );
 };
 CanvasComponent.propTypes = {
     HomeWidth: PropTypes.number.isRequired,
-    HomeHeight: PropTypes.number.isRequired
+    HomeHeight: PropTypes.number.isRequired,
+    objectToDraw: PropTypes.string.isRequired
 };
 
 export default CanvasComponent;

@@ -9,6 +9,7 @@ import Toolbar from "./Components/Toolbar/Toolbar";
 const Home = () => {
 
     const headerHeight = 56;
+    const [objectToDraw, setObjectToDraw] = useState('Node');
     const [canvasWidth, setcanvasWidth] = useState(window.innerWidth*6/8);
     const [canvasHeight, setcanvasHeight] = useState(window.innerHeight-headerHeight);
     const [learningToolMenuWidth, setlearningToolMenuWidth] = useState(window.innerWidth*2/8);
@@ -32,9 +33,9 @@ const Home = () => {
     return (
         <div>
             <Header/>
-            <Toolbar/>
+            <Toolbar onSelectStructure={setObjectToDraw}/>
             <div className="flex-container">
-                <CanvasComponent className="canvas" HomeWidth={canvasWidth} HomeHeight={canvasHeight}/>
+                <CanvasComponent className="canvas" objectToDraw={objectToDraw} HomeWidth={canvasWidth} HomeHeight={canvasHeight}/>
                 <LearningToolMenu className="learning-tool-menu" HomeWidth={learningToolMenuWidth} HomeHeight={learningToolMenuHeight}/>
             </div>
         </div>
