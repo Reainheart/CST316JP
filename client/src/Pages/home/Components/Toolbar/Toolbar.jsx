@@ -1,18 +1,19 @@
-import React from "react"; 
+//import React from "react"; 
+import PropTypes from 'prop-types'
+
 import "./Toolbar.css";
 
 const structures = [
     { name: 'Node' },
-    { name: 'Linked List' },
-    { name: 'Pointer' },
-    { name: 'Null Pointer' },
+    { name: 'Array' },
+    { name: 'Linked List' }
 ];
 
-function Toolbar({ onSelectStructure }) {
+function Toolbar({ setSelectStructure }) {
     return (
         <div className="toolbar">
             {structures.map((structure) => (
-                <button key={structure.name} onClick={() => onSelectStructure(structure.name)}>
+                <button key={structure.name} onClick={() => setSelectStructure(structure.name)}>
                     {structure.icon}
                     {structure.name}
                 </button>
@@ -21,5 +22,7 @@ function Toolbar({ onSelectStructure }) {
         </div>
     )
 }
-
+Toolbar.propTypes = {
+    setSelectStructure: PropTypes.func.isRequired
+};
 export default Toolbar

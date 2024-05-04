@@ -33,7 +33,7 @@ const Home = () => {
     return (
         <div>
             <Header/>
-            <Toolbar onSelectStructure={setObjectToDraw}/>
+            <Toolbar setSelectStructure={setObjectToDraw}/>
             <div className="flex-container">
                 <CanvasComponent className="canvas" objectToDraw={objectToDraw} HomeWidth={canvasWidth} HomeHeight={canvasHeight}/>
                 <LearningToolMenu className="learning-tool-menu" HomeWidth={learningToolMenuWidth} HomeHeight={learningToolMenuHeight}/>
