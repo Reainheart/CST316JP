@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import "./Toolbar.css";
 
+//connects to home function for deciding on object to draw
 const structures = [
     { name: 'Node' },
     { name: 'Array' },
