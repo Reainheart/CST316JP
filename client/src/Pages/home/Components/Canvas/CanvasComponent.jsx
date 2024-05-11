@@ -52,6 +52,7 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
 
         return newObject
     }
+
     const getBlankPointer = () => {
         // Get the current object instance
 
@@ -70,6 +71,7 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
 
         return newPointer
     }
+
     const getPointerObject = (from_id, to_id) => {
         // Get the current object instance
         const newPointer = getBlankPointer()
@@ -93,6 +95,44 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
         return newPointer
     }
 
+    const getNewLinkedList = (x,y) => {
+        // Create the schema Arrays
+        var linkedNodes = []
+        var linkedPointers = []
+        
+        // Push the schema for new objects for the linked nodes
+        for (let i = 0; i < 3; i++) {
+            linkedNodes.push(getNewObject(x + (150 * i), y, 'Linked\nNode'))
+        }
+
+        // n -1 pointers to be created, get a previous and go to end
+        var last_id = null;
+        linkedNodes.forEach((linkedNode) => {
+            drawnCanvasObjects.current.set(linkedNode.id, linkedNode)
+            if (last_id == null) {
+                last_id = linkedNode.id
+            } else {
+                linkedPointers.push(getPointerObject(last_id, linkedNode.id))// Track Drawn Objects
+                last_id = linkedNode.id
+            }
+        })
+
+        // Build Linked List Object Schema
+        var newLinkedList = {
+            id: Math.floor(Math.random() * 999999),
+            nodes: linkedNodes,
+            pointers: linkedPointers
+        }
+        //Guarentee non-allocated ID
+        while (drawnCanvasObjects.current.keys[newLinkedList.id]) {
+            newLinkedList.id = Math.floor(Math.random() * 999999);
+        }
+
+        // Place Linked List Object Schema to be rendered
+        setLinkedLists([...linkedLists, newLinkedList]);
+
+        return newLinkedList.id
+    }
 
     // Adding a new type here is how we can draw a new object,
     // This can also be passed to objects Like Array to draw their new items 
@@ -112,36 +152,7 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
                 setArrays([...arrays, newObject]);
                 return newObject.id;
             case 'Linked List':
-                var linkedNodes = [newObject]
-                var linkedPointers = []
-                for (let i = 0; i < 3; i++) {
-                    linkedNodes.push(getNewObject(x + (150 * i), y, 'Linked\nNode'))
-                }
-                var last_id = null;
-                linkedNodes.forEach((linkedNode) => {
-                    drawnCanvasObjects.current.set(linkedNode.id, linkedNode)
-                    if (last_id == null) {
-                        last_id = linkedNode.id
-                    } else {
-                        linkedPointers.push(getPointerObject(last_id, linkedNode.id))// Track Drawn Objects
-                        last_id = linkedNode.id
-                    }
-                })
-                //Guarentee non-allocated ID
-                
-                var newLinkedList = {
-                    id: Math.floor(Math.random() * 999999),
-                    nodes: linkedNodes,
-                    pointers: linkedPointers
-                }
-
-                while (drawnCanvasObjects.current.keys[newLinkedList.id]) {
-                    newLinkedList.id = Math.floor(Math.random() * 999999);
-                }
-
-                setLinkedLists([...linkedLists, newLinkedList]);
-
-                return newLinkedList.id
+                return getNewLinkedList(x, y)
         }
     }
 
