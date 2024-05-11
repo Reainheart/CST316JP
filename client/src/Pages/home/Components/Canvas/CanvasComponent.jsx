@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Node from "./Node/Node";
 import Pointer from "./Pointer/Pointer";
 import Array from "./Array/Array";
+import LinkedList from "./LinkedList/LinkedList";
 import "./canvasComponent.css";
 
 
@@ -18,9 +19,9 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
     const [nodes, setNodes] = useState([]); // State to track nodes
     const [pointers, setPointers] = useState([]); // State to track pointers
     const [arrays, setArrays] = useState([]); // State to track pointers
+    const [linkedLists, setLinkedLists] = useState([]); // State to track the linked lists
     const selectedObjects = useRef(new Map()); // State to track selected objects
     // Purely by definition, not an object
-    const linkedLists = useRef(new Map()); // A map of the linked lists on canvas
     const trees = useRef(new Map()); // A map of trees on canvas
 
     const findObjectOnCanvasById = (id) => {
@@ -36,7 +37,8 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
         }
         return null
     };
-    const handleCavasClick = (event) => {
+
+    const handleCanvasClick = (event) => {
 
         if (selectedObjects.length !== 0) {
             selectedObjects.current.clear()
@@ -60,6 +62,9 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
             case 'Array':
                 drawNewArray(x, y)
                 break;
+            case 'Linked List':
+                drawNewLinkedList(x, y)
+                break;
         }
     }
     const drawNewNode = (x, y) => {
@@ -72,6 +77,11 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
         const newArray = { id: Math.random(), x, y, text: "Array" };
         setArrays([...arrays, newArray]);
     }
+    const drawNewLinkedList = (x, y) => {
+        // Adds a new linked list object
+        const newLinkedList = { id: Math.random(), x, y, text: "Linked List" };
+        setLinkedLists([...linkedLists, newLinkedList]);
+    };
     const handleCtrlClickOnObject = (id) => {
         //debugger
         // Deselect on self click 
@@ -144,7 +154,7 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
                 ref={canvasRef}
                 width={HomeWidth}
                 height={HomeHeight}
-                onClick={handleCavasClick}
+                onClick={handleCanvasClick}
             />
             {pointers.map((pointer) => (
                 <Pointer
@@ -178,6 +188,16 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
                     text={node.text}
                     onClick={handleObjectClick(node.id)}
                     isSelected={selectedObjects.current.has(node.id)}
+                />
+            ))}
+            {linkedLists.map((node) => (
+                <LinkedList
+                    key={node.id}
+                    name={node.id}
+                    x={node.x}
+                    y={node.y}
+                    text={node.text}
+                    
                 />
             ))}
         </>
