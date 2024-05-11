@@ -9,6 +9,7 @@
     user-select: none;
     text-align: center;
     overflow: hidden;
+    padding: 5px;
 }
 
 .array, .selected-array {
@@ -48,6 +49,13 @@ h3 {
     box-shadow: 0 0 10px rgba(19, 122, 127, 0.5);
 } */
 
-.array:hover, .selected-array:hover {
+.arrayNode {
+    border: '1px solid black';
+    position: 'relative';
+    background-color: 'white';
+    margin: 10px;
+}
+
+.arrayNode:hover, .selected-arrayNode:hover {
     background-color: #137a7f;
 }
