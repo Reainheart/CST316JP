@@ -21,8 +21,11 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
     const [arrays, setArrays] = useState([]); // State to track pointers
     const [linkedLists, setLinkedLists] = useState([]); // State to track pointers
 
-    const selectedObjects = useRef(new Map()); // Map to track selected objects
-    const drawnCanvasObjects = useRef(new Map()) // Map to track all objects
+    // Map to track selected objects
+    const selectedObjects = useRef(new Map()); 
+    
+    // Map to track all objects and Interacts with CodeView
+    const drawnCanvasObjects = useRef(new Map()) 
 
     const handleCanvasClick = (event) => {
 
@@ -200,8 +203,6 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
         console.log(selectedObjects.current.size)
         console.log(selectedObjects.current.values)
     };
-
-
 
     return (
         <>
