@@ -2,10 +2,12 @@
 import ArrayNode from "./ArrayNode";
 import PropTypes from 'prop-types'
 import "./Array.css";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const Array = ({ x, y, text, onClick, isSelected }) => {
     const [isActive, setIsActive] = useState(false);
+    const [arrayData, setArrayData] = useState([]);
+
     //const nodeRef = useRef(null);
 
     useEffect((isSelected) => {
@@ -16,45 +18,74 @@ const Array = ({ x, y, text, onClick, isSelected }) => {
         // Prevents onClick from bubbling to the parent if it's nested
         event.stopPropagation();
 
+
         setIsActive(!isActive);
         if (onClick) {
             onClick(event);
         }
     };
-    
-    const [arrayData, setArrayData] = useState([{ x: { x }, y: { y }, text: 'arrayNode' }])
-    
+
+    const addToEndOfArray = () => {
+        let ArrayNode = { text: `pos\n${arrayData.length}` };
+        setArrayData([...arrayData, ArrayNode])
+    }
+    const addToStartOfArray = () => {
+        let ArrayNode = { text: `pos\n${arrayData.length}` };
+        setArrayData([ArrayNode, ...arrayData])
+    }
+
     return (
         <>
             {isSelected ? (
-                <div className="selected-array" onClick={handleArrayNodeClick} style={{ left: x, top: y }}>
-                    <h3>{text}</h3>
-                    <div className="selected-array-container" >
 
+                <div className="selected-array" style={{ left: x, top: y }}>
+                    <h3>{text}</h3>
+
+                    <div className="array-container" >
+                        <ArrayNode
+                            key='start'
+                            text='+'
+                            onClick={addToStartOfArray}
+                        />
                         {arrayData.map((node, index) => (
                             <ArrayNode
                                 key={index}
-                                x={node.x}
-                                y={node.y}
                                 text={node.text}
+
                             />
                         ))}
+                        <ArrayNode
+                            key='end'
+                            text='+'
+                            onClick={addToEndOfArray}
+                        />
                     </div>
+
                 </div>
             ) : (
                 <div className="array" style={{ left: x, top: y }}>
                     <h3>{text}</h3>
-                    <div className="array-container" onClick={onClick} >
 
+                    <div className="array-container" >
+                        <ArrayNode
+                            key='start'
+                            text='+'
+                            onClick={addToStartOfArray}
+                        />
                         {arrayData.map((node, index) => (
                             <ArrayNode
                                 key={index}
-                                x={node.x}
-                                y={node.y}
                                 text={node.text}
+
                             />
                         ))}
+                        <ArrayNode
+                            key='end'
+                            text='+'
+                            onClick={addToEndOfArray}
+                        />
                     </div>
+
                 </div>
             )}
         </>
