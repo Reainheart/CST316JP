@@ -95,11 +95,11 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
         return newPointer
     }
 
-    const getNewLinkedList = (x,y) => {
+    const getNewLinkedList = (x, y) => {
         // Create the schema Arrays
         var linkedNodes = []
         var linkedPointers = []
-        
+
         // Push the schema for new objects for the linked nodes
         for (let i = 0; i < 3; i++) {
             linkedNodes.push(getNewObject(x + (150 * i), y, 'Linked\nNode'))
@@ -135,7 +135,6 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
     }
 
     // Adding a new type here is how we can draw a new object,
-    // This can also be passed to objects Like Array to draw their new items 
     const drawNewObject = (x, y, objectType, objectText) => {
         // Add to the arrays to render the objects
         var newObject = getNewObject(x, y, objectText)
@@ -155,6 +154,7 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
                 return getNewLinkedList(x, y)
         }
     }
+    // This can also be passed to objects Like Array to draw their new items 
 
     const handleCtrlClickOnObject = (id) => {
         //debugger
