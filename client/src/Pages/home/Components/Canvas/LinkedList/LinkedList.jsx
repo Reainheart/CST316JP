@@ -1,44 +1,55 @@
-import React from "react";
+import React, { useState } from "react";
 import Node from "../Node/Node";
 import Pointer from "../Pointer/Pointer";
+import PropTypes from 'prop-types';
 
-const RADIUS = 40
+const LinkedList = ({ nodes, pointers, onClick, isSelected }) => {
 
-const LinkedList = ({ x, y }) => {
     // Define the positions of the nodes
-    const nodePositions = [
-        { x: x, y: y },
-        { x: x + 150, y: y },
-        { x: x + 300, y: y }
-    ];
+    const handleNodeClick = (event) => {
+        // Prevents onClick from bubbling to the parent if it's nested
+        event.stopPropagation();
+
+        if (onClick) {
+            onClick(event);
+        }
+    };
 
     return (
         <>
-            <Pointer
-                from_x={nodePositions[0].x + RADIUS}
-                from_y={nodePositions[0].y + RADIUS}
-                to_x={nodePositions[1].x + RADIUS}
-                to_y={nodePositions[1].y + RADIUS}
-            />
-            <Pointer
-                from_x={nodePositions[1].x + RADIUS}
-                from_y={nodePositions[1].y + RADIUS}
-                to_x={nodePositions[2].x + RADIUS}
-                to_y={nodePositions[2].y + RADIUS}
-            />
-            {nodePositions.map((position, index) => (
+            {pointers.map((pointer) => (
+                <Pointer
+                    key={pointer.id}
+                    name={pointer.id}
+                    from_x={pointer.from_x}
+                    from_y={pointer.from_y}
+                    to_x={pointer.to_x}
+                    to_y={pointer.to_y}
+                    connectedFromObject={pointer.connectedFromObject}
+                    connectedToObject={pointer.connectedToObject}
+                />
+            ))}
+            {nodes.map((node) => (
                 <Node
-                    key={`node_${index}`}
-                    x={position.x}
-                    y={position.y}
-                    text={`Node ${index + 1}`}
+                    key={node.id}
+                    name={node.id}
+                    x={node.x}
+                    y={node.y}
+                    text={node.text}
+                    onClick={node.onClick}
+                    isSelected={isSelected}
                 />
             ))}
 
         </>
     );
 };
-
+LinkedList.propTypes = {
+    nodes: PropTypes.array,
+    pointers: PropTypes.array,
+    onClick: PropTypes.func,
+    isSelected: PropTypes.bool,
+};
 export default LinkedList;
 
 //below is to help fix the pointers above in their positioning: delete when issue is resolved

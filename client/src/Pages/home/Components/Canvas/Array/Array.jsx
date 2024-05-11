@@ -51,7 +51,7 @@ const Array = ({ x, y, text, onClick, isSelected }) => {
                             <ArrayNode
                                 key={index}
                                 text={node.text}
-
+                                onClick={handleArrayNodeClick}
                             />
                         ))}
                         <ArrayNode
@@ -76,7 +76,7 @@ const Array = ({ x, y, text, onClick, isSelected }) => {
                             <ArrayNode
                                 key={index}
                                 text={node.text}
-
+                                onClick={handleArrayNodeClick}
                             />
                         ))}
                         <ArrayNode

@@ -19,8 +19,8 @@ const LearningToolMenu = ({ HomeWidth, HomeHeight }) => {
     );
 };
 LearningToolMenu.propTypes = {
-    HomeWidth: PropTypes.string,
-    HomeHeight: PropTypes.func
+    HomeWidth: PropTypes.number,
+    HomeHeight: PropTypes.number
 };
 
 // To Impliment

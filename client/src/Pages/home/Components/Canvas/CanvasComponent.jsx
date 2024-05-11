@@ -19,25 +19,10 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
     const [nodes, setNodes] = useState([]); // State to track nodes
     const [pointers, setPointers] = useState([]); // State to track pointers
     const [arrays, setArrays] = useState([]); // State to track pointers
-    const [linkedLists, setLinkedLists] = useState([]); // State to track the linked lists
-    const selectedObjects = useRef(new Map()); // State to track selected objects
-    
-    // Purely by definition, not an object
-    const trees = useRef(new Map()); // A map of trees on canvas
+    const [linkedLists, setLinkedLists] = useState([]); // State to track pointers
 
-    const findObjectOnCanvasById = (id) => {
-        for (const node of nodes) {
-            if (node.id == id) {
-                return node;
-            }
-        }
-        for (const array of arrays) {
-            if (array.id == id) {
-                return array;
-            }
-        }
-        return null
-    };
+    const selectedObjects = useRef(new Map()); // Map to track selected objects
+    const drawnCanvasObjects = useRef(new Map()) // Map to track all objects
 
     const handleCanvasClick = (event) => {
 
@@ -52,44 +37,121 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
             return;
         }
 
-        drawCurrentObjectAt(x, y)
+        drawNewObject(x, y, objectToDraw, objectToDraw)
     }
-    const drawCurrentObjectAt = (x, y) => {
-        console.log(objectToDraw)
-        switch (objectToDraw) {
+
+    // To add a new object call get new Object
+    const getNewObject = (x, y, objectText) => {
+        // Takes a canvas position for x and y, the object to draw is also the text 
+        const newObject = { id: Math.floor(Math.random() * 999999), x: x, y: y, text: objectText };
+
+        //Guarentee non-allocated ID
+        while (drawnCanvasObjects.current.keys[newObject.id]) {
+            newObject.id = Math.floor(Math.random() * 999999);
+        }
+
+        return newObject
+    }
+    const getBlankPointer = () => {
+        // Get the current object instance
+
+        const newPointer = {
+            id: Math.floor(Math.random() * 999999),
+            from_x: 0,
+            from_y: 0,
+            to_x: 0,
+            to_y: 0,
+            connectedFromObject: null,
+            connectedToObject: null
+        }
+        while (drawnCanvasObjects.current.keys[newPointer.id]) {
+            newPointer.id = Math.floor(Math.random() * 999999);
+        }
+
+        return newPointer
+    }
+    const getPointerObject = (from_id, to_id) => {
+        // Get the current object instance
+        const newPointer = getBlankPointer()
+
+        //update the pointer to the object passed if it exists
+
+        if (from_id) {
+            const fromObject = drawnCanvasObjects.current.get(from_id)
+            newPointer.connectedToObject = fromObject
+            newPointer.from_x = fromObject.x + RADIUS
+            newPointer.from_y = fromObject.y + RADIUS
+        }
+
+        if (to_id) {
+            const toObject = drawnCanvasObjects.current.get(to_id)
+            newPointer.connectedToObject = toObject
+            newPointer.to_x = toObject.x + RADIUS
+            newPointer.to_y = toObject.y + RADIUS
+        }
+
+        return newPointer
+    }
+
+
+    // Adding a new type here is how we can draw a new object,
+    // This can also be passed to objects Like Array to draw their new items 
+    const drawNewObject = (x, y, objectType, objectText) => {
+        // Add to the arrays to render the objects
+        var newObject = getNewObject(x, y, objectText)
+        switch (objectType) {
+            // Base objects
             case 'Node':
-                drawNewNode(x, y)
-                break;
+                // Assign the id to track the objects
+                drawnCanvasObjects.current.set(newObject.id, newObject)
+                setNodes([...nodes, newObject]);
+                return newObject.id;
             case 'Array':
-                drawNewArray(x, y)
-                break;
+                // Assign the id to track the objects
+                drawnCanvasObjects.current.set(newObject.id, newObject)
+                setArrays([...arrays, newObject]);
+                return newObject.id;
             case 'Linked List':
-                drawNewLinkedList(x, y)
-                break;
+                var linkedNodes = [newObject]
+                var linkedPointers = []
+                for (let i = 0; i < 3; i++) {
+                    linkedNodes.push(getNewObject(x + (150 * i), y, 'Linked\nNode'))
+                }
+                var last_id = null;
+                linkedNodes.forEach((linkedNode) => {
+                    drawnCanvasObjects.current.set(linkedNode.id, linkedNode)
+                    if (last_id == null) {
+                        last_id = linkedNode.id
+                    } else {
+                        linkedPointers.push(getPointerObject(last_id, linkedNode.id))// Track Drawn Objects
+                        last_id = linkedNode.id
+                    }
+                })
+                //Guarentee non-allocated ID
+                
+                var newLinkedList = {
+                    id: Math.floor(Math.random() * 999999),
+                    nodes: linkedNodes,
+                    pointers: linkedPointers
+                }
+
+                while (drawnCanvasObjects.current.keys[newLinkedList.id]) {
+                    newLinkedList.id = Math.floor(Math.random() * 999999);
+                }
+
+                setLinkedLists([...linkedLists, newLinkedList]);
+
+                return newLinkedList.id
         }
     }
-    const drawNewNode = (x, y) => {
-        // Adds a new node. Each node has a unique key/id
-        const newNode = { id: Math.random(), x, y, text: "Node" };
-        setNodes([...nodes, newNode]);
-    }
-    const drawNewArray = (x, y) => {
-        // Adds a new node. Each node has a unique key/id
-        const newArray = { id: Math.random(), x, y, text: "Array" };
-        setArrays([...arrays, newArray]);
-    }
-    const drawNewLinkedList = (x, y) => {
-        // Adds a new linked list object
-        const newLinkedList = { id: Math.random(), x, y, text: "Linked List" };
-        setLinkedLists([...linkedLists, newLinkedList]);
-    };
+
     const handleCtrlClickOnObject = (id) => {
         //debugger
         // Deselect on self click 
         if (selectedObjects.current.has(id)) {
             return selectedObjects.current.delete(id);
         }
-        const currentObject = findObjectOnCanvasById(id)
+        const currentObject = drawnCanvasObjects.current.get(id)
 
         // Shouldnt happen... but should be good
         if (currentObject != null) {
@@ -100,6 +162,7 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
             console.log('Current object not found')
         }
     }
+
     const handleObjectClick = (id) => (event) => {
         // console.log(event)
         // console.log(id)
@@ -109,45 +172,25 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
 
         console.log(selectedObjects)
     };
+
     const handleClickOnObject = (id) => {
         //debugger
         // If the object is selected
-        // Deselect on self click 
         if (selectedObjects.current.has(id)) {
-            selectedObjects.current.clear()
-            return selectedObjects.current.delete(id);
+            // Deselect all
+            return selectedObjects.current.clear();
         }
 
+        // Mark the object as Selected
+        const currentObject = drawnCanvasObjects.current.get(id)
+
+        selectedObjects.current.set(id, currentObject)
+        console.log(selectedObjects.current.get(id).id + ' was added')
         console.log(selectedObjects.current.size)
-        const currentObject = findObjectOnCanvasById(id)
+        console.log(selectedObjects.current.values)
+    };
 
-        switch (selectedObjects.current.size) {
-            case 1:
-                drawPointerFromObjectToObject(selectedObjects.current.keys().next().value, id)
-                console.log(selectedObjects.current.size)
-                break;
-            default:
-                selectedObjects.current.set(id, currentObject)
-                console.log(selectedObjects.current.get(id).id + ' was added')
-                console.log(selectedObjects.current.size)
-                break;
-        }
-    }
-    const drawPointerFromObjectToObject = (from_id, to_id) => {
-        const fromObject = findObjectOnCanvasById(from_id)
-        const toObject = findObjectOnCanvasById(to_id)
 
-        const newPointer = {
-            id: Math.floor(Math.random() * 999999),
-            from_x: fromObject.x + RADIUS,
-            from_y: fromObject.y + RADIUS,
-            to_x: toObject.x + RADIUS,
-            to_y: toObject.y + RADIUS,
-            connectedFromObject: fromObject,
-            connectedToObject: toObject
-        }
-        setPointers([...pointers, newPointer])
-    }
 
     return (
         <>
@@ -191,14 +234,12 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
                     isSelected={selectedObjects.current.has(node.id)}
                 />
             ))}
-            {linkedLists.map((node) => (
+            {linkedLists.map((list) => (
                 <LinkedList
-                    key={node.id}
-                    name={node.id}
-                    x={node.x}
-                    y={node.y}
-                    text={node.text}
-                    
+                    key={list.id}
+                    name={list.id}
+                    nodes={list.nodes}
+                    pointers={list.pointers}
                 />
             ))}
         </>

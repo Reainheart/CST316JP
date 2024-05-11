@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 const RADIUS = 30
 const degrees = [];
 
-for (let angle = 0; angle < 360; angle++) {
+for (let angle = 0; angle < 360; angle=angle+45) {
     degrees.push(angle);
 }
 
