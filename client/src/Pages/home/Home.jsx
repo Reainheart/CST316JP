@@ -6,8 +6,6 @@ import CanvasComponent from "./Components/Canvas/CanvasComponent"
 import LearningToolMenu from "./Components/Learning-Tool-Menu/Learning-Tool-Menu"
 import Toolbar from "./Components/Toolbar/Toolbar";
 
-
-
 const Home = () => {
     const headerHeight = 74;
     const toolbarHeight = 46;
@@ -24,7 +22,6 @@ const Home = () => {
         setlearningToolMenuWidth(window.innerWidth*2/8);
         setlearningToolMenuHeight(window.innerHeight-headerHeight-toolbarHeight);
     };
-
 
     useEffect(() => {
         // set canvas size based on the window size

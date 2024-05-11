@@ -21,6 +21,7 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
     const [arrays, setArrays] = useState([]); // State to track pointers
     const [linkedLists, setLinkedLists] = useState([]); // State to track the linked lists
     const selectedObjects = useRef(new Map()); // State to track selected objects
+    
     // Purely by definition, not an object
     const trees = useRef(new Map()); // A map of trees on canvas
 

@@ -15,7 +15,6 @@ const LearningToolMenu = ({ HomeWidth, HomeHeight }) => {
             height: HomeHeight
         }}>
             <LearningToolViewWindow selectedView={selectedView} />
-
         </div>
     );
 };
