@@ -6,20 +6,23 @@ import CanvasComponent from "./Components/Canvas/CanvasComponent"
 import LearningToolMenu from "./Components/Learning-Tool-Menu/Learning-Tool-Menu"
 import Toolbar from "./Components/Toolbar/Toolbar";
 
-const Home = () => {
 
-    const headerHeight = 56;
+
+const Home = () => {
+    const headerHeight = 74;
+    const toolbarHeight = 46;
+
     const [objectToDraw, setObjectToDraw] = useState('Node');
     const [canvasWidth, setcanvasWidth] = useState(window.innerWidth*6/8);
-    const [canvasHeight, setcanvasHeight] = useState(window.innerHeight-headerHeight);
+    const [canvasHeight, setcanvasHeight] = useState(window.innerHeight-headerHeight-toolbarHeight);
     const [learningToolMenuWidth, setlearningToolMenuWidth] = useState(window.innerWidth*2/8);
-    const [learningToolMenuHeight, setlearningToolMenuHeight] = useState(window.innerHeight-headerHeight);
+    const [learningToolMenuHeight, setlearningToolMenuHeight] = useState(window.innerHeight-headerHeight-toolbarHeight);
 
     const onReSize = () => {
         setcanvasWidth(window.innerWidth*6/8);
-        setcanvasHeight(window.innerHeight-headerHeight);
+        setcanvasHeight(window.innerHeight-headerHeight-toolbarHeight);
         setlearningToolMenuWidth(window.innerWidth*2/8);
-        setlearningToolMenuHeight(window.innerHeight-headerHeight);
+        setlearningToolMenuHeight(window.innerHeight-headerHeight-toolbarHeight);
     };
 
 
