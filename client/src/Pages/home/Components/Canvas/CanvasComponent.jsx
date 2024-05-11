@@ -30,6 +30,11 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
                 return node;
             }
         }
+        for (const array of arrays) {
+            if (array.id == id) {
+                return array;
+            }
+        }
         return null
     };
 
@@ -48,7 +53,6 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
 
         drawCurrentObjectAt(x, y)
     }
-
     const drawCurrentObjectAt = (x, y) => {
         console.log(objectToDraw)
         switch (objectToDraw) {
@@ -63,7 +67,6 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
                 break;
         }
     }
-
     const drawNewNode = (x, y) => {
         // Adds a new node. Each node has a unique key/id
         const newNode = { id: Math.random(), x, y, text: "Node" };
@@ -96,7 +99,6 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
             console.log('Current object not found')
         }
     }
-
     const handleObjectClick = (id) => (event) => {
         // console.log(event)
         // console.log(id)
@@ -106,7 +108,6 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
 
         console.log(selectedObjects)
     };
-
     const handleClickOnObject = (id) => {
         //debugger
         // If the object is selected
@@ -131,7 +132,6 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
                 break;
         }
     }
-
     const drawPointerFromObjectToObject = (from_id, to_id) => {
         const fromObject = findObjectOnCanvasById(from_id)
         const toObject = findObjectOnCanvasById(to_id)
