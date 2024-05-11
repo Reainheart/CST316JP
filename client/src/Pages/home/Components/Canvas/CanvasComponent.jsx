@@ -6,10 +6,12 @@ import Array from "./Array/Array";
 import LinkedList from "./LinkedList/LinkedList";
 import "./canvasComponent.css";
 
-
+//Radius is the node's radius in pixels
+//Degrees is for the amount of anchor points needed
+//Threshold is a ui threshold so objects don't overlap with the toolbar 
 const RADIUS = 40
 const degrees = [];
-const THRESHOLD = 50;
+const THRESHOLD = 65;
 for (let angle = 0; angle < 360; angle++) {
     degrees.push(angle);
 }
@@ -33,19 +35,21 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
         const x = event.clientX - rect.left - 40; // Centering the node (node's width and height are 80px)
         const y = event.clientY - rect.top + 60;
 
+        //Making sure elements don't overlap with the canvas borders
         if (y < THRESHOLD + 50 || y > rect.height - THRESHOLD + 10) {
-            return;
+            console.log("Node placed in threshold")
+        } else {
+            drawNewObject(x, y, objectToDraw, objectToDraw)
         }
-
-        drawNewObject(x, y, objectToDraw, objectToDraw)
     }
 
     // To add a new object call get new Object
     const getNewObject = (x, y, objectText) => {
-        // Takes a canvas position for x and y, the object to draw is also the text 
+        // Takes a canvas position for x and y, the object to draw is also the display text 
         const newObject = { id: Math.floor(Math.random() * 999999), x: x, y: y, text: objectText };
 
         //Guarentee non-allocated ID
+        //while the object id is in the current keys, we keep rolling
         while (drawnCanvasObjects.current.keys[newObject.id]) {
             newObject.id = Math.floor(Math.random() * 999999);
         }
@@ -54,8 +58,8 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
     }
 
     const getBlankPointer = () => {
-        // Get the current object instance
-
+        
+        // Create default pointer
         const newPointer = {
             id: Math.floor(Math.random() * 999999),
             from_x: 0,
@@ -73,11 +77,10 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
     }
 
     const getPointerObject = (from_id, to_id) => {
-        // Get the current object instance
+        //create defualt pointer
         const newPointer = getBlankPointer()
-
+        
         //update the pointer to the object passed if it exists
-
         if (from_id) {
             const fromObject = drawnCanvasObjects.current.get(from_id)
             newPointer.connectedToObject = fromObject
@@ -109,9 +112,12 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
         var last_id = null;
         linkedNodes.forEach((linkedNode) => {
             drawnCanvasObjects.current.set(linkedNode.id, linkedNode)
+
+            //Skip the head node
             if (last_id == null) {
                 last_id = linkedNode.id
             } else {
+                //creating pointers for the 3 nodes
                 linkedPointers.push(getPointerObject(last_id, linkedNode.id))// Track Drawn Objects
                 last_id = linkedNode.id
             }
@@ -154,7 +160,7 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
                 return getNewLinkedList(x, y)
         }
     }
-    // This can also be passed to objects Like Array to draw their new items 
+    // This can also be passed to objects Like Array to draw their new items
 
     const handleCtrlClickOnObject = (id) => {
         //debugger
@@ -200,9 +206,7 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
         console.log(selectedObjects.current.size)
         console.log(selectedObjects.current.values)
     };
-
-
-
+    
     return (
         <>
             <canvas
