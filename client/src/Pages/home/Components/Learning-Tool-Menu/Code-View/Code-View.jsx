@@ -4,6 +4,7 @@ import Card from "react-bootstrap/card";
 import CodeViewWindow from "./Code-View-Window/Code-View-Window";
 import CodeLanguageSelector from "./Code-Language-Selection-Menu/Code-Language-Selection-Menu";
 
+
 const CodeView = () => {
     const [selectedLanguage, setSelectedLanguage] = useState("C++");
     const [selectedLanguageCode, setSelectedLanguageCode] = useState(
@@ -12,6 +13,7 @@ const CodeView = () => {
 
     useEffect(() => {
         const fetchData = async () => {
+            
             try {
                 const url = "http://localhost:3000/GetSampleCodeNode";
                 const response = await fetch(url);
