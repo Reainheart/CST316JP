@@ -4,6 +4,7 @@ import Node from "./Node/Node";
 import Pointer from "./Pointer/Pointer";
 import Array from "./Array/Array";
 import LinkedList from "./LinkedList/LinkedList";
+import Tree from "./Tree/Tree";
 import "./canvasComponent.css";
 
 //Radius is the node's radius in pixels
@@ -22,6 +23,7 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
     const [pointers, setPointers] = useState([]); // State to track pointers
     const [arrays, setArrays] = useState([]); // State to track pointers
     const [linkedLists, setLinkedLists] = useState([]); // State to track pointers
+    const [trees, setTrees] = useState([]); // State to track trees
 
     // Map to track selected objects
     const selectedObjects = useRef(new Map()); 
@@ -143,6 +145,33 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
         return newLinkedList.id
     }
 
+    const getNewTree = (x, y) => {
+        const root = getNewObject(x, y, 'Root');
+        const leftChild = getNewObject(x - 100, y + 100, 'Left');
+        const rightChild = getNewObject(x + 100, y + 100, 'Right');
+
+        drawnCanvasObjects.current.set(root.id, root);
+        drawnCanvasObjects.current.set(leftChild.id, leftChild);
+        drawnCanvasObjects.current.set(rightChild.id, rightChild);
+
+        const pointers = [
+            getPointerObject(root.id, leftChild.id),
+            getPointerObject(root.id, rightChild.id)
+        ];
+
+        const newTree = {
+            id: Math.floor(Math.random() * 999999),
+            root: root,
+            pointers: pointers
+        };
+        while (drawnCanvasObjects.current.keys[newTree.id]) {
+            newTree.id = Math.floor(Math.random() * 999999);
+        }
+        setTrees([...trees, newTree]);
+        
+        return newTree.id;
+    };
+
     // Adding a new type here is how we can draw a new object,
     const drawNewObject = (x, y, objectType, objectText) => {
         // Add to the arrays to render the objects
@@ -161,8 +190,10 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
                 return newObject.id;
             case 'Linked List':
                 return getNewLinkedList(x, y)
+            case 'Tree':
+                return getNewTree(x, y);
         }
-    }
+    };
     // This can also be passed to objects Like Array to draw their new items
 
     const handleCtrlClickOnObject = (id) => {
@@ -258,6 +289,14 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
                     name={list.id}
                     nodes={list.nodes}
                     pointers={list.pointers}
+                />
+            ))}
+            {trees.map((tree) => (
+                <Tree
+                    key={tree.id}
+                    name={tree.id}
+                    root={tree.root}
+                    pointers={tree.pointers}
                 />
             ))}
         </>
