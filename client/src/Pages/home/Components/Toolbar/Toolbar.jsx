@@ -7,7 +7,8 @@ import "./Toolbar.css";
 const structures = [
     { name: 'Node' },
     { name: 'Array' },
-    { name: 'Linked List' }
+    { name: 'Linked List' },
+    { name: 'Tree' }
 ];
 
 function Toolbar({ setSelectStructure }) {

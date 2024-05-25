@@ -4,6 +4,7 @@ import Node from "./Node/Node";
 import Pointer from "./Pointer/Pointer";
 import Array from "./Array/Array";
 import LinkedList from "./LinkedList/LinkedList";
+import Tree from "./Tree/Tree";
 import "./canvasComponent.css";
 
 //Radius is the node's radius in pixels
@@ -22,6 +23,7 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
     const [pointers, setPointers] = useState([]); // State to track pointers
     const [arrays, setArrays] = useState([]); // State to track pointers
     const [linkedLists, setLinkedLists] = useState([]); // State to track pointers
+    const [trees, setTrees] = useState([]); // State to track trees
 
     // Map to track selected objects
     const selectedObjects = useRef(new Map()); 
@@ -84,13 +86,15 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
         if (from_id) {
             const fromObject = drawnCanvasObjects.current.get(from_id)
             newPointer.connectedToObject = fromObject
+            console.log(fromObject)
             newPointer.from_x = fromObject.x + RADIUS
             newPointer.from_y = fromObject.y + RADIUS
         }
-
+        
         if (to_id) {
             const toObject = drawnCanvasObjects.current.get(to_id)
             newPointer.connectedToObject = toObject
+            console.log(toObject)
             newPointer.to_x = toObject.x + RADIUS
             newPointer.to_y = toObject.y + RADIUS
         }
@@ -140,6 +144,40 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
         return newLinkedList.id
     }
 
+    const getNewTree = (x, y) => {
+        const root = getNewObject(x, y, 'Root');
+        const leftChild = getNewObject(x - 100, y + 100, 'Left');
+        const rightChild = getNewObject(x + 100, y + 100, 'Right');
+        
+        drawnCanvasObjects.current.set(root.id, root);
+        drawnCanvasObjects.current.set(leftChild.id, leftChild);
+        drawnCanvasObjects.current.set(rightChild.id, rightChild);
+
+        const nodes = [
+            root, 
+            leftChild, 
+            rightChild
+        ];
+
+        const pointers = [
+            getPointerObject(root.id, leftChild.id),
+            getPointerObject(root.id, rightChild.id)
+        ];
+
+        const newTree = {
+            id: Math.floor(Math.random() * 999999),
+            nodes: nodes,
+            pointers: pointers,
+
+        };
+        while (drawnCanvasObjects.current.keys[newTree.id]) {
+            newTree.id = Math.floor(Math.random() * 999999);
+        }
+        setTrees([...trees, newTree]);
+        
+        return newTree.id;
+    };
+
     // Adding a new type here is how we can draw a new object,
     const drawNewObject = (x, y, objectType, objectText) => {
         // Add to the arrays to render the objects
@@ -158,8 +196,10 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
                 return newObject.id;
             case 'Linked List':
                 return getNewLinkedList(x, y)
+            case 'Tree':
+                return getNewTree(x, y);
         }
-    }
+    };
     // This can also be passed to objects Like Array to draw their new items
 
     const handleCtrlClickOnObject = (id) => {
@@ -255,6 +295,14 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
                     name={list.id}
                     nodes={list.nodes}
                     pointers={list.pointers}
+                />
+            ))}
+            {trees.map((tree) => (
+                <Tree
+                    key={tree.id}
+                    name={tree.id}
+                    nodes={tree.nodes}
+                    pointers={tree.pointers}
                 />
             ))}
         </>
