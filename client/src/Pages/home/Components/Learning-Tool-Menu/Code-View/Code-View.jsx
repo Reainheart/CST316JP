@@ -3,17 +3,24 @@ import "./Code-View.css";
 import Card from "react-bootstrap/card";
 import CodeViewWindow from "./Code-View-Window/Code-View-Window";
 import CodeLanguageSelector from "./Code-Language-Selection-Menu/Code-Language-Selection-Menu";
+import PropTypes from 'prop-types';
 
 const sampleCodeNode = "http://localhost:3000/GetSampleCodeNode";
 const sampleCodeArray = "http://localhost:3000/GetSampleCodeArray";
 const sampleCodeLinkedList = "http://localhost:3000/GetSampleCodeLinkedList";
 
 
-const CodeView = () => {
+const CodeView = ({CanvasObjects}) => {
     const [selectedLanguage, setSelectedLanguage] = useState("C++");
+    const [structures, setStructures] = useState([]);
     const [selectedLanguageCode, setSelectedLanguageCode] = useState(
         "Select a language to view the example."
     );
+
+    useEffect(() => {
+        console.log(CanvasObjects);
+        setStructures(CanvasObjects);
+    },[CanvasObjects])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -59,10 +66,14 @@ const CodeView = () => {
                         selectedLanguage={selectedLanguage}
                         selectedLanguageCode={selectedLanguageCode}
                     />
+                    {structures}
                 </div>
             </Card>
         </div>
     );
+};
+CodeView.propTypes = {
+    CanvasObjects: PropTypes.any
 };
 
 export default CodeView;

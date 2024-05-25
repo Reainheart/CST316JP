@@ -11,20 +11,33 @@ const Home = () => {
     const toolbarHeight = 46;
 
     const [objectToDraw, setObjectToDraw] = useState('Node');
-    const [canvasWidth, setcanvasWidth] = useState(window.innerWidth*6/8);
-    const [canvasHeight, setcanvasHeight] = useState(window.innerHeight-headerHeight-toolbarHeight);
+    const [canvasObjects, setCanvasObjects] = useState([]);
+    const [canvasWidth, setcanvasWidth] = useState(window.innerWidth * 6 / 8);
+    const [canvasHeight, setcanvasHeight] = useState(window.innerHeight - headerHeight - toolbarHeight);
 
     // Map to track all objects and Interacts with CodeView
-    const drawnCanvasObjects = useRef(new Map()) 
-
-    const [learningToolMenuWidth, setlearningToolMenuWidth] = useState(window.innerWidth*2/8);
-    const [learningToolMenuHeight, setlearningToolMenuHeight] = useState(window.innerHeight-headerHeight-toolbarHeight);
+    const drawnCanvasObjects = useRef(new Map())
+    const [learningToolMenuWidth, setlearningToolMenuWidth] = useState(window.innerWidth * 2 / 8);
+    const [learningToolMenuHeight, setlearningToolMenuHeight] = useState(window.innerHeight - headerHeight - toolbarHeight);
 
     const onReSize = () => {
-        setcanvasWidth(window.innerWidth*6/8);
-        setcanvasHeight(window.innerHeight-headerHeight-toolbarHeight);
-        setlearningToolMenuWidth(window.innerWidth*2/8);
-        setlearningToolMenuHeight(window.innerHeight-headerHeight-toolbarHeight);
+        setcanvasWidth(window.innerWidth * 6 / 8);
+        setcanvasHeight(window.innerHeight - headerHeight - toolbarHeight);
+        setlearningToolMenuWidth(window.innerWidth * 2 / 8);
+        setlearningToolMenuHeight(window.innerHeight - headerHeight - toolbarHeight);
+    };
+    const handleClick = () => {
+        var allObjects = Array.from(drawnCanvasObjects.current.values());
+        var getCanvasObjects = (objects) => {
+            var uniqueObjects = []
+            objects.forEach(element => {
+                if (!uniqueObjects.includes(element.text)){
+                    uniqueObjects.push(element.text)
+                }
+            });
+            return uniqueObjects;
+        }
+        setCanvasObjects(Array.from(getCanvasObjects(allObjects)));
     };
 
     useEffect(() => {
@@ -35,12 +48,12 @@ const Home = () => {
     }, []);
 
     return (
-        <div>
-            <Header/>
-            <Toolbar setSelectStructure={setObjectToDraw}/>
+        <div onClick={handleClick}>
+            <Header />
+            <Toolbar setSelectStructure={setObjectToDraw} />
             <div className="flex-container">
-                <CanvasComponent className="canvas" drawnCanvasObjects={drawnCanvasObjects} objectToDraw={objectToDraw} HomeWidth={canvasWidth} HomeHeight={canvasHeight}/>
-                <LearningToolMenu className="learning-tool-menu" HomeWidth={learningToolMenuWidth} HomeHeight={learningToolMenuHeight}/>
+                <CanvasComponent className="canvas" drawnCanvasObjects={drawnCanvasObjects} objectToDraw={objectToDraw} HomeWidth={canvasWidth} HomeHeight={canvasHeight} />
+                <LearningToolMenu className="learning-tool-menu" HomeWidth={learningToolMenuWidth} HomeHeight={learningToolMenuHeight} CanvasObjects={canvasObjects} />
             </div>
         </div>
     );

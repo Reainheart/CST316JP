@@ -17,8 +17,8 @@ const ArrayNode = ({ display_index, display_text, onClick }) => {
     )
 }
 ArrayNode.propTypes = {
-    display_index: PropTypes.number,
-    display_text: PropTypes.string,  
+    display_index: PropTypes.any,
+    display_text: PropTypes.any,  
     onClick: PropTypes.func
 };
 export default ArrayNode;

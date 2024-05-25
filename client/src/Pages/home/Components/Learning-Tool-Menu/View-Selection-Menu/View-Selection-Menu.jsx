@@ -1,6 +1,6 @@
-import React from "react";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
+import PropTypes from 'prop-types';
 import "./View-Selection-Menu.css";
 
 const ViewSelectionMenu = ({ setSelectedView }) => {
@@ -22,7 +22,7 @@ const ViewSelectionMenu = ({ setSelectedView }) => {
                 >
                     Code View
                 </Button>
-                <Button
+                {/* <Button
                     className="btn btn-primary"
                     variant="secondary"
                     onClick={() => handleViewClick("Memory View")}
@@ -35,10 +35,13 @@ const ViewSelectionMenu = ({ setSelectedView }) => {
                     onClick={() => handleViewClick("Function View")}
                 >
                     Function View
-                </Button>
+                </Button> */}
             </ButtonGroup>
         </div>
     );
+};
+ViewSelectionMenu.propTypes = {
+    setSelectedView: PropTypes.func
 };
 
 export default ViewSelectionMenu;

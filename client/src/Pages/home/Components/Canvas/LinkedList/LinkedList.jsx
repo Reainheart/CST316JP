@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+//   import React, { useState } from "react";
 import Node from "../Node/Node";
 import Pointer from "../Pointer/Pointer";
 import PropTypes from 'prop-types';
@@ -13,6 +13,7 @@ const LinkedList = ({ nodes, pointers, onClick, isSelected }) => {
         if (onClick) {
             onClick(event);
         }
+        console.log('::LinkedListHandleNodeClick::')
     };
 
     return (
@@ -36,7 +37,7 @@ const LinkedList = ({ nodes, pointers, onClick, isSelected }) => {
                     x={node.x}
                     y={node.y}
                     text={node.text}
-                    onClick={node.onClick}
+                    onClick={handleNodeClick}
                     isSelected={isSelected}
                 />
             ))}

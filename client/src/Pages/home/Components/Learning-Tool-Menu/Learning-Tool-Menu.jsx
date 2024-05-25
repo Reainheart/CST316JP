@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import PropTypes from 'prop-types';
-import Card from "react-bootstrap/card";
 import LearningToolViewWindow from "./Learning-Tool-View-Window/Learning-Tool-View-Window";
-import ViewSelectionMenu from "./View-Selection-Menu/View-Selection-Menu";
 import "./Learning-Tool-Menu.css";
 
-const LearningToolMenu = ({ HomeWidth, HomeHeight }) => {
+//For future implimentation 
+import ViewSelectionMenu from "./View-Selection-Menu/View-Selection-Menu";
+
+const LearningToolMenu = ({ HomeWidth, HomeHeight, CanvasObjects }) => {
     const [selectedView, setSelectedView] = useState("Code View");
 
     return (
@@ -14,11 +15,13 @@ const LearningToolMenu = ({ HomeWidth, HomeHeight }) => {
             width: HomeWidth,
             height: HomeHeight
         }}>
-            <LearningToolViewWindow selectedView={selectedView} />
+            <ViewSelectionMenu setSelectedView={setSelectedView}/>
+            <LearningToolViewWindow selectedView={selectedView} CanvasObjects={CanvasObjects} />
         </div>
     );
 };
 LearningToolMenu.propTypes = {
+    CanvasObjects: PropTypes.any,
     HomeWidth: PropTypes.number,
     HomeHeight: PropTypes.number
 };

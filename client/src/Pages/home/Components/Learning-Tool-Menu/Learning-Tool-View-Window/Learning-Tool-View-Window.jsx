@@ -1,12 +1,12 @@
-import React from "react";
 import CodeView from "../Code-View/Code-View";
+import PropTypes from 'prop-types';
 import "./Learning-Tool-View-Window.css";
 
-const LearningToolViewWindow = ({ selectedView }) => {
+const LearningToolViewWindow = ({ selectedView, CanvasObjects }) => {
     const renderViewContent = () => {
         switch (selectedView) {
             case "Code View":
-                return <CodeView className="code-view" />;
+                return <CodeView className="code-view" CanvasObjects={CanvasObjects} />;
             case "Memory View":
                 return <p>Memory View content goes here</p>;
             case "Function View":
@@ -23,5 +23,8 @@ const LearningToolViewWindow = ({ selectedView }) => {
         </div>
     );
 };
-
+LearningToolViewWindow.propTypes = {
+    selectedView: PropTypes.string,
+    CanvasObjects: PropTypes.any
+};
 export default LearningToolViewWindow;
