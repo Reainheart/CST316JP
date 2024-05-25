@@ -26,11 +26,11 @@ const Array = ({ x, y, text, onClick, isSelected }) => {
     };
 
     const addToEndOfArray = () => {
-        let ArrayNode = { text: `pos\n${arrayData.length}` };
+        let ArrayNode = { text: `added  ${arrayData.length}` };
         setArrayData([...arrayData, ArrayNode])
     }
     const addToStartOfArray = () => {
-        let ArrayNode = { text: `pos\n${arrayData.length}` };
+        let ArrayNode = { text: `added ${arrayData.length}` };
         setArrayData([ArrayNode, ...arrayData])
     }
 
@@ -44,23 +44,25 @@ const Array = ({ x, y, text, onClick, isSelected }) => {
                     <div className="array-container" >
                         <ArrayNode
                             key='start'
-                            text='+'
+                            display_index='start'
+                            display_text='+'
                             onClick={addToStartOfArray}
                         />
                         {arrayData.map((node, index) => (
                             <ArrayNode
                                 key={index}
-                                text={node.text}
+                                display_index={index}
+                                display_text={node.text}
                                 onClick={handleArrayNodeClick}
                             />
                         ))}
                         <ArrayNode
                             key='end'
-                            text='+'
+                            display_index='end'
+                            display_text='+'
                             onClick={addToEndOfArray}
                         />
                     </div>
-
                 </div>
             ) : (
                 <div className="array" style={{ left: x, top: y }}>
@@ -69,23 +71,25 @@ const Array = ({ x, y, text, onClick, isSelected }) => {
                     <div className="array-container" >
                         <ArrayNode
                             key='start'
-                            text='+'
+                            display_index='start'
+                            display_text='+'
                             onClick={addToStartOfArray}
                         />
                         {arrayData.map((node, index) => (
                             <ArrayNode
                                 key={index}
-                                text={node.text}
+                                display_index={index}
+                                display_text={node.text}
                                 onClick={handleArrayNodeClick}
                             />
                         ))}
                         <ArrayNode
                             key='end'
-                            text='+'
+                            display_index='end'
+                            display_text='+'
                             onClick={addToEndOfArray}
                         />
                     </div>
-
                 </div>
             )}
         </>

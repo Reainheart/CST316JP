@@ -4,7 +4,6 @@ import Node from "./Node/Node";
 import Pointer from "./Pointer/Pointer";
 import Array from "./Array/Array";
 import LinkedList from "./LinkedList/LinkedList";
-import { useCanvasContext } from "./canvasContext";
 import "./canvasComponent.css";
 
 //Radius is the node's radius in pixels
@@ -23,8 +22,6 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
     const [pointers, setPointers] = useState([]); // State to track pointers
     const [arrays, setArrays] = useState([]); // State to track pointers
     const [linkedLists, setLinkedLists] = useState([]); // State to track pointers
-
-    
 
     // Map to track selected objects
     const selectedObjects = useRef(new Map()); 
