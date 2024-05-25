@@ -4,6 +4,7 @@ import Node from "./Node/Node";
 import Pointer from "./Pointer/Pointer";
 import Array from "./Array/Array";
 import LinkedList from "./LinkedList/LinkedList";
+import { useCanvasContext } from "./canvasContext";
 import "./canvasComponent.css";
 
 //Radius is the node's radius in pixels
@@ -16,18 +17,17 @@ for (let angle = 0; angle < 360; angle++) {
     degrees.push(angle);
 }
 
-const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
+const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeight }) => {
     const canvasRef = useRef(null);
     const [nodes, setNodes] = useState([]); // State to track nodes
     const [pointers, setPointers] = useState([]); // State to track pointers
     const [arrays, setArrays] = useState([]); // State to track pointers
     const [linkedLists, setLinkedLists] = useState([]); // State to track pointers
 
+    
+
     // Map to track selected objects
     const selectedObjects = useRef(new Map()); 
-    
-    // Map to track all objects and Interacts with CodeView
-    const drawnCanvasObjects = useRef(new Map()) 
 
     const handleCanvasClick = (event) => {
 
@@ -266,7 +266,8 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
 CanvasComponent.propTypes = {
     HomeWidth: PropTypes.number.isRequired,
     HomeHeight: PropTypes.number.isRequired,
-    objectToDraw: PropTypes.string.isRequired
+    objectToDraw: PropTypes.string.isRequired,
+    drawnCanvasObjects: PropTypes.any.isRequired
 };
 
 export default CanvasComponent;
