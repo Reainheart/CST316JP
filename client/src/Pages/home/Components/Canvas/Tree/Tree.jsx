@@ -3,35 +3,41 @@ import PropTypes from 'prop-types'
 import Node from "../Node/Node";
 import Pointer from "../Pointer/Pointer";
 
-const Tree = ({ name, root, pointers }) => {
-    return (
-      <>
-        {root && (
-          <Node
-            key={root.id}
-            name={root.id}
-            x={root.x}
-            y={root.y}
-            text={root.text}
-          />
-        )}
+const Tree = ({ name, nodes, pointers }) => {
+  return (
+    <>
         {pointers.map((pointer) => (
-          <Pointer
-            key={pointer.id}
-            from_x={pointer.from_x}
-            from_y={pointer.from_y}
-            to_x={pointer.to_x}
-            to_y={pointer.to_y}
-          />
+            <Pointer
+                key={pointer.id}
+                name={pointer.id}
+                from_x={pointer.from_x}
+                from_y={pointer.from_y}
+                to_x={pointer.to_x}
+                to_y={pointer.to_y}
+                connectedFromObject={pointer.connectedFromObject}
+                connectedToObject={pointer.connectedToObject}
+            />
         ))}
-      </>
-    );
-  };
+        {nodes.map((node) => (
+            <Node
+                key={node.id}
+                name={node.id}
+                x={node.x}
+                y={node.y}
+                text={node.text}
+                onClick={node.onClick}
+                isSelected={node.isSelected}
+            />
+        ))}
 
-Tree.PropTypes = {
+    </>
+  );
+};
+
+Tree.propTypes = {
     name: PropTypes.number.isRequired,
-    root: PropTypes.object.isRequired,
-    pointers: PropTypes.arrayOf(PropTypes.object).isRequired
+    nodes: PropTypes.array,
+    pointers: PropTypes.array
 };
 
 export default Tree;

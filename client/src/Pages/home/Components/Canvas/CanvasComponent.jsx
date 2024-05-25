@@ -89,13 +89,15 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
         if (from_id) {
             const fromObject = drawnCanvasObjects.current.get(from_id)
             newPointer.connectedToObject = fromObject
+            console.log(fromObject)
             newPointer.from_x = fromObject.x + RADIUS
             newPointer.from_y = fromObject.y + RADIUS
         }
-
+        
         if (to_id) {
             const toObject = drawnCanvasObjects.current.get(to_id)
             newPointer.connectedToObject = toObject
+            console.log(toObject)
             newPointer.to_x = toObject.x + RADIUS
             newPointer.to_y = toObject.y + RADIUS
         }
@@ -149,10 +151,16 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
         const root = getNewObject(x, y, 'Root');
         const leftChild = getNewObject(x - 100, y + 100, 'Left');
         const rightChild = getNewObject(x + 100, y + 100, 'Right');
-
+        
         drawnCanvasObjects.current.set(root.id, root);
         drawnCanvasObjects.current.set(leftChild.id, leftChild);
         drawnCanvasObjects.current.set(rightChild.id, rightChild);
+
+        const nodes = [
+            root, 
+            leftChild, 
+            rightChild
+        ];
 
         const pointers = [
             getPointerObject(root.id, leftChild.id),
@@ -161,8 +169,9 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
 
         const newTree = {
             id: Math.floor(Math.random() * 999999),
-            root: root,
-            pointers: pointers
+            nodes: nodes,
+            pointers: pointers,
+
         };
         while (drawnCanvasObjects.current.keys[newTree.id]) {
             newTree.id = Math.floor(Math.random() * 999999);
@@ -295,7 +304,7 @@ const CanvasComponent = ({ objectToDraw, HomeWidth, HomeHeight }) => {
                 <Tree
                     key={tree.id}
                     name={tree.id}
-                    root={tree.root}
+                    nodes={tree.nodes}
                     pointers={tree.pointers}
                 />
             ))}

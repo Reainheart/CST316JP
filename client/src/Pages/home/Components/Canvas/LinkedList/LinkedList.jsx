@@ -44,6 +44,7 @@ const LinkedList = ({ nodes, pointers, onClick, isSelected }) => {
         </>
     );
 };
+
 LinkedList.propTypes = {
     nodes: PropTypes.array,
     pointers: PropTypes.array,
