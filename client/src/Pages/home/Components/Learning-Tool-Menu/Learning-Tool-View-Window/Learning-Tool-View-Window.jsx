@@ -17,8 +17,7 @@ const LearningToolViewWindow = ({ selectedView, CanvasObjects }) => {
     };
 
     return (
-        <div>
-            <h5 style={{ color: "pink" }}>{selectedView}</h5>
+        <div className="learningToolViewWindow">
             {renderViewContent()}
         </div>
     );
