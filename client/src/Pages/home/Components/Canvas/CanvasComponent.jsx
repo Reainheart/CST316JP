@@ -20,6 +20,7 @@ for (let angle = 0; angle < 360; angle++) {
 const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeight }) => {
     const canvasRef = useRef(null);
     const [nodes, setNodes] = useState([]); // State to track nodes
+    const [, setUpdate] = useState(0); // State to trigger re-renders
     const [pointers, setPointers] = useState([]); // State to track pointers
     const [arrays, setArrays] = useState([]); // State to track pointers
     const [linkedLists, setLinkedLists] = useState([]); // State to track pointers
@@ -203,34 +204,34 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
     };
     // This can also be passed to objects Like Array to draw their new items
 
-    const handleCtrlClickOnObject = (id) => {
-        //debugger
-        // Deselect on self click 
-        if (selectedObjects.current.has(id)) {
-            return selectedObjects.current.delete(id);
-        }
-        const currentObject = drawnCanvasObjects.current.get(id)
+    // const handleCtrlClickOnObject = (id) => {
+    //     //debugger
+    //     // Deselect on self click 
+    //     if (selectedObjects.current.has(id)) {
+    //         return selectedObjects.current.delete(id);
+    //     }
+    //     const currentObject = drawnCanvasObjects.current.get(id)
 
-        // Shouldnt happen... but should be good
-        if (currentObject != null) {
-            // map the id of selected object
-            selectedObjects.current.set(id, currentObject)
-            console.log(selectedObjects.current.get(id).id + ' was added')
-        } else {
-            console.log('Current object not found')
-        }
-    }
+    //     // Shouldnt happen... but should be good
+    //     if (currentObject != null) {
+    //         // map the id of selected object
+    //         selectedObjects.current.set(id, currentObject)
+    //         console.log(selectedObjects.current.get(id).id + ' was added')
+    //     } else {
+    //         console.log('Current object not found')
+    //     }
+    // }
 
     const removeCanvasObject = (id) => (event) => {
         event.stopPropagation();
-        
+
         if (drawnCanvasObjects.current.has(id)) {
-            console.log('RemoveCanvasObject::' + id +'::type::'+drawnCanvasObjects.current.get(id).type)
+            console.log('RemoveCanvasObject::' + id + '::type::' + drawnCanvasObjects.current.get(id).type)
             // const currentObject = drawnCanvasObjects.current.get(id)
             // console.log(currentObject)
             // drawnCanvasObjects.current.delete(id);
         }
-        
+
         const objectType = drawnCanvasObjects.current.get(id).type;
 
         switch (objectType) {
@@ -252,23 +253,25 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
             default:
                 console.warn('Unknown type:', objectType);
         }
-    } 
+    }
 
     const handleClickOnObject = (id) => {
         //debugger
         // If the object is selected
         if (selectedObjects.current.has(id)) {
             // Deselect all
-            return selectedObjects.current.clear();
+            selectedObjects.current.clear();
+        }
+        else {
+            // Mark the object as Selected
+            const currentObject = drawnCanvasObjects.current.get(id)
+
+            selectedObjects.current.set(id, currentObject)
+            console.log(selectedObjects.current.get(id).id + ' was added')
+            console.log(selectedObjects.current.size)
+            console.log(selectedObjects.current.values)
         }
 
-        // Mark the object as Selected
-        const currentObject = drawnCanvasObjects.current.get(id)
-
-        selectedObjects.current.set(id, currentObject)
-        console.log(selectedObjects.current.get(id).id + ' was added')
-        console.log(selectedObjects.current.size)
-        console.log(selectedObjects.current.values)
     };
 
     const handleObjectClick = (id) => (event) => {
@@ -276,9 +279,22 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
         // console.log(id)
         event.stopPropagation();
 
-        event.ctrlKey ? handleCtrlClickOnObject(id) : handleClickOnObject(id)
-
+        // event.ctrlKey ? handleCtrlClickOnObject(id) : handleClickOnObject(id)
+        handleClickOnObject(id)
         console.log(selectedObjects)
+    };
+
+    const amISelected = (id) => {
+        return selectedObjects.current.has(id);
+    };
+
+    const toggleSelection = (id) => {
+        if (selectedObjects.current.has(id)) {
+            selectedObjects.current.delete(id);
+        } else {
+            selectedObjects.current.set(id, true);
+        }
+        setUpdate(prev => prev + 1); // Force re-render
     };
 
     return (
@@ -309,7 +325,8 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
                     y={node.y}
                     text={node.text}
                     onClick={handleObjectClick(node.id)}
-                    isSelected={selectedObjects.current.has(node.id)}
+                    selected={amISelected(node.id)}
+                    toggleSelection={toggleSelection}
                     removeMe={removeCanvasObject(node.id)}
                 />
             ))}
@@ -321,7 +338,7 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
                     y={node.y}
                     text={node.text}
                     onClick={handleObjectClick(node.id)}
-                    isSelected={selectedObjects.current.has(node.id)}
+                    isSelected={amISelected(node.id)}
                 />
             ))}
             {linkedLists.map((list) => (

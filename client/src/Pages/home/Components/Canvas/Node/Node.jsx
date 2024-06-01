@@ -1,16 +1,16 @@
 import { useState, useRef, useEffect } from "react";
 import AnchorPoint from "../AnchorPoint/AnchorPoint";
 import "./Node.css";
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 
-const RADIUS = 30
+const RADIUS = 30;
 const degrees = [];
 
-for (let angle = 0; angle < 360; angle = angle + 45) {
+for (let angle = 0; angle < 360; angle += 45) {
     degrees.push(angle);
 }
 
-// Function to calculate point on circumference of a circle given angle
+// Function to calculate point on the circumference of a circle given an angle
 function anchorPointsOnCircle(angleInDegrees, centerX, centerY) {
     // Convert angle from degrees to radians
     const angleInRadians = angleInDegrees * Math.PI / 180;
@@ -21,26 +21,20 @@ function anchorPointsOnCircle(angleInDegrees, centerX, centerY) {
     return { x, y };
 }
 
-const Node = ({ name, x, y, text, onClick, isSelected, removeMe }) => {
+const Node = ({ name, x, y, text, selected, toggleSelection, removeMe }) => {
     const [content, setContent] = useState(text);
     const [inputIsHidden, setInputIsHidden] = useState(true);
-    const [isActive, setIsActive] = useState(false);
     const nodeRef = useRef(null);
 
-    useEffect((isSelected) => {
-        setIsActive(isSelected)
-    }, [isSelected]);
+    useEffect(() => {
+        setInputIsHidden(true); // Hide the input initially or when the node is deselected
+    }, [selected]);
 
     const handleNodeClick = (event) => {
         // Prevents onClick from bubbling to the parent if it's nested
         event.stopPropagation();
-
-        setIsActive(!isActive);
-        if (onClick) {
-            onClick(event);
-        }
+        toggleSelection(name);
     };
-
 
     const handleChange = (e) => {
         setContent(e.target.value);
@@ -49,7 +43,6 @@ const Node = ({ name, x, y, text, onClick, isSelected, removeMe }) => {
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
             e.preventDefault(); // Prevents the default action of adding a new line
-            console.log('Enter key pressed');
             setInputIsHidden(true);
         }
     };
@@ -57,52 +50,55 @@ const Node = ({ name, x, y, text, onClick, isSelected, removeMe }) => {
     const triggerEdit = (e) => {
         e.stopPropagation();
         setInputIsHidden(false);
-    }
+    };
 
     return (
-        <>
-            <div>
-                {isActive ? (
-                    <div className="node-options" style={{ left: x - 10.5, top: y - 35 }}>
-                        <button onClick={triggerEdit}>✎</button>
-                        <button onClick={removeMe}>␥</button>
-                        <button>→</button>
-                    </div>
-                ) : (
-                    <>
-                    </>
-                )}
-
-                {degrees.map((angle) => (
-                    <AnchorPoint
-                        key={'node_' + name + '_ap_' + angle}
-                        x={anchorPointsOnCircle(angle, x, y).x}
-                        y={anchorPointsOnCircle(angle, x, y).y}
-                    />
-                ))}
-                <div className="node" style={{ left: x, top: y }} onClick={handleNodeClick} ref={nodeRef}>
-                    <p className="nodeText">
-                        {content}
-                    </p>
+        <div>
+            {selected && (
+                <div className="node-options" style={{ left: x - 10.5, top: y - 35 }}>
+                    <button onClick={triggerEdit}>✎</button>
+                    <button onClick={removeMe}>␥</button>
+                    <button>→</button>
                 </div>
-                <input
-                    style={{ left: x - 50, top: y + 100 }}
-                    hidden={inputIsHidden}
-                    className="changeContent"
-                    type="text"
-                    onInput={handleChange} 
-                    onKeyDown={handleKeyDown} />
+            )}
+            {degrees.map((angle) => (
+                <AnchorPoint
+                    key={'node_' + name + '_ap_' + angle}
+                    x={anchorPointsOnCircle(angle, x, y).x}
+                    y={anchorPointsOnCircle(angle, x, y).y}
+                />
+            ))}
+            <div
+                className="node"
+                style={{ left: x, top: y, border: selected ? '2px solid blue' : '1px solid gray' }}
+                onClick={handleNodeClick}
+                ref={nodeRef}
+            >
+                <p className="nodeText">
+                    {content}
+                </p>
             </div>
-        </>
+            <input
+                style={{ left: x - 50, top: y + 100 }}
+                hidden={inputIsHidden}
+                className="changeContent"
+                type="text"
+                value={content}
+                onInput={handleChange}
+                onKeyDown={handleKeyDown}
+            />
+        </div>
     );
 };
+
 Node.propTypes = {
     name: PropTypes.number.isRequired,
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
     text: PropTypes.string.isRequired,
-    onClick: PropTypes.func,
-    isSelected: PropTypes.bool,
+    selected: PropTypes.bool,
+    toggleSelection: PropTypes.func,
     removeMe: PropTypes.func,
 };
+
 export default Node;
