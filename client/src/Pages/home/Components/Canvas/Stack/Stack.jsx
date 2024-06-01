@@ -32,7 +32,7 @@ const Stack = ({ x, y, text, onClick, isSelected }) => {
         <div className={`stack ${isSelected ? 'selected-stack' : ''}`} style={{ left: x, top: y }}>
             <h3>{text}</h3>
             <div className="stack-container">
-                {isSelected && <button onClick={pushToStack}>Push</button>}
+                <button onClick={pushToStack}>Push</button>
                 {stackData.map((node, index) => (
                     <StackNode
                         key={index}
@@ -41,7 +41,7 @@ const Stack = ({ x, y, text, onClick, isSelected }) => {
                         onClick={handleStackNodeClick}
                     />
                 ))}
-                {isSelected && <button onClick={popFromStack}>Pop</button>}
+                <button onClick={popFromStack}>Pop</button>
             </div>
         </div>
     );
