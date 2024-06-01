@@ -289,6 +289,7 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
     };
 
     const toggleSelection = (id) => {
+        console.log('Canvas::ToggleSelection::' + id);
         if (selectedObjects.current.has(id)) {
             selectedObjects.current.delete(id);
         } else {
