@@ -279,7 +279,7 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
         if (selectedObjects.current.has(id)) {
             selectedObjects.current.delete(id);
         } else {
-            selectedObjects.current.set(id, true);
+            selectedObjects.current.set(id, drawnCanvasObjects.current.get(id));
         }
         setUpdate(prev => prev + 1); // Force re-render
     };
