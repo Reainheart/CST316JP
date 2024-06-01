@@ -7,7 +7,7 @@
     background-color: #2b2b2b;
 }
 
-.stackNode {
+.queueNode {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -19,11 +19,11 @@
     width: 100px; 
 }
 
-.selected-stack {
+.selected-queue {
     border: 2px solid #00ff00; 
 }
 
-.stack {
+.queue {
     position: absolute;
     border: 1px solid #ccc;
     padding: 10px;
