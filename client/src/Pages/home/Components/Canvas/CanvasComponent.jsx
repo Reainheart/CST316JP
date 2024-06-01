@@ -224,14 +224,7 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
 
     const removeCanvasObject = (id) => (event) => {
         event.stopPropagation();
-
-        if (drawnCanvasObjects.current.has(id)) {
-            console.log('RemoveCanvasObject::' + id + '::type::' + drawnCanvasObjects.current.get(id).type)
-            // const currentObject = drawnCanvasObjects.current.get(id)
-            // console.log(currentObject)
-            // drawnCanvasObjects.current.delete(id);
-        }
-
+        console.log('RemoveCanvasObject::' + id + '::type::' + drawnCanvasObjects.current.get(id).type)
         const objectType = drawnCanvasObjects.current.get(id).type;
 
         switch (objectType) {

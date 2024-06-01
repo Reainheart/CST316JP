@@ -21,7 +21,7 @@ function anchorPointsOnCircle(angleInDegrees, centerX, centerY) {
     return { x, y };
 }
 
-const Node = ({ name, x, y, text, selected, toggleSelection, removeMe }) => {
+const Node = ({ name, x, y, text, selected, toggleSelection, getPointer, removeMe }) => {
     const [content, setContent] = useState(text);
     const [inputIsHidden, setInputIsHidden] = useState(true);
     const nodeRef = useRef(null);
@@ -58,7 +58,7 @@ const Node = ({ name, x, y, text, selected, toggleSelection, removeMe }) => {
                 <div className="node-options" style={{ left: x - 10.5, top: y - 35 }}>
                     <button onClick={triggerEdit}>✎</button>
                     <button onClick={removeMe}>␥</button>
-                    <button>→</button>
+                    <button >→</button>
                 </div>
             )}
             {degrees.map((angle) => (
@@ -98,6 +98,7 @@ Node.propTypes = {
     text: PropTypes.string.isRequired,
     selected: PropTypes.bool,
     toggleSelection: PropTypes.func,
+    getPointer: PropTypes.func,
     removeMe: PropTypes.func,
 };
 
