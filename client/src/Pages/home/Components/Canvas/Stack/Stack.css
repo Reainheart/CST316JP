@@ -1,0 +1,31 @@
+.stack-container {
+    display: flex;
+    flex-direction: column-reverse; 
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #2b2b2b;
+}
+
+.stackNode {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin: 5px 0;
+    background-color: #1b1b1b; 
+    color: white;
+    width: 100px; 
+}
+
+.selected-stack {
+    border: 2px solid #00ff00; 
+}
+
+.stack {
+    position: absolute;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #2b2b2b; 
+}

@@ -5,6 +5,7 @@ import Pointer from "./Pointer/Pointer";
 import Array from "./Array/Array";
 import LinkedList from "./LinkedList/LinkedList";
 import Tree from "./Tree/Tree";
+import Stack from "./Stack/Stack"
 import "./canvasComponent.css";
 
 //Radius is the node's radius in pixels
@@ -24,7 +25,7 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
     const [arrays, setArrays] = useState([]); // State to track pointers
     const [linkedLists, setLinkedLists] = useState([]); // State to track pointers
     const [trees, setTrees] = useState([]); // State to track trees
-
+    const [stacks, setStacks] = useState([]); // State to track stacks
     // Map to track selected objects
     const selectedObjects = useRef(new Map()); 
 
@@ -198,6 +199,10 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
                 return getNewLinkedList(x, y)
             case 'Tree':
                 return getNewTree(x, y);
+            case 'Stack':
+                drawnCanvasObjects.current.set(newObject.id, newObject);
+                setStacks([...stacks, newObject]);
+                return newObject.id;
         }
     };
     // This can also be passed to objects Like Array to draw their new items
@@ -303,6 +308,17 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
                     name={tree.id}
                     nodes={tree.nodes}
                     pointers={tree.pointers}
+                />
+            ))}
+            {stacks.map((stack) => (
+                <Stack
+                    key={stack.id}
+                    name={stack.id}
+                    x={stack.x}
+                    y={stack.y}
+                    text={stack.text}
+                    onClick={handleObjectClick(stack.id)}
+                    isSelected={selectedObjects.current.has(stack.id)}
                 />
             ))}
         </>
