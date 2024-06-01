@@ -198,8 +198,10 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
     // Adding a new type here is how we can draw a new object,
     const drawNewObject = (x, y, objectType, objectText) => {
         // Add to the arrays to render the objects
+        
         var newObject = getNewObject(x, y, objectText)
         newObject.type = objectType;
+        console.log('Canvas::drawNewObject::' + newObject.id + '::type::' + newObject.type)
         switch (objectType) {
             // Base objects
             case 'Node':
@@ -228,27 +230,9 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
     };
     // This can also be passed to objects Like Array to draw their new items
 
-    // const handleCtrlClickOnObject = (id) => {
-    //     //debugger
-    //     // Deselect on self click 
-    //     if (selectedObjects.current.has(id)) {
-    //         return selectedObjects.current.delete(id);
-    //     }
-    //     const currentObject = drawnCanvasObjects.current.get(id)
-
-    //     // Shouldnt happen... but should be good
-    //     if (currentObject != null) {
-    //         // map the id of selected object
-    //         selectedObjects.current.set(id, currentObject)
-    //         console.log(selectedObjects.current.get(id).id + ' was added')
-    //     } else {
-    //         console.log('Current object not found')
-    //     }
-    // }
-
     const removeCanvasObject = (id) => (event) => {
         event.stopPropagation();
-        console.log('RemoveCanvasObject::' + id + '::type::' + drawnCanvasObjects.current.get(id).type)
+        console.log('Canvas::RemoveCanvasObject::' + id + '::type::' + drawnCanvasObjects.current.get(id).type)
         const objectType = drawnCanvasObjects.current.get(id).type;
 
         switch (objectType) {
@@ -338,7 +322,10 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
                     y={node.y}
                     text={node.text}
                     onClick={handleObjectClick(node.id)}
-                    isSelected={amISelected(node.id)}
+                    selected={amISelected(node.id)}
+                    toggleSelection={toggleSelection}
+                    removeMe={removeCanvasObject(node.id)}
+                    getPointer={drawPointerFromMeToSelectedID(node.id)}
                 />
             ))}
             {linkedLists.map((list) => (

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import "./Array.css";
 import { useState, useEffect } from "react";
 
-const Array = ({ x, y, text, selected, toggleSelection, getPointer, removeMe }) => {
+const Array = ({ name, x, y, text, selected, toggleSelection, getPointer, removeMe }) => {
     const [arrayData, setArrayData] = useState([]);
     const [content, setContent] = useState(text);
     const [inputIsHidden, setInputIsHidden] = useState(true);
@@ -45,23 +45,31 @@ const Array = ({ x, y, text, selected, toggleSelection, getPointer, removeMe }) 
     }
 
     return (
-        <>
+        <div>
             {selected && (
-                <div className="array-options" style={{ left: x - 10.5, top: y - 35 }}>
+                <div className="array-options" style={{ left: x - 36, top: y }}>
                     <button onClick={triggerEdit}>✎</button>
                     <button onClick={removeMe}>␥</button>
                     <button onClick={getPointer}>→</button>
                 </div>
             )}
+            <input
+                    style={{ left: x - 50, top: y - 50}}
+                    hidden={inputIsHidden}
+                    className="changeContent"
+                    type="text"
+                    value={content}
+                    onInput={handleChange}
+                    onKeyDown={handleKeyDown}
+                />
             <div
                 className={selected ? "selected-array" : "array"}
                 style={{ left: x, top: y, border: selected ? '2px solid blue' : '1px solid gray' }}
             >
-                <h3>{content}</h3>
-
-                <div
-                    className="array-container"
-                    onClick={handleArrayClick}>
+                <h3 onClick={handleArrayClick}>
+                    {content}
+                </h3>
+                <div className="array-container">
                     <ArrayNode
                         key='start'
                         display_index='start'
@@ -82,17 +90,9 @@ const Array = ({ x, y, text, selected, toggleSelection, getPointer, removeMe }) 
                         onClick={addToEndOfArray}
                     />
                 </div>
-                <input
-                    style={{ left: x - 50, top: y + 100 }}
-                    hidden={inputIsHidden}
-                    className="changeContent"
-                    type="text"
-                    value={content}
-                    onInput={handleChange}
-                    onKeyDown={handleKeyDown}
-                />
             </div>
-        </>
+        </div>
+
     );
 };
 Array.propTypes = {

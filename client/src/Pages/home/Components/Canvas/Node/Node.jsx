@@ -79,7 +79,7 @@ const Node = ({ name, x, y, text, selected, toggleSelection, getPointer, removeM
                 </p>
             </div>
             <input
-                style={{ left: x - 50, top: y + 100 }}
+                style={{ left: x, top: y}}
                 hidden={inputIsHidden}
                 className="changeContent"
                 type="text"
