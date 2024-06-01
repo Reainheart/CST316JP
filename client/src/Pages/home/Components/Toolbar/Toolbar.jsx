@@ -8,7 +8,8 @@ const structures = [
     { name: 'Node' },
     { name: 'Array' },
     { name: 'Linked List' },
-    { name: 'Tree' }
+    { name: 'Tree' },
+    { name: 'Stack' }
 ];
 
 function Toolbar({ setSelectStructure }) {
