@@ -26,7 +26,7 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
     const [trees, setTrees] = useState([]); // State to track trees
 
     // Map to track selected objects
-    const selectedObjects = useRef(new Map()); 
+    const selectedObjects = useRef(new Map());
 
     const handleCanvasClick = (event) => {
 
@@ -60,7 +60,7 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
     }
 
     const getBlankPointer = () => {
-        
+
         // Create default pointer
         const newPointer = {
             id: Math.floor(Math.random() * 999999),
@@ -81,7 +81,7 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
     const getPointerObject = (from_id, to_id) => {
         //create defualt pointer
         const newPointer = getBlankPointer()
-        
+
         //update the pointer to the object passed if it exists
         if (from_id) {
             const fromObject = drawnCanvasObjects.current.get(from_id)
@@ -90,7 +90,7 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
             newPointer.from_x = fromObject.x + RADIUS
             newPointer.from_y = fromObject.y + RADIUS
         }
-        
+
         if (to_id) {
             const toObject = drawnCanvasObjects.current.get(to_id)
             newPointer.connectedToObject = toObject
@@ -148,14 +148,14 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
         const root = getNewObject(x, y, 'Root');
         const leftChild = getNewObject(x - 100, y + 100, 'Left');
         const rightChild = getNewObject(x + 100, y + 100, 'Right');
-        
+
         drawnCanvasObjects.current.set(root.id, root);
         drawnCanvasObjects.current.set(leftChild.id, leftChild);
         drawnCanvasObjects.current.set(rightChild.id, rightChild);
 
         const nodes = [
-            root, 
-            leftChild, 
+            root,
+            leftChild,
             rightChild
         ];
 
@@ -174,7 +174,7 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
             newTree.id = Math.floor(Math.random() * 999999);
         }
         setTrees([...trees, newTree]);
-        
+
         return newTree.id;
     };
 
@@ -182,6 +182,7 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
     const drawNewObject = (x, y, objectType, objectText) => {
         // Add to the arrays to render the objects
         var newObject = getNewObject(x, y, objectText)
+        newObject.type = objectType;
         switch (objectType) {
             // Base objects
             case 'Node':
@@ -220,15 +221,38 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
         }
     }
 
-    const handleObjectClick = (id) => (event) => {
-        // console.log(event)
-        // console.log(id)
+    const removeCanvasObject = (id) => (event) => {
         event.stopPropagation();
+        
+        if (drawnCanvasObjects.current.has(id)) {
+            console.log('RemoveCanvasObject::' + id +'::type::'+drawnCanvasObjects.current.get(id).type)
+            // const currentObject = drawnCanvasObjects.current.get(id)
+            // console.log(currentObject)
+            // drawnCanvasObjects.current.delete(id);
+        }
+        
+        const objectType = drawnCanvasObjects.current.get(id).type;
 
-        event.ctrlKey ? handleCtrlClickOnObject(id) : handleClickOnObject(id)
-
-        console.log(selectedObjects)
-    };
+        switch (objectType) {
+            case 'Node':
+                setNodes(prevNodes => prevNodes.filter(node => node.id !== id));
+                break;
+            case 'Pointer':
+                setPointers(prevPointers => prevPointers.filter(pointer => pointer.id !== id));
+                break;
+            case 'Array':
+                setArrays(prevArrays => prevArrays.filter(array => array.id !== id));
+                break;
+            case 'LinkedList':
+                setLinkedLists(prevLinkedLists => prevLinkedLists.filter(linkedList => linkedList.id !== id));
+                break;
+            case 'Tree':
+                setTrees(prevTrees => prevTrees.filter(tree => tree.id !== id));
+                break;
+            default:
+                console.warn('Unknown type:', objectType);
+        }
+    } 
 
     const handleClickOnObject = (id) => {
         //debugger
@@ -246,7 +270,17 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
         console.log(selectedObjects.current.size)
         console.log(selectedObjects.current.values)
     };
-    
+
+    const handleObjectClick = (id) => (event) => {
+        // console.log(event)
+        // console.log(id)
+        event.stopPropagation();
+
+        event.ctrlKey ? handleCtrlClickOnObject(id) : handleClickOnObject(id)
+
+        console.log(selectedObjects)
+    };
+
     return (
         <>
             <canvas
@@ -276,6 +310,7 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
                     text={node.text}
                     onClick={handleObjectClick(node.id)}
                     isSelected={selectedObjects.current.has(node.id)}
+                    removeMe={removeCanvasObject(node.id)}
                 />
             ))}
             {arrays.map((node) => (

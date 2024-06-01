@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 const RADIUS = 30
 const degrees = [];
 
-for (let angle = 0; angle < 360; angle=angle+45) {
+for (let angle = 0; angle < 360; angle = angle + 45) {
     degrees.push(angle);
 }
 
@@ -21,10 +21,12 @@ function anchorPointsOnCircle(angleInDegrees, centerX, centerY) {
     return { x, y };
 }
 
-const Node = ({ name, x, y, text, onClick, isSelected }) => {
+const Node = ({ name, x, y, text, onClick, isSelected, removeMe }) => {
+    const [content, setContent] = useState(text);
+    const [inputIsHidden, setInputIsHidden] = useState(true);
     const [isActive, setIsActive] = useState(false);
     const nodeRef = useRef(null);
-    
+
     useEffect((isSelected) => {
         setIsActive(isSelected)
     }, [isSelected]);
@@ -39,40 +41,58 @@ const Node = ({ name, x, y, text, onClick, isSelected }) => {
         }
     };
 
+
+    const handleChange = (e) => {
+        setContent(e.target.value);
+    };
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault(); // Prevents the default action of adding a new line
+            console.log('Enter key pressed');
+            setInputIsHidden(true);
+        }
+    };
+
+    const triggerEdit = (e) => {
+        e.stopPropagation();
+        setInputIsHidden(false);
+    }
+
     return (
         <>
-            {isActive ? (
-                <div>
+            <div>
+                {isActive ? (
                     <div className="node-options" style={{ left: x - 10.5, top: y - 35 }}>
-                        <button>1</button>
-                        <button>2</button>
-                        <button>3</button>
+                        <button onClick={triggerEdit}>✎</button>
+                        <button onClick={removeMe}>␥</button>
+                        <button>→</button>
                     </div>
-                    {degrees.map((angle) => (
-                        <AnchorPoint
-                            key={'node_' + name + '_ap_' + angle}
-                            x={anchorPointsOnCircle(angle, x, y).x}
-                            y={anchorPointsOnCircle(angle, x, y).y}
-                        />
-                    ))}
-                    <div className="selected-node" style={{ left: x, top: y }} onClick={handleNodeClick} ref={nodeRef}>
-                        <p>{text}</p>
-                    </div>
+                ) : (
+                    <>
+                    </>
+                )}
+
+                {degrees.map((angle) => (
+                    <AnchorPoint
+                        key={'node_' + name + '_ap_' + angle}
+                        x={anchorPointsOnCircle(angle, x, y).x}
+                        y={anchorPointsOnCircle(angle, x, y).y}
+                    />
+                ))}
+                <div className="node" style={{ left: x, top: y }} onClick={handleNodeClick} ref={nodeRef}>
+                    <p className="nodeText">
+                        {content}
+                    </p>
                 </div>
-            ) : (
-                <div>
-                    {degrees.map((angle) => (
-                        <AnchorPoint
-                            key={'node_' + name + '_ap_' + angle}
-                            x={anchorPointsOnCircle(angle, x, y).x}
-                            y={anchorPointsOnCircle(angle, x, y).y}
-                        />
-                    ))}
-                    <div className="node" style={{ left: x, top: y }} onClick={handleNodeClick} ref={nodeRef}>
-                        <p>{text}</p>
-                    </div>
-                </div>
-            )}
+                <input
+                    style={{ left: x - 50, top: y + 100 }}
+                    hidden={inputIsHidden}
+                    className="changeContent"
+                    type="text"
+                    onInput={handleChange} 
+                    onKeyDown={handleKeyDown} />
+            </div>
         </>
     );
 };
@@ -82,6 +102,7 @@ Node.propTypes = {
     y: PropTypes.number.isRequired,
     text: PropTypes.string.isRequired,
     onClick: PropTypes.func,
-    isSelected: PropTypes.bool
+    isSelected: PropTypes.bool,
+    removeMe: PropTypes.func,
 };
 export default Node;
