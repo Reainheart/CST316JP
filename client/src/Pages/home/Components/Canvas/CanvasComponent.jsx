@@ -79,6 +79,18 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
         return newPointer
     }
 
+    const drawPointerFromMeToSelectedID = (from_id) => () => {
+        console.log(from_id) 
+        console.log()
+
+        selectedObjects.current.keys().forEach((id) => {
+            if (id != from_id){
+                const newPointer = getPointerObject(id, from_id);
+                setPointers([...pointers, newPointer])
+            }
+        })
+    }
+
     const getPointerObject = (from_id, to_id) => {
         //create defualt pointer
         const newPointer = getBlankPointer()
@@ -248,33 +260,14 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
         }
     }
 
-    const handleClickOnObject = (id) => {
-        //debugger
-        // If the object is selected
-        if (selectedObjects.current.has(id)) {
-            // Deselect all
-            selectedObjects.current.clear();
-        }
-        else {
-            // Mark the object as Selected
-            const currentObject = drawnCanvasObjects.current.get(id)
-
-            selectedObjects.current.set(id, currentObject)
-            console.log(selectedObjects.current.get(id).id + ' was added')
-            console.log(selectedObjects.current.size)
-            console.log(selectedObjects.current.values)
-        }
-
-    };
-
     const handleObjectClick = (id) => (event) => {
         // console.log(event)
         // console.log(id)
         event.stopPropagation();
 
         // event.ctrlKey ? handleCtrlClickOnObject(id) : handleClickOnObject(id)
-        handleClickOnObject(id)
-        console.log(selectedObjects)
+        toggleSelection(id);
+        console.log(selectedObjects);
     };
 
     const amISelected = (id) => {
@@ -322,6 +315,7 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
                     selected={amISelected(node.id)}
                     toggleSelection={toggleSelection}
                     removeMe={removeCanvasObject(node.id)}
+                    getPointer={drawPointerFromMeToSelectedID(node.id)}
                 />
             ))}
             {arrays.map((node) => (

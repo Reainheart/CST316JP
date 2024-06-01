@@ -58,7 +58,7 @@ const Node = ({ name, x, y, text, selected, toggleSelection, getPointer, removeM
                 <div className="node-options" style={{ left: x - 10.5, top: y - 35 }}>
                     <button onClick={triggerEdit}>✎</button>
                     <button onClick={removeMe}>␥</button>
-                    <button >→</button>
+                    <button onClick={getPointer}>→</button>
                 </div>
             )}
             {degrees.map((angle) => (
