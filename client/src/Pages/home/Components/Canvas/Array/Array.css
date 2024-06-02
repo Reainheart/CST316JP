@@ -38,7 +38,12 @@ h3 {
     flex-direction: column;
     gap: 5px;
 }
-
+.array-node-options {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
 .array-options button {
     width: 30px;
     height: 30px;
@@ -49,6 +54,12 @@ h3 {
 }
 
 .arrayNode {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+}
+
+.arrayNodeDisplay {
     margin: 10px;
     box-sizing: content-box;
 }
@@ -63,3 +74,4 @@ h3 {
 .arrayNode:hover, .selected-arrayNode:hover {
     background-color: #137a7f;
 }
+

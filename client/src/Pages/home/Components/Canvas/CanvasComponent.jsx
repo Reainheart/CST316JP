@@ -51,15 +51,22 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
     }
 
     // To add a new object call get new Object
-    const getNewObject = (x, y, objectText) => {
-        // Takes a canvas position for x and y, the object to draw is also the display text 
-        const newObject = { id: Math.floor(Math.random() * 999999), x: x, y: y, text: objectText };
+    const getNewObject = (x, y, objectText, objectType) => {
 
+        // Takes a canvas position for x and y, the object to draw is also the display text 
+        const newObject = {
+            id: Math.floor(Math.random() * 999999),
+            x: x,
+            y: y,
+            text: objectText,
+            type: objectType
+        };
         //Guarentee non-allocated ID
         //while the object id is in the current keys, we keep rolling
         while (drawnCanvasObjects.current.keys[newObject.id]) {
             newObject.id = Math.floor(Math.random() * 999999);
         }
+        drawnCanvasObjects.current.set(newObject.id, newObject);
 
         return newObject
     }
@@ -166,9 +173,7 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
         const leftChild = getNewObject(x - 100, y + 100, 'Left');
         const rightChild = getNewObject(x + 100, y + 100, 'Right');
 
-        drawnCanvasObjects.current.set(root.id, root);
-        drawnCanvasObjects.current.set(leftChild.id, leftChild);
-        drawnCanvasObjects.current.set(rightChild.id, rightChild);
+
 
         const nodes = [
             root,
@@ -198,20 +203,18 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
     // Adding a new type here is how we can draw a new object,
     const drawNewObject = (x, y, objectType, objectText) => {
         // Add to the arrays to render the objects
-        
-        var newObject = getNewObject(x, y, objectText)
-        newObject.type = objectType;
+
+        var newObject = getNewObject(x, y, objectText, objectType)
+
         console.log('Canvas::drawNewObject::' + newObject.id + '::type::' + newObject.type)
         switch (objectType) {
             // Base objects
             case 'Node':
                 // Assign the id to track the objects
-                drawnCanvasObjects.current.set(newObject.id, newObject)
                 setNodes([...nodes, newObject]);
                 return newObject.id;
             case 'Array':
                 // Assign the id to track the objects
-                drawnCanvasObjects.current.set(newObject.id, newObject)
                 setArrays([...arrays, newObject]);
                 return newObject.id;
             case 'Linked List':
@@ -219,11 +222,9 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
             case 'Tree':
                 return getNewTree(x, y);
             case 'Stack':
-                drawnCanvasObjects.current.set(newObject.id, newObject);
                 setStacks([...stacks, newObject]);
                 return newObject.id;
             case 'Queue':
-                drawnCanvasObjects.current.set(newObject.id, newObject);
                 setQueues([...queues, newObject]);
                 return newObject.id;
         }
@@ -274,8 +275,10 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
         console.log('Canvas::ToggleSelection::' + id);
         if (selectedObjects.current.has(id)) {
             selectedObjects.current.delete(id);
+            console.log('Canvas::ToggleSelection::Removed::' + id);
         } else {
             selectedObjects.current.set(id, drawnCanvasObjects.current.get(id));
+            console.log('Canvas::ToggleSelection::Added::' + id);
         }
         setUpdate(prev => prev + 1); // Force re-render
     };
@@ -326,6 +329,7 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
                     toggleSelection={toggleSelection}
                     removeMe={removeCanvasObject(node.id)}
                     getPointer={drawPointerFromMeToSelectedID(node.id)}
+                    getNewObject={getNewObject}
                 />
             ))}
             {linkedLists.map((list) => (

@@ -2,10 +2,12 @@
 import ArrayNode from "./ArrayNode";
 import PropTypes from 'prop-types'
 import "./Array.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
-const Array = ({ name, x, y, text, selected, toggleSelection, getPointer, removeMe }) => {
+const Array = ({ name, x, y, text, getNewObject, selected, toggleSelection, getPointer, removeMe }) => {
     const [arrayData, setArrayData] = useState([]);
+    const [, setUpdate] = useState(0); // State to trigger re-renders
+    const selectedSubnodes = useRef(new Map());
     const [content, setContent] = useState(text);
     const [inputIsHidden, setInputIsHidden] = useState(true);
 
@@ -30,19 +32,37 @@ const Array = ({ name, x, y, text, selected, toggleSelection, getPointer, remove
         }
     };
 
+    const amISelected = (id) => {
+        return selectedSubnodes.current.has(id);
+    };
+    const toggleSubnodeSelection = (id) => {
+        console.log('Array::toggleSubnodeSelection::' + id);
+        if (selectedSubnodes.current.has(id)) {
+            selectedSubnodes.current.delete(id);
+            console.log('Array::toggleSubnodeSelection::Removed::' + id);
+        } else {
+            selectedSubnodes.current.set(id, true);
+            console.log('Array::toggleSubnodeSelection::Added::' + id);
+        }
+        setUpdate(prev => prev + 1); // Force re-render
+    };
+
     const triggerEdit = (e) => {
         e.stopPropagation();
         setInputIsHidden(false);
     };
 
-    const addToEndOfArray = () => {
-        let ArrayNode = { text: `added  ${arrayData.length}` };
-        setArrayData([...arrayData, ArrayNode])
-    }
-    const addToStartOfArray = () => {
-        let ArrayNode = { text: `added ${arrayData.length}` };
-        setArrayData([ArrayNode, ...arrayData])
-    }
+    const addEmptyArrayNode = () => {
+        const newArrayNode = getNewObject(x, y, 'null', 'Array Node');
+        const newArrayNodeId = newArrayNode.id;
+        newArrayNode.text = newArrayNodeId
+        setArrayData([...arrayData, newArrayNode]);
+        setUpdate(prev => prev + 1); // Force re-render
+    };
+
+    const removeArrayNode = (remove_id) => {
+        setArrayData(prevNodes => prevNodes.filter(node => node.id !== remove_id))
+    };
 
     return (
         <div>
@@ -54,14 +74,14 @@ const Array = ({ name, x, y, text, selected, toggleSelection, getPointer, remove
                 </div>
             )}
             <input
-                    style={{ left: x - 50, top: y - 50}}
-                    hidden={inputIsHidden}
-                    className="changeContent"
-                    type="text"
-                    value={content}
-                    onInput={handleChange}
-                    onKeyDown={handleKeyDown}
-                />
+                style={{ left: x - 50, top: y - 50 }}
+                hidden={inputIsHidden}
+                className="changeContent"
+                type="text"
+                value={content}
+                onInput={handleChange}
+                onKeyDown={handleKeyDown}
+            />
             <div
                 className={selected ? "selected-array" : "array"}
                 style={{ left: x, top: y, border: selected ? '2px solid blue' : '1px solid gray' }}
@@ -70,29 +90,28 @@ const Array = ({ name, x, y, text, selected, toggleSelection, getPointer, remove
                     {content}
                 </h3>
                 <div className="array-container">
-                    <ArrayNode
-                        key='start'
-                        display_index='start'
-                        display_text='+'
-                        onClick={addToStartOfArray}
-                    />
+                    <div
+                        className='addArrayNodeFunction'
+                        onClick={addEmptyArrayNode}
+                    >
+                        <h4>
+                            Add an empty index
+                        </h4>
+                    </div>
                     {arrayData.map((node, index) => (
                         <ArrayNode
-                            key={index}
+                            key={node.id}
+                            name={node.id}
                             display_index={index}
                             display_text={node.text}
+                            selected={amISelected(node.id)}
+                            toggleSelection={toggleSubnodeSelection}
+                            removeMe={() => removeArrayNode(node.id)}
                         />
                     ))}
-                    <ArrayNode
-                        key='end'
-                        display_index='end'
-                        display_text='+'
-                        onClick={addToEndOfArray}
-                    />
                 </div>
             </div>
         </div>
-
     );
 };
 Array.propTypes = {
@@ -100,6 +119,8 @@ Array.propTypes = {
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
     text: PropTypes.string.isRequired,
+    getNewObject: PropTypes.func,
+    removeArrayNode: PropTypes.func,
     selected: PropTypes.bool,
     toggleSelection: PropTypes.func,
     getPointer: PropTypes.func,

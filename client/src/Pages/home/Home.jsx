@@ -31,8 +31,8 @@ const Home = () => {
         var getCanvasObjects = (objects) => {
             var uniqueObjects = []
             objects.forEach(element => {
-                if (!uniqueObjects.includes(element.text)){
-                    uniqueObjects.push(element.text)
+                if (!uniqueObjects.includes(element.type)){
+                    uniqueObjects.push(element.type)
                 }
             });
             return uniqueObjects;

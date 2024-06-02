@@ -18,7 +18,7 @@ const CodeView = ({CanvasObjects}) => {
     );
 
     useEffect(() => {
-        console.log(CanvasObjects);
+        //console.log(CanvasObjects);
         setStructures(CanvasObjects);
     },[CanvasObjects])
 
