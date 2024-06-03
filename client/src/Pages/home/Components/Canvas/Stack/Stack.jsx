@@ -54,7 +54,7 @@ const Stack = ({ name, x, y, text, getNewObject, selected, toggleSelection, getP
     };
 
     const pushToStack = () => {
-        const newStackNode  = getNewObject(x, y, 'null', 'Stack');
+        const newStackNode = getNewObject(x, y, 'null', 'Stack');
         newStackNode.text = `added ${StackedItems} items`
         setStackData([...stackData, newStackNode]);
         setStackedItems(StackedItems + 1);
@@ -63,15 +63,13 @@ const Stack = ({ name, x, y, text, getNewObject, selected, toggleSelection, getP
     const popFromStack = () => {
         setStackData(stackData.slice(0, -1));
     };
+
     const removeArrayNode = (remove_id) => {
         setStackData(prevNodes => prevNodes.filter(node => node.id !== remove_id))
     };
 
     return (
-        <div
-            className={`stack ${selected ? 'selected-stack' : ''}`}
-            style={{ left: x, top: y, border: selected ? '2px solid blue' : '1px solid gray' }}
-        >
+        <div>
             {selected && (
                 <div className="stack-options" style={{ left: x - 36, top: y }}>
                     <button onClick={triggerEdit}>✎</button>
@@ -88,26 +86,32 @@ const Stack = ({ name, x, y, text, getNewObject, selected, toggleSelection, getP
                 onInput={handleChange}
                 onKeyDown={handleKeyDown}
             />
-            <h3 onClick={handleStackClick}>
-                {content}
-            </h3>
-            <div className='stack-functions'>
-                <button onClick={pushToStack}>Push</button>
-                <button onClick={popFromStack}>Pop</button>
+            <div
+                className={`stack ${selected ? 'selected-stack' : ''}`}
+                style={{ left: x, top: y, border: selected ? '2px solid blue' : '1px solid gray' }}
+            >
+                <h3 onClick={handleStackClick}>
+                    {content}
+                </h3>
+                <div className='stack-functions'>
+                    <button onClick={pushToStack}>Push</button>
+                    <button onClick={popFromStack}>Pop</button>
+                </div>
+                <div className="stack-container">
+                    {stackData.map((node, index) => (
+                        <ArrayNode
+                            key={node.id}
+                            name={node.id}
+                            display_index={index}
+                            display_text={node.text}
+                            selected={amISelected(node.id)}
+                            toggleSelection={toggleSubnodeSelection}
+                            removeMe={() => removeArrayNode(node.id)}
+                        />
+                    ))}
+                </div>
             </div>
-            <div className="stack-container">
-                {stackData.map((node, index) => (
-                    <ArrayNode
-                        key={node.id}
-                        name={node.id}
-                        display_index={index}
-                        display_text={node.text}
-                        selected={amISelected(node.id)}
-                        toggleSelection={toggleSubnodeSelection}
-                        removeMe={() => removeArrayNode(node.id)}
-                    />
-                ))}
-            </div>
+
         </div>
     );
 };

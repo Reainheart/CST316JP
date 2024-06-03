@@ -259,6 +259,9 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
             case 'Stack':
                 setStacks(prevStacks => prevStacks.filter(stack => stack.id !== id));
                 break;
+            case 'Queue':
+                setQueues(prevQueues => prevQueues.filter(queue => queue.id !== id));
+                break;
             default:
                 console.warn('Unknown type:', objectType);
         }
@@ -355,15 +358,19 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
                     getNewObject={getNewObject}
                 />
             ))}
-            {queues.map((stack) => (
+            {queues.map((queue) => (
                 <Queue
-                    key={stack.id}
-                    name={stack.id}
-                    x={stack.x}
-                    y={stack.y}
-                    text={stack.text}
-                    onClick={handleObjectClick(stack.id)}
-                    isSelected={selectedObjects.current.has(stack.id)}
+                    key={queue.id}
+                    name={queue.id}
+                    x={queue.x}
+                    y={queue.y}
+                    text={queue.text}
+                    onClick={handleObjectClick(queue.id)}
+                    selected={amISelected(queue.id)}
+                    toggleSelection={toggleSelection}
+                    removeMe={removeCanvasObject(queue.id)}
+                    getPointer={drawPointerFromMeToSelectedID(queue.id)}
+                    getNewObject={getNewObject}
                 />
             ))}
         </>

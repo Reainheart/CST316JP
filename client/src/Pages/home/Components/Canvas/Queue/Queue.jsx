@@ -1,61 +1,128 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import QueueNode from './QueueNode';
+import ArrayNode from '../Array/ArrayNode';
 import './Queue.css';
 
-const Queue = ({ x, y, text, onClick, isSelected }) => {
-    const [isActive, setIsActive] = useState(false);
+const Queue = ({ name, x, y, text, getNewObject, selected, toggleSelection, getPointer, removeMe }) => {
     const [queueData, setQueueData] = useState([]);
+    const [, setUpdate] = useState(0); // State to trigger re-renders
+    const selectedSubnodes = useRef(new Map());
+    const [content, setContent] = useState(text);
+    const [inputIsHidden, setInputIsHidden] = useState(true);
 
     useEffect(() => {
-        setIsActive(isSelected);
-    }, [isSelected]);
+        setInputIsHidden(true); // Hide the input initially or when the node is deselected
+    }, [selected]);
 
-    const handleQueueNodeClick = (event) => {
+    const handleQueueClick = (event) => {
+        // Prevents onClick from bubbling to the parent if it's nested
         event.stopPropagation();
-        setIsActive(!isActive);
-        if (onClick) {
-            onClick(event);
+        toggleSelection(name);
+    };
+
+    const handleChange = (e) => {
+        setContent(e.target.value);
+    };
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault(); // Prevents the default action of adding a new line
+            setInputIsHidden(true);
         }
     };
 
+    const amISelected = (id) => {
+        return selectedSubnodes.current.has(id);
+    };
+    const toggleSubnodeSelection = (id) => {
+        console.log('Queue::toggleSubnodeSelection::' + id);
+        if (selectedSubnodes.current.has(id)) {
+            selectedSubnodes.current.delete(id);
+            console.log('Queue::toggleSubnodeSelection::Removed::' + id);
+        } else {
+            selectedSubnodes.current.set(id, true);
+            console.log('Queue::toggleSubnodeSelection::Added::' + id);
+        }
+        setUpdate(prev => prev + 1); // Force re-render
+    };
+
+    const triggerEdit = (e) => {
+        e.stopPropagation();
+        setInputIsHidden(false);
+    };
+
     const pushToQueue = () => {
-        let newNode = { text: `added ${queueData.length}` };
-        setQueueData([...queueData, newNode]);
+        const newQueueNode = getNewObject(x, y, 'null', 'Queue Node');
+        const newQueueNodeId = newQueueNode.id;
+        newQueueNode.text = newQueueNodeId
+        setQueueData([...queueData, newQueueNode]);
     };
 
     const popFromQueue = () => {
         setQueueData(queueData.slice(1, queueData.length));
     };
 
-    return (
-        <div className={`queue ${isSelected ? 'selected-queue' : ''}`} style={{ left: x, top: y }}>
-            <h3>{text}</h3>
-            <div className="queue-container">
-                <button onClick={popFromQueue}>Pop</button>
-                {queueData.map((node, index) => (
-                    <QueueNode
-                        key={index}
-                        display_index={index}
-                        display_text={node.text}
-                        onClick={handleQueueNodeClick}
-                    />
-                ))}
-                <button onClick={pushToQueue}>Push</button>
+    const removeArrayNode = (remove_id) => {
+        setQueueData(prevNodes => prevNodes.filter(node => node.id !== remove_id))
+    };
 
+    return (
+        <div>
+            {selected && (
+                <div className="queue-options" style={{ left: x - 36, top: y }}>
+                    <button onClick={triggerEdit}>✎</button>
+                    <button onClick={removeMe}>␥</button>
+                    <button onClick={getPointer}>→</button>
+                </div>
+            )}
+            <input
+                style={{ left: x - 50, top: y - 50 }}
+                hidden={inputIsHidden}
+                className="changeContent"
+                type="text"
+                value={content}
+                onInput={handleChange}
+                onKeyDown={handleKeyDown}
+            />
+            <div className={`queue ${selected ? 'selected-queue' : ''}`} style={{ left: x, top: y }}>
+            <h3 onClick={handleQueueClick}>
+                {content}
+            </h3>
+                <div className='queue-functions'>
+                    <button onClick={popFromQueue}>Pop</button>
+                    <button onClick={pushToQueue}>Push</button>
+                </div>
+                <div className="queue-container">
+
+                    {queueData.map((node, index) => (
+                        <ArrayNode
+                            key={node.id}
+                            name={node.id}
+                            display_index={index}
+                            display_text={node.text}
+                            selected={amISelected(node.id)}
+                            toggleSelection={toggleSubnodeSelection}
+                            removeMe={() => removeArrayNode(node.id)}
+                        />
+                    ))}
+
+                </div>
             </div>
         </div>
+
     );
 };
-
-
 Queue.propTypes = {
     name: PropTypes.number.isRequired,
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
     text: PropTypes.string.isRequired,
-    onClick: PropTypes.func,
-    isSelected: PropTypes.bool
+    getNewObject: PropTypes.func,
+    removeArrayNode: PropTypes.func,
+    selected: PropTypes.bool,
+    toggleSelection: PropTypes.func,
+    getPointer: PropTypes.func,
+    removeMe: PropTypes.func,
 };
 
 export default Queue;
