@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import Node from "./Node/Node";
 import Pointer from "./Pointer/Pointer";
 import Array from "./Array/Array";
-import LinkedList from "./LinkedList/LinkedList";
 import Tree from "./Tree/Tree";
 import Queue from "./Queue/Queue";
 import Stack from "./Stack/Stack"
@@ -18,6 +17,8 @@ const THRESHOLD = 65;
 for (let angle = 0; angle < 360; angle++) {
     degrees.push(angle);
 }
+
+
 
 const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeight }) => {
     const canvasRef = useRef(null);
@@ -102,6 +103,12 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
         })
     }
 
+    const drawPointerObject = (from_id, to_id) => {
+        const newPointer = getPointerObject(from_id, to_id);
+        setPointers([...pointers, newPointer])
+        return newPointer.id
+    }
+
     const getPointerObject = (from_id, to_id) => {
         //create defualt pointer
         const newPointer = getBlankPointer()
@@ -127,53 +134,47 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
     }
 
     const getNewLinkedList = (x, y) => {
-        // Create the schema Arrays
-        var linkedNodes = []
-        var linkedPointers = []
 
-        // Push the schema for new objects for the linked nodes
-        for (let i = 0; i < 3; i++) {
-            linkedNodes.push(getNewObject(x + (150 * i), y, 'Linked\nNode'))
+        // Start from X and Y, get the object for head buffer, value, and tail buffer node 
+        const head = getNewObject(x, y, 'head buffer', 'Node');
+        const dummy = getNewObject(x + 150, y, 'value', 'Node');
+        const tail = getNewObject(x + 300, y, 'tail buffer', 'Node');
+
+        // Draw the nodes, all nodes drawn MUST be drawn at the same time
+        setNodes([...nodes, head, dummy, tail])
+
+        // Get the pointers to build the object using IDs
+        const headToDummy = getPointerObject(head.id, dummy.id);
+        const dummyToTail = getPointerObject(dummy.id, tail.id);
+
+        // Draw the pointers, all pointers drawn MUST be drawn at the same time
+        setPointers([...pointers, headToDummy, dummyToTail]);
+
+        // Build the New Linked list as a schema
+        const newLinkedListSchema = {
+            baseObject: getNewObject(x, y, 'Linked List', 'Linked List'),
+            relatedNodeIDs: [
+                head.id,
+                dummy.id,
+                tail.id
+            ],
+            relatedPointerIDs: [
+                headToDummy.id,
+                dummyToTail.id
+            ]
         }
 
-        // n -1 pointers to be created, get a previous and go to end
-        var last_id = null;
-        linkedNodes.forEach((linkedNode) => {
-            drawnCanvasObjects.current.set(linkedNode.id, linkedNode)
+        // We don't render the schema, but we do track that there is an object for code generation
+        setLinkedLists([...linkedLists, newLinkedListSchema]);
 
-            //Skip the head node
-            if (last_id == null) {
-                last_id = linkedNode.id
-            } else {
-                //creating pointers for the 3 nodes
-                linkedPointers.push(getPointerObject(last_id, linkedNode.id))// Track Drawn Objects
-                last_id = linkedNode.id
-            }
-        })
-
-        // Build Linked List Object Schema
-        var newLinkedList = {
-            id: Math.floor(Math.random() * 999999),
-            nodes: linkedNodes,
-            pointers: linkedPointers
-        }
-        //Guarentee non-allocated ID
-        while (drawnCanvasObjects.current.keys[newLinkedList.id]) {
-            newLinkedList.id = Math.floor(Math.random() * 999999);
-        }
-
-        // Place Linked List Object Schema to be rendered
-        setLinkedLists([...linkedLists, newLinkedList]);
-
-        return newLinkedList.id
+        return newLinkedListSchema.id
     }
 
     const getNewTree = (x, y) => {
-        const root = getNewObject(x, y, 'Root');
-        const leftChild = getNewObject(x - 100, y + 100, 'Left');
-        const rightChild = getNewObject(x + 100, y + 100, 'Right');
-
-
+        const tree = new tree()
+        const root = getNewObject(x, y, 'Root', 'treeNode');
+        const leftChild = getNewObject(x - 100, y + 100, 'Left', 'treeNode');
+        const rightChild = getNewObject(x + 100, y + 100, 'Right', 'treeNode');
 
         const nodes = [
             root,
@@ -201,7 +202,7 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
     };
 
     // Adding a new type here is how we can draw a new object,
-    const drawNewObject = (x, y, objectType, objectText) => {
+    const drawNewObject = (x, y, objectText, objectType) => {
         // Add to the arrays to render the objects
 
         var newObject = getNewObject(x, y, objectText, objectType)
@@ -227,6 +228,8 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
             case 'Queue':
                 setQueues([...queues, newObject]);
                 return newObject.id;
+            default:
+                console.warn('Unknown type:', objectType);
         }
     };
     // This can also be passed to objects Like Array to draw their new items
@@ -330,14 +333,6 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
                     removeMe={removeCanvasObject(node.id)}
                     getPointer={drawPointerFromMeToSelectedID(node.id)}
                     getNewObject={getNewObject}
-                />
-            ))}
-            {linkedLists.map((list) => (
-                <LinkedList
-                    key={list.id}
-                    name={list.id}
-                    nodes={list.nodes}
-                    pointers={list.pointers}
                 />
             ))}
             {trees.map((tree) => (

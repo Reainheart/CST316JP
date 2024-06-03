@@ -17,8 +17,8 @@
 }
 
 .nodeText {
-    line-height: 100px;
-    font-size: larger;
+    line-height: 50px;
+    font-size: small;
     margin: 0;
     color: #e12885;
 }
