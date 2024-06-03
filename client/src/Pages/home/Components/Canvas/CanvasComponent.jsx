@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import Node from "./Node/Node";
 import Pointer from "./Pointer/Pointer";
 import Array from "./Array/Array";
-import Tree from "./Tree/Tree";
 import Queue from "./Queue/Queue";
 import Stack from "./Stack/Stack"
 import "./canvasComponent.css";
@@ -81,12 +80,13 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
             from_y: 0,
             to_x: 0,
             to_y: 0,
-            connectedFromObject: null,
-            connectedToObject: null
+            from_ID: 0,
+            to_ID: 0,
         }
         while (drawnCanvasObjects.current.keys[newPointer.id]) {
             newPointer.id = Math.floor(Math.random() * 999999);
         }
+        drawnCanvasObjects.current.set(newPointer.id, newPointer)
 
         return newPointer
     }
@@ -103,12 +103,6 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
         })
     }
 
-    const drawPointerObject = (from_id, to_id) => {
-        const newPointer = getPointerObject(from_id, to_id);
-        setPointers([...pointers, newPointer])
-        return newPointer.id
-    }
-
     const getPointerObject = (from_id, to_id) => {
         //create defualt pointer
         const newPointer = getBlankPointer()
@@ -116,18 +110,19 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
         //update the pointer to the object passed if it exists
         if (from_id) {
             const fromObject = drawnCanvasObjects.current.get(from_id)
-            newPointer.connectedToObject = fromObject
-            console.log(fromObject)
+            newPointer.from_ID = fromObject.id
             newPointer.from_x = fromObject.x + RADIUS
             newPointer.from_y = fromObject.y + RADIUS
+            console.log('Canvas::getPointerObject::from_ID::' + fromObject.id)
         }
 
+        //update the pointer to the object passed if it exists
         if (to_id) {
             const toObject = drawnCanvasObjects.current.get(to_id)
-            newPointer.connectedToObject = toObject
-            console.log(toObject)
+            newPointer.to_id = toObject.id
             newPointer.to_x = toObject.x + RADIUS
             newPointer.to_y = toObject.y + RADIUS
+            console.log('Canvas::getPointerObject::to_ID::' + toObject.to_ID)
         }
 
         return newPointer
@@ -171,37 +166,42 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
     }
 
     const getNewTree = (x, y) => {
-        const tree = new tree()
-        const root = getNewObject(x, y, 'Root', 'treeNode');
-        const leftChild = getNewObject(x - 100, y + 100, 'Left', 'treeNode');
-        const rightChild = getNewObject(x + 100, y + 100, 'Right', 'treeNode');
 
-        const nodes = [
-            root,
-            leftChild,
-            rightChild
-        ];
+        const root = getNewObject(x, y, 'Tree Root', 'Node');
+        const leftChild = getNewObject(x - 100, y + 100, 'Left Child', 'Node');
+        const rightChild = getNewObject(x + 100, y + 100, 'Right Child', 'Node');
 
-        const pointers = [
-            getPointerObject(root.id, leftChild.id),
-            getPointerObject(root.id, rightChild.id)
-        ];
+        // Draw the nodes, all nodes drawn MUST be drawn at the same time
+        setNodes([...nodes, root, leftChild, rightChild]);
 
+        const rootToleftChild = getPointerObject(root.id, leftChild.id);
+        const rootTorightChild = getPointerObject(root.id, rightChild.id);
+
+        // Draw the pointers, all pointers drawn MUST be drawn at the same time
+        setPointers([...pointers, rootToleftChild, rootTorightChild]);
+
+        // Build the New Tree as a schema
         const newTree = {
-            id: Math.floor(Math.random() * 999999),
-            nodes: nodes,
-            pointers: pointers,
-
+            baseObject: getNewObject(x, y, 'Tree', 'Tree'),
+            relatedNodeIDs: [
+                root.id,
+                leftChild.id,
+                rightChild.id
+            ],
+            relatedPointerIDs: [
+                rootToleftChild.id,
+                rootTorightChild.id
+            ]
         };
-        while (drawnCanvasObjects.current.keys[newTree.id]) {
-            newTree.id = Math.floor(Math.random() * 999999);
-        }
+
         setTrees([...trees, newTree]);
 
         return newTree.id;
     };
 
     // Adding a new type here is how we can draw a new object,
+    // This can also be passed to objects Like Array to draw their new items
+
     const drawNewObject = (x, y, objectText, objectType) => {
         // Add to the arrays to render the objects
 
@@ -232,7 +232,7 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
                 console.warn('Unknown type:', objectType);
         }
     };
-    // This can also be passed to objects Like Array to draw their new items
+
 
     const removeCanvasObject = (id) => (event) => {
         event.stopPropagation();
@@ -242,6 +242,7 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
         switch (objectType) {
             case 'Node':
                 setNodes(prevNodes => prevNodes.filter(node => node.id !== id));
+                setPointers(prevPointers => prevPointers.filter(pointer => pointer.from_ID !== id));
                 break;
             case 'Pointer':
                 setPointers(prevPointers => prevPointers.filter(pointer => pointer.id !== id));
@@ -254,6 +255,9 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
                 break;
             case 'Tree':
                 setTrees(prevTrees => prevTrees.filter(tree => tree.id !== id));
+                break;
+            case 'Stack':
+                setStacks(prevStacks => prevStacks.filter(stack => stack.id !== id));
                 break;
             default:
                 console.warn('Unknown type:', objectType);
@@ -270,6 +274,7 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
         console.log(selectedObjects);
     };
 
+    // Functional code to track selection state on Nodes
     const amISelected = (id) => {
         return selectedObjects.current.has(id);
     };
@@ -302,8 +307,8 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
                     from_y={pointer.from_y}
                     to_x={pointer.to_x}
                     to_y={pointer.to_y}
-                    connectedFromObject={pointer.connectedFromObject}
-                    connectedToObject={pointer.connectedToObject}
+                    to_ID={pointer.to_ID}
+                    from_ID={pointer.from_ID}
                 />
             ))}
             {nodes.map((node) => (
@@ -320,27 +325,19 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
                     getPointer={drawPointerFromMeToSelectedID(node.id)}
                 />
             ))}
-            {arrays.map((node) => (
+            {arrays.map((array) => (
                 <Array
-                    key={node.id}
-                    name={node.id}
-                    x={node.x}
-                    y={node.y}
-                    text={node.text}
-                    onClick={handleObjectClick(node.id)}
-                    selected={amISelected(node.id)}
+                    key={array.id}
+                    name={array.id}
+                    x={array.x}
+                    y={array.y}
+                    text={array.text}
+                    onClick={handleObjectClick(array.id)}
+                    selected={amISelected(array.id)}
                     toggleSelection={toggleSelection}
-                    removeMe={removeCanvasObject(node.id)}
-                    getPointer={drawPointerFromMeToSelectedID(node.id)}
+                    removeMe={removeCanvasObject(array.id)}
+                    getPointer={drawPointerFromMeToSelectedID(array.id)}
                     getNewObject={getNewObject}
-                />
-            ))}
-            {trees.map((tree) => (
-                <Tree
-                    key={tree.id}
-                    name={tree.id}
-                    nodes={tree.nodes}
-                    pointers={tree.pointers}
                 />
             ))}
             {stacks.map((stack) => (
@@ -351,7 +348,11 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
                     y={stack.y}
                     text={stack.text}
                     onClick={handleObjectClick(stack.id)}
-                    isSelected={selectedObjects.current.has(stack.id)}
+                    selected={amISelected(stack.id)}
+                    toggleSelection={toggleSelection}
+                    removeMe={removeCanvasObject(stack.id)}
+                    getPointer={drawPointerFromMeToSelectedID(stack.id)}
+                    getNewObject={getNewObject}
                 />
             ))}
             {queues.map((stack) => (

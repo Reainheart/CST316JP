@@ -3,12 +3,12 @@ import { useState, useEffect } from 'react';
 import './pointer.css'
 import PropTypes from 'prop-types';
 
-const Pointer = ({ from_x, from_y, to_x, to_y, connectedFromObject, connectedToObject }) => {
+const Pointer = ({ from_x, from_y, to_x, to_y, from_id, to_id }) => {
     const [isNullPointer, setIsNullPointer] = useState(false)
     
-    useEffect(() => {
-        !connectedToObject ? setIsNullPointer(true) : setIsNullPointer(false)
-    }, [connectedToObject])
+    // useEffect(() => {
+    //     !connectedToObject ? setIsNullPointer(true) : setIsNullPointer(false)
+    // }, [connectedToObject])
 
     // Calculate the angle of the arrow
     const angle = Math.atan2(to_y - from_y, to_x - from_x) * 180 / Math.PI;
@@ -49,7 +49,7 @@ Pointer.propTypes = {
     from_y: PropTypes.number,
     to_x: PropTypes.number,
     to_y: PropTypes.number,
-    connectedFromObject: PropTypes.any,
-    connectedToObject: PropTypes.any
+    from_id: PropTypes.number,
+    to_id: PropTypes.number,
 };
 export default Pointer;
