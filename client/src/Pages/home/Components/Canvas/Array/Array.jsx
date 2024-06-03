@@ -84,20 +84,16 @@ const Array = ({ name, x, y, text, getNewObject, selected, toggleSelection, getP
             />
             <div
                 className={selected ? "selected-array" : "array"}
-                style={{ left: x, top: y, border: selected ? '2px solid blue' : '1px solid gray' }}
+                style={{ left: x, top: y }}
             >
                 <h3 onClick={handleArrayClick}>
                     {content}
                 </h3>
+                <div className='array-functions'>
+                    <button onClick={addEmptyArrayNode}>Add new Index</button>
+                </div>
                 <div className="array-container">
-                    <div
-                        className='addArrayNodeFunction'
-                        onClick={addEmptyArrayNode}
-                    >
-                        <h4>
-                            Add an empty index
-                        </h4>
-                    </div>
+
                     {arrayData.map((node, index) => (
                         <ArrayNode
                             key={node.id}
