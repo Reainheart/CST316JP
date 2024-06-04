@@ -10,7 +10,7 @@ const sampleCodeArray = "http://localhost:3000/GetSampleCodeArray";
 const sampleCodeLinkedList = "http://localhost:3000/GetSampleCodeLinkedList";
 
 
-const CodeView = ({CanvasObjects}) => {
+const CodeView = ({ CanvasObjects }) => {
     const [selectedLanguage, setSelectedLanguage] = useState("C++");
     const [structures, setStructures] = useState([]);
     const [selectedLanguageCode, setSelectedLanguageCode] = useState(
@@ -20,7 +20,7 @@ const CodeView = ({CanvasObjects}) => {
     useEffect(() => {
         //console.log(CanvasObjects);
         setStructures(CanvasObjects);
-    },[CanvasObjects])
+    }, [CanvasObjects])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -53,22 +53,26 @@ const CodeView = ({CanvasObjects}) => {
     }, [selectedLanguage]); // This will re-fetch when selectedLanguage changes
 
     return (
-        <div>
-            <Card>
-                <div className="card-header">
-                    <CodeLanguageSelector
-                        selectedLanguage={selectedLanguage}
-                        setSelectedLanguage={setSelectedLanguage}
-                    />
-                </div>
-                <div className="card-body">
-                    <CodeViewWindow
-                        selectedLanguage={selectedLanguage}
-                        selectedLanguageCode={selectedLanguageCode}
-                    />
-                    {structures}
-                </div>
-            </Card>
+        <div className="CodeView">
+            <p>We need to map the structures object into a map of the Cards for each object</p>
+            <h4>{structures}</h4>
+            <div className="code-view-card">
+                <Card>
+                    <div className="card-header">
+
+                        <CodeLanguageSelector
+                            selectedLanguage={selectedLanguage}
+                            setSelectedLanguage={setSelectedLanguage}
+                        />
+                    </div>
+                    <div className="card-body">
+                        <CodeViewWindow
+                            selectedLanguage={selectedLanguage}
+                            selectedLanguageCode={selectedLanguageCode}
+                        />
+                    </div>
+                </Card>
+            </div>
         </div>
     );
 };

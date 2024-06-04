@@ -9,7 +9,7 @@ const ViewSelectionMenu = ({ setSelectedView }) => {
     };
 
     return (
-        <div>
+        <div className="view-selection-menu">
             <ButtonGroup
                 className="btn-group"
                 role="group"

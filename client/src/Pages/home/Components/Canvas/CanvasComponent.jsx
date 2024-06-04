@@ -17,8 +17,6 @@ for (let angle = 0; angle < 360; angle++) {
     degrees.push(angle);
 }
 
-
-
 const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeight }) => {
     const canvasRef = useRef(null);
     const [nodes, setNodes] = useState([]); // State to track nodes
