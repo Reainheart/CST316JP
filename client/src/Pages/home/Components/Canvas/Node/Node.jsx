@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import AnchorPoint from "../AnchorPoint/AnchorPoint";
 import "./Node.css";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 const RADIUS = 30;
 const degrees = [];
@@ -13,15 +13,24 @@ for (let angle = 0; angle < 360; angle += 45) {
 // Function to calculate point on the circumference of a circle given an angle
 function anchorPointsOnCircle(angleInDegrees, centerX, centerY) {
     // Convert angle from degrees to radians
-    const angleInRadians = angleInDegrees * Math.PI / 180;
+    const angleInRadians = (angleInDegrees * Math.PI) / 180;
 
-    const x = (centerX + RADIUS) + RADIUS * Math.cos(angleInRadians);
-    const y = (centerY + RADIUS) + RADIUS * Math.sin(angleInRadians);
+    const x = centerX + RADIUS + RADIUS * Math.cos(angleInRadians);
+    const y = centerY + RADIUS + RADIUS * Math.sin(angleInRadians);
 
     return { x, y };
 }
 
-const Node = ({ name, x, y, text, selected, toggleSelection, getPointer, removeMe }) => {
+const Node = ({
+    name,
+    x,
+    y,
+    text,
+    selected,
+    toggleSelection,
+    getPointer,
+    removeMe,
+}) => {
     const [content, setContent] = useState(text);
     const [inputIsHidden, setInputIsHidden] = useState(true);
     const nodeRef = useRef(null);
@@ -41,7 +50,7 @@ const Node = ({ name, x, y, text, selected, toggleSelection, getPointer, removeM
     };
 
     const handleKeyDown = (e) => {
-        if (e.key === 'Enter') {
+        if (e.key === "Enter") {
             e.preventDefault(); // Prevents the default action of adding a new line
             setInputIsHidden(true);
         }
@@ -55,7 +64,10 @@ const Node = ({ name, x, y, text, selected, toggleSelection, getPointer, removeM
     return (
         <div>
             {selected && (
-                <div className="node-options" style={{ left: x - 10.5, top: y - 35 }}>
+                <div
+                    className="node-options"
+                    style={{ left: x - 10.5, top: y - 35 }}
+                >
                     <button onClick={triggerEdit}>✎</button>
                     <button onClick={removeMe}>␥</button>
                     <button onClick={getPointer}>→</button>
@@ -63,23 +75,25 @@ const Node = ({ name, x, y, text, selected, toggleSelection, getPointer, removeM
             )}
             {degrees.map((angle) => (
                 <AnchorPoint
-                    key={'node_' + name + '_ap_' + angle}
+                    key={"node_" + name + "_ap_" + angle}
                     x={anchorPointsOnCircle(angle, x, y).x}
                     y={anchorPointsOnCircle(angle, x, y).y}
                 />
             ))}
             <div
                 className="node"
-                style={{ left: x, top: y, border: selected ? '2px solid blue' : '1px solid gray' }}
+                style={{
+                    left: x,
+                    top: y,
+                    border: selected ? "2px solid black" : "1px solid black",
+                }}
                 onClick={handleNodeClick}
                 ref={nodeRef}
             >
-                <p className="nodeText">
-                    {content}
-                </p>
+                <p className="nodeText">{content}</p>
             </div>
             <input
-                style={{ left: x, top: y}}
+                style={{ left: x, top: y }}
                 hidden={inputIsHidden}
                 className="changeContent"
                 type="text"

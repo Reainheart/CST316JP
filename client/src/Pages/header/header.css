@@ -1,21 +1,38 @@
 .navbar {
-    background-color: #0b0c10;
+    background-color: #ffffff;
 }
 
 .brand {
-    color: #66fcf1 !important;
+    color: black !important;
     font-size: 2rem;
     font-weight: bold;
+    font-family: "Dosis", sans-serif;
 }
+
 .nav-link {
-    color: #45a29e !important;
+    color: black !important;
+    background-color: #e0e0e0;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    font-weight: 500;
+    padding: 5px 15px;
+    margin: 0.5rem;
 }
 
 .nav-link.active {
-    color: #66fcf1 !important;
-    font-weight: 1000;
+    color: white !important;
+    background-color: black;
+}
+
+.nav-link:hover {
+    color: white !important;
+    background-color: black;
 }
 
 .navbar-toggler {
-    background-color: #66fcf1 !important;
+    background-color: #e0e0e0 !important;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'><path stroke='black' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/></svg>") !important;
 }

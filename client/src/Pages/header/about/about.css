@@ -1,13 +1,14 @@
 .about-text {
     text-align: center;
-    color: #66fcf1;
+    color: black;
 }
 
 .about-text h5 {
     margin-top: 5rem;
+    color: black;
 }
 
 .about-div {
-    background-color: #0b0c10;
+    background-color: white;
     padding-bottom: 10rem;
 }

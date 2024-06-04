@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Dosis:wght@700&display=swap");
 body {
     height: max-content;
+    font-family: "Dosis", sans-serif;
 }

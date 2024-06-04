@@ -2,7 +2,10 @@
 h1,
 p {
     text-align: center;
-    color: #66fcf1;
+    color: black;
+    padding-left: 25%;
+    padding-right: 25%;
+    font-size: 1.5rem;
 }
 
 .button-group-container {
@@ -20,29 +23,36 @@ p {
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
-    background-color: #0b0c10;
+    background-color: white;
 }
 
 .button-group .btn {
     width: 300px;
     height: 150px;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     border-radius: 5rem;
     border-width: 0.2rem;
-    border-color: hsl(176, 96%, 69%);
-    color: #66fcf1;
-    background-color: #0b0c10;
-    height: 7rem;
-    width: 20rem;
+    border-color: #e0e0e0;
+    color: black;
+    background-color: #e0e0e0;
+    height: 5rem;
+    width: 10rem;
     margin: 1rem;
 }
 
 .instruct-page-content {
-    background-color: #0b0c10;
+    background-color: white;
     padding-bottom: 5rem;
 }
 
 .button-group .btn:hover {
-    background-color: #45a29e;
-    color: #0b0c10;
+    background-color: black;
+    border-color: black;
+    color: white;
+}
+
+.button-group .btn.active {
+    background-color: black !important;
+    border-color: black !important;
+    color: white !important;
 }
