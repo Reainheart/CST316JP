@@ -1,0 +1,6 @@
+.CodeView {
+    display: flex;
+    flex-direction: column;
+    flex-grow: unset;
+    flex-shrink: unset;
+}

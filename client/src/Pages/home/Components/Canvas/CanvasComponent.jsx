@@ -74,6 +74,7 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
         // Create default pointer
         const newPointer = {
             id: Math.floor(Math.random() * 999999),
+            type: 'Pointer',
             from_x: 0,
             from_y: 0,
             to_x: 0,
@@ -129,9 +130,9 @@ const CanvasComponent = ({ objectToDraw, drawnCanvasObjects, HomeWidth, HomeHeig
     const getNewLinkedList = (x, y) => {
 
         // Start from X and Y, get the object for head buffer, value, and tail buffer node 
-        const head = getNewObject(x, y, 'head buffer', 'Node');
+        const head = getNewObject(x, y, 'head value', 'Node');
         const dummy = getNewObject(x + 150, y, 'value', 'Node');
-        const tail = getNewObject(x + 300, y, 'tail buffer', 'Node');
+        const tail = getNewObject(x + 300, y, 'tail value', 'Node');
 
         // Draw the nodes, all nodes drawn MUST be drawn at the same time
         setNodes([...nodes, head, dummy, tail])

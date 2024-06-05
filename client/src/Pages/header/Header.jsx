@@ -13,7 +13,7 @@ const Header = () => {
         <Navbar className="navbar" expand="lg">
             <Container>
                 <Navbar.Brand className="brand" as={RouterNavLink} to="/home">
-                    Data Structures
+                    OmniNode
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">

@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
-//import React, { useState, useRef, useEffect } from "react";
-import "./Code-View-Window.css";
+import "./Code-View.css";
 
 const CodeViewWindow = (props) => {
     return (
