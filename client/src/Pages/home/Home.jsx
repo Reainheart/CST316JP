@@ -17,8 +17,8 @@ const Home = () => {
 
     // Map to track all objects and Interacts with CodeView
     const drawnCanvasObjects = useRef(new Map())
-    const [learningToolMenuWidth, setlearningToolMenuWidth] = useState((window.innerWidth * 2 / 8 ) - 5);
-    const [learningToolMenuHeight, setlearningToolMenuHeight] = useState(window.innerHeight - headerHeight - toolbarHeight - 10);
+    const [learningToolMenuWidth, setlearningToolMenuWidth] = useState(window.innerWidth * 2 / 8 );
+    const [learningToolMenuHeight, setlearningToolMenuHeight] = useState(window.innerHeight - headerHeight - toolbarHeight);
 
     const onReSize = () => {
         setcanvasWidth(window.innerWidth * 6 / 8);
@@ -31,7 +31,7 @@ const Home = () => {
         var getCanvasObjects = (objects) => {
             var uniqueObjects = []
             objects.forEach(element => {
-                if (!uniqueObjects.includes(element.type)){
+                if (!uniqueObjects.includes(element.type) && element.type != 'Pointer'){
                     uniqueObjects.push(element.type)
                 }
             });

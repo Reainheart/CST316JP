@@ -11,4 +11,7 @@
 .about-div {
     background-color: white;
     padding-bottom: 10rem;
+    display: flex;
+    justify-content: left;
 }
+

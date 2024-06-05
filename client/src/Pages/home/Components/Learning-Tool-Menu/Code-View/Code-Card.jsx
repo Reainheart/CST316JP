@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 
 const CodeCard = ({ structureName }) => {
     const [selectedLanguage, setSelectedLanguage] = useState("C++");
+    const [open, toggleOpen] = useState(true);
     const [selectedLanguageCode, setSelectedLanguageCode] = useState(
         "Select a language to view the example."
     );
@@ -14,7 +15,8 @@ const CodeCard = ({ structureName }) => {
     useEffect(() => {
         const fetchData = async () => {
             const url = "http://localhost:3000/GetSampleCode";
-            const structureUrl = url + structureName
+            const urlsafeStructureName = structureName.replace(' ', '')
+            const structureUrl = url + urlsafeStructureName
             fetch(structureUrl).then((response) => {
                 if (!response.ok) {
                     throw new Error(
@@ -31,7 +33,7 @@ const CodeCard = ({ structureName }) => {
                         ? languageData.Example
                         : `No example code found for ${selectedLanguage}`
                 );
-            }).catch((error)=>{
+            }).catch((error) => {
                 console.error("Fetching error:", error);
                 setSelectedLanguageCode(
                     `Failed to load data: ${error.message}`
@@ -39,28 +41,32 @@ const CodeCard = ({ structureName }) => {
             })
         };
         fetchData();
-    }, []); // This will re-fetch when selectedLanguage changes
+    }, [selectedLanguage, structureName]); // This will re-fetch when selectedLanguage changes
 
     return (
-            <div className="code-view-card">
-                <Card>
-                    <h5>
-                        {structureName}
-                    </h5>
-                    <div className="card-header">
-                        <CodeLanguageSelector
-                            selectedLanguage={selectedLanguage}
-                            setSelectedLanguage={setSelectedLanguage}
-                        />
+        <div className="code-view-card">
+            <Card>
+                <div className="card-header">
+                    <div>
+                        <h5>{structureName}</h5>
                     </div>
-                    <div className="card-body">
+                    <CodeLanguageSelector
+                        selectedLanguage={selectedLanguage}
+                        setSelectedLanguage={setSelectedLanguage}
+                        collapseCodeView={() => { toggleOpen(!open) }}
+                        isCodeViewOpen={open}
+                    />
+                </div>
+                <div className={open ? 'collapse.show' : 'collapse'}>
+                    <div className="card-body" >
                         <CodeViewWindow
                             selectedLanguage={selectedLanguage}
                             selectedLanguageCode={selectedLanguageCode}
                         />
                     </div>
-                </Card>
-        </div>
+                </div>
+            </Card >
+        </div >
     );
 };
 CodeCard.propTypes = {

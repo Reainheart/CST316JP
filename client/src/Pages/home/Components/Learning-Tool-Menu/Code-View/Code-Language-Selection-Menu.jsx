@@ -10,29 +10,44 @@ const CodeLanguageSelector = (props) => {
     };
 
     return (
-        <div>
-            <ButtonGroup aria-label="Language Selector">
-                <Button
-                    variant="secondary"
-                    onClick={() => handleLanguageClick("C++")}
-                    active={props.selectedLanguage === "C++"}
-                >
-                    C++
-                </Button>
-                <Button
-                    variant="secondary"
-                    onClick={() => handleLanguageClick("Python")}
-                    active={props.selectedLanguage === "Python"}
-                >
-                    Python
-                </Button>
-                <Button
-                    variant="secondary"
-                    onClick={() => handleLanguageClick("Java")}
-                    active={props.selectedLanguage === "Java"}
-                >
-                    Java
-                </Button>
+        <div className="btn-toolbar justify-content-between">
+            <ButtonGroup className="btn-toolbar justify-content-between" aria-label="Language Selector">
+                <div className="btn-group" role="group" aria-label="First group">
+                    <Button
+                        variant="secondary"
+                        onClick={() => handleLanguageClick("C++")}
+                        active={props.selectedLanguage === "C++"}
+                    >
+                        C++
+                    </Button>
+                    <Button
+                        variant="secondary"
+                        onClick={() => handleLanguageClick("Python")}
+                        active={props.selectedLanguage === "Python"}
+                    >
+                        Python
+                    </Button>
+                    <Button
+                        variant="secondary"
+                        onClick={() => handleLanguageClick("Java")}
+                        active={props.selectedLanguage === "Java"}
+                    >
+                        Java
+                    </Button>
+                </div>
+
+            </ButtonGroup>
+            <ButtonGroup className="btn-toolbar justify-content-between" aria-label="Language Selector">
+                <div className="btn-group" role="group" aria-label="First group">
+                    <Button
+                        variant="secondary"
+                        onClick={props.collapseCodeView}
+                        active={props.open}
+                    >
+                        {props.open ? '^' : 'v'}
+                    </Button>
+                </div>
+
             </ButtonGroup>
         </div>
     );
