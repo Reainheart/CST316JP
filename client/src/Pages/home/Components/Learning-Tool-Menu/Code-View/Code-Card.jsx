@@ -4,8 +4,10 @@ import Card from "react-bootstrap/card";
 import CodeViewWindow from "./Code-View-Window";
 import CodeLanguageSelector from "./Code-Language-Selection-Menu";
 import PropTypes from 'prop-types';
+import Button from "react-bootstrap/Button";
 
-const CodeCard = ({ structureName }) => {
+
+const CodeCard = ({ structureName, closeCard }) => {
     const [selectedLanguage, setSelectedLanguage] = useState("C++");
     const [open, toggleOpen] = useState(true);
     const [selectedLanguageCode, setSelectedLanguageCode] = useState(
@@ -35,27 +37,53 @@ const CodeCard = ({ structureName }) => {
                 );
             }).catch((error) => {
                 console.error("Fetching error:", error);
-                setSelectedLanguageCode(
-                    `Failed to load data: ${error.message}`
-                );
+                if ((error.message).includes('404'))
+                    setSelectedLanguage('coming soon')
+                else
+                    setSelectedLanguageCode(
+                        `Failed to load data: ${error.message}`
+                    );
             })
         };
         fetchData();
     }, [selectedLanguage, structureName]); // This will re-fetch when selectedLanguage changes
 
+    const copyToClipboard = (text) => () => {
+        navigator.clipboard.writeText(text)
+            .then(() => {
+                console.log('Copied to clipboard:', text);
+            })
+            .catch(err => {
+                console.log('Failed to copy:', err);
+            });
+    };
+
     return (
-        <div className="code-view-card">
+        <>
             <Card>
-                <div className="card-header">
-                    <div>
-                        <h5>{structureName}</h5>
+                <div className="card-header" >
+                    <div style={{ design: 'flex', flexDirection: 'row' }}>
+                        <h5>
+                            <Button
+                                variant="secondary"
+                                onClick={() => copyToClipboard(selectedLanguageCode)}
+                                style={{ marginRight: '1rem' }}
+                            >
+                                📄
+                            </Button>
+                            {structureName}
+                        </h5>
                     </div>
-                    <CodeLanguageSelector
-                        selectedLanguage={selectedLanguage}
-                        setSelectedLanguage={setSelectedLanguage}
-                        collapseCodeView={() => { toggleOpen(!open) }}
-                        isCodeViewOpen={open}
-                    />
+                    <div>
+                        <CodeLanguageSelector
+                            selectedLanguage={selectedLanguage}
+                            setSelectedLanguage={setSelectedLanguage}
+                            collapseCodeView={() => { toggleOpen(!open) }}
+                            isCodeViewOpen={open}
+                            closeTheCard={closeCard}
+                            copyToClipboard={copyToClipboard(selectedLanguageCode)}
+                        />
+                    </div>
                 </div>
                 <div className={open ? 'collapse.show' : 'collapse'}>
                     <div className="card-body" >
@@ -66,11 +94,12 @@ const CodeCard = ({ structureName }) => {
                     </div>
                 </div>
             </Card >
-        </div >
+        </>
     );
 };
 CodeCard.propTypes = {
-    structureName: PropTypes.string.isRequired
+    structureName: PropTypes.string.isRequired,
+    closeCard: PropTypes.func.isRequired
 };
 
 export default CodeCard;

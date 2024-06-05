@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 //import React, { useState, useRef, useEffect } from "react";
 import "./Code-View.css";
+
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 
@@ -47,7 +48,14 @@ const CodeLanguageSelector = (props) => {
                         {props.open ? '^' : 'v'}
                     </Button>
                 </div>
-
+                <div className="btn-group" role="group" aria-label="First group">
+                    <Button
+                        variant="secondary"
+                        onClick={props.closeTheCard}
+                    >
+                        X
+                    </Button>
+                </div>
             </ButtonGroup>
         </div>
     );

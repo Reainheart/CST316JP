@@ -20,6 +20,7 @@ app.get("/GetSampleCodeArray", require("./SB/GetSampleCodeArray"));
 app.get("/GetSampleCodeLinkedList", require("./SB/GetSampleCodeLinkedList"));
 app.get("/GetSampleCodeDoublyLinkedList", require("./SB/GetSampleCodeDoublyLinkedList"));
 app.get("/GetSampleCodeCircularLinkedList", require("./SB/GetSampleCodeCircularLinkedList"));
+app.get("/GetSampleCodeTree", require("./SB/GetSampleCodeGeneralTree"))
 
 // Start the server
 app.listen(port, () => {

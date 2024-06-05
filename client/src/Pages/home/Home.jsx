@@ -23,7 +23,7 @@ const Home = () => {
     const onReSize = () => {
         setcanvasWidth(window.innerWidth * 6 / 8);
         setcanvasHeight(window.innerHeight - headerHeight - toolbarHeight);
-        setlearningToolMenuWidth(window.innerWidth * 2 / 8);
+        setlearningToolMenuWidth(window.innerWidth - canvasWidth);
         setlearningToolMenuHeight(window.innerHeight - headerHeight - toolbarHeight);
     };
     const handleClick = () => {

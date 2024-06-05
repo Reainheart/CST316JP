@@ -2,8 +2,7 @@ import { useState } from "react";
 import PropTypes from 'prop-types';
 import LearningToolViewWindow from "./Learning-Tool-View-Window/Learning-Tool-View-Window";
 import "./Learning-Tool-Menu.css";
-
-//For future implimentation 
+import Card from "react-bootstrap/card";
 import ViewSelectionMenu from "./View-Selection-Menu/View-Selection-Menu";
 
 const LearningToolMenu = ({ HomeWidth, HomeHeight, CanvasObjects }) => {
@@ -14,11 +13,18 @@ const LearningToolMenu = ({ HomeWidth, HomeHeight, CanvasObjects }) => {
             style={{
                 display: 'flex',
                 flexDirection: 'column',
-                width: HomeWidth,
+                maxWidth: HomeWidth,
+                width: '100%',
                 height: HomeHeight
             }}>
-            <ViewSelectionMenu setSelectedView={setSelectedView} />
-            <LearningToolViewWindow selectedView={selectedView} CanvasObjects={CanvasObjects} />
+            <Card>
+                <div className="card-header">
+                    <ViewSelectionMenu setSelectedView={setSelectedView} />
+                </div>
+                <div className="card-body" >
+                    <LearningToolViewWindow selectedView={selectedView} CanvasObjects={CanvasObjects} />
+                </div>
+            </Card >
         </div>
     );
 };
@@ -29,3 +35,8 @@ LearningToolMenu.propTypes = {
 };
 
 export default LearningToolMenu;
+
+// TO IMPLIMENT LATER
+{/* <div className={open ? 'collapse.show' : 'collapse'}>
+
+</div> */}

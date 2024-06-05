@@ -10,12 +10,22 @@ const CodeView = ({ CanvasObjects }) => {
         setStructures(CanvasObjects);
     }, [CanvasObjects])
 
+    const highlightAll = (closeStructure) => () => {
+        try{
+            
+            setStructures((prevStructures => prevStructures.filter((structure) => structure != closeStructure)))
+        }catch (err){
+            console.log(err)
+        }
+    }
+
     return (
         <div className="CodeView">
             {structures.map((structure, index) => (
                 <CodeCard
                     key={index}
                     structureName={structure}
+                    highlightAll={highlightAll(structure)}
                 />
             ))}
         </div>

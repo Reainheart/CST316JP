@@ -6,8 +6,13 @@
     scroll-behavior: smooth;
 }
 
-.CodeView > *{
+.CodeView>* {
     padding: 5px;
     flex-grow: 1;
-    
+
+}
+
+h5>* {
+
+    flex-grow: 1;
 }
