@@ -17,6 +17,9 @@ app.get("/GetLearnPageInfo", require("./SB/GetLearnPageInfo"));
 app.get("/GetNodeLearnPage", require("./SB/GetNodeLearnPage"));
 app.get("/GetArrayLearnPage", require("./SB/GetArrayLearnPage"));
 app.get("/GetSampleCodeArray", require("./SB/GetSampleCodeArray"));
+app.get("/GetSampleCodeLinkedList", require("./SB/GetSampleCodeLinkedList"));
+app.get("/GetSampleCodeDoublyLinkedList", require("./SB/GetSampleCodeDoublyLinkedList"));
+app.get("/GetSampleCodeCircularLinkedList", require("./SB/GetSampleCodeCircularLinkedList"));
 
 // Start the server
 app.listen(port, () => {
