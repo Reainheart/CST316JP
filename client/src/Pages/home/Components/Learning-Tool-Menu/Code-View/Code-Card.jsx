@@ -5,11 +5,6 @@ import CodeViewWindow from "./Code-View-Window";
 import CodeLanguageSelector from "./Code-Language-Selection-Menu";
 import PropTypes from 'prop-types';
 
-// const sampleCodeNode = "http://localhost:3000/GetSampleCodeNode";
-// const sampleCodeArray = "http://localhost:3000/GetSampleCodeArray";
-// const sampleCodeLinkedList = "http://localhost:3000/GetSampleCodeLinkedList";
-
-
 const CodeCard = ({ structureName }) => {
     const [selectedLanguage, setSelectedLanguage] = useState("C++");
     const [selectedLanguageCode, setSelectedLanguageCode] = useState(

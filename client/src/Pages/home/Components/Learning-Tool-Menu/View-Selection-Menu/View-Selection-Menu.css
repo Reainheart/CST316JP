@@ -25,6 +25,6 @@
 }
 
 .view-selection-menu > *{
+    padding: 5px;
     flex-grow: 1;
-    padding-bottom: 1rem;
 }

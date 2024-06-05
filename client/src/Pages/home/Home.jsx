@@ -17,7 +17,7 @@ const Home = () => {
 
     // Map to track all objects and Interacts with CodeView
     const drawnCanvasObjects = useRef(new Map())
-    const [learningToolMenuWidth, setlearningToolMenuWidth] = useState(window.innerWidth * 2 / 8);
+    const [learningToolMenuWidth, setlearningToolMenuWidth] = useState((window.innerWidth * 2 / 8 ) - 5);
     const [learningToolMenuHeight, setlearningToolMenuHeight] = useState(window.innerHeight - headerHeight - toolbarHeight - 10);
 
     const onReSize = () => {

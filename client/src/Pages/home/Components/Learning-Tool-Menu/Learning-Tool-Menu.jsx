@@ -14,7 +14,6 @@ const LearningToolMenu = ({ HomeWidth, HomeHeight, CanvasObjects }) => {
             style={{
                 display: 'flex',
                 flexDirection: 'column',
-                flexShrink: 'inherit',
                 width: HomeWidth,
                 height: HomeHeight
             }}>
