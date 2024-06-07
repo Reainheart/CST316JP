@@ -89,8 +89,8 @@ const Queue = ({ name, x, y, text, getNewObject, selected, toggleSelection, getP
                 {content}
             </h3>
                 <div className='queue-functions'>
-                    <button onClick={popFromQueue}>Pop</button>
-                    <button onClick={pushToQueue}>Push</button>
+                    <button onClick={pushToQueue}>Enqueue</button>
+                    <button onClick={popFromQueue}>Dequeue</button>
                 </div>
                 <div className="queue-container">
 

@@ -47,14 +47,11 @@ const InstructionalPage = () => {
                             "Array",
                             "Linked List",
                             "Doubly Linked List",
-                            "Circular Linked List",
                             "Doubly Circular Linked List",
                             "Binary Search Tree",
                             "Binary Tree",
                             "General Tree",
                             "Red Black Tree",
-                            "Segment Tree",
-                            "Treap",
                         ].map((structure) => (
                             <Button
                                 key={structure}

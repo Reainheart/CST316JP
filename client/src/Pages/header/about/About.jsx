@@ -8,14 +8,22 @@ const AboutPage = () => {
             <Header />
             <div className="about-text">
                 <h1>About</h1>
-                <h5>Alex Shibley</h5>
-                <p>QA Lead & Programmer</p>
-                <h5>Cameron McHatton</h5>
-                <p>Architect & Programmer</p>
-                <h5>Milad Ale Ali</h5>
-                <p>Product Owner & Programmer</p>
-                <h5>Noah Etchemendy</h5>
-                <p>Scrum Master, Architect, & Programmer</p>
+                <div>
+                    <h5>Alex Shibley</h5>
+                    <p>QA Lead, Programmer</p>
+                </div>
+                <div>
+                    <h5>Cameron McHatton</h5>
+                    <p>Architect, Programmer</p>
+                </div>
+                <div>
+                    <h5>Milad Ale Ali</h5>
+                    <p>Product Owner, Programmer</p>
+                </div>
+                <div>
+                    <h5>Noah Etchemendy</h5>
+                    <p>Scrum Master, Architect, Programmer</p>
+                </div>
             </div>
         </div>
     );
