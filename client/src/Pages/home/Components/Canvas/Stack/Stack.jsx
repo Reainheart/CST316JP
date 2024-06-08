@@ -98,7 +98,7 @@ const Stack = ({
                 onKeyDown={handleKeyDown}
             />
             <div
-                className={`stack ${selected ? "selected-stack" : ""}`}
+                className={`stack ${selected ? "selected" : ""}`}
                 style={{
                     left: x,
                     top: y,

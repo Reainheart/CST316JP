@@ -84,10 +84,16 @@ const Queue = ({ name, x, y, text, getNewObject, selected, toggleSelection, getP
                 onInput={handleChange}
                 onKeyDown={handleKeyDown}
             />
-            <div className={`queue ${selected ? 'selected-queue' : ''}`} style={{ left: x, top: y }}>
-            <h3 onClick={handleQueueClick}>
-                {content}
-            </h3>
+            <div
+                className={`queue ${selected ? 'selected-queue' : ''}`}
+                style={{
+                    left: x,
+                    top: y,
+                    border: selected ? "4px solid white" : "1px solid gray",
+                }}>
+                <h3 onClick={handleQueueClick}>
+                    {content}
+                </h3>
                 <div className='queue-functions'>
                     <button onClick={pushToQueue}>Enqueue</button>
                     <button onClick={popFromQueue}>Dequeue</button>

@@ -84,7 +84,11 @@ const Array = ({ name, x, y, text, getNewObject, selected, toggleSelection, getP
             />
             <div
                 className={selected ? "selected-array" : "array"}
-                style={{ left: x, top: y }}
+                style={{
+                    left: x,
+                    top: y,
+                    border: (selected ? "4px solid white" : "1px solid gray")
+                }}
             >
                 <h3 onClick={handleArrayClick}>
                     {content}

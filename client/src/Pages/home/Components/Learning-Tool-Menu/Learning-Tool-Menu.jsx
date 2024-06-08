@@ -15,7 +15,7 @@ const LearningToolMenu = ({ HomeWidth, HomeHeight, CanvasObjects }) => {
                 flexDirection: 'column',
                 maxWidth: HomeWidth,
                 width: '100%',
-                height: HomeHeight
+                maxHeight: HomeHeight
             }}>
             <Card>
                 <div className="card-header">
