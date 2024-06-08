@@ -7,7 +7,7 @@ import LearningToolMenu from "./Components/Learning-Tool-Menu/Learning-Tool-Menu
 import Toolbar from "./Components/Toolbar/Toolbar";
 
 const Home = () => {
-    const headerHeight = 86;
+    const headerHeight = 96;
     const toolbarHeight = 46;
 
     const [objectToDraw, setObjectToDraw] = useState('Node');
@@ -17,7 +17,7 @@ const Home = () => {
 
     // Map to track all objects and Interacts with CodeView
     const drawnCanvasObjects = useRef(new Map())
-    const [learningToolMenuWidth, setlearningToolMenuWidth] = useState(window.innerWidth * 2 / 8 );
+    const [learningToolMenuWidth, setlearningToolMenuWidth] = useState(window.innerWidth - canvasWidth);
     const [learningToolMenuHeight, setlearningToolMenuHeight] = useState(window.innerHeight - headerHeight - toolbarHeight);
 
     const onReSize = () => {
@@ -31,7 +31,7 @@ const Home = () => {
         var getCanvasObjects = (objects) => {
             var uniqueObjects = []
             objects.forEach(element => {
-                if (!uniqueObjects.includes(element.type) && element.type != 'Pointer'){
+                if (!uniqueObjects.includes(element.type) && element.type != 'Pointer') {
                     uniqueObjects.push(element.type)
                 }
             });
