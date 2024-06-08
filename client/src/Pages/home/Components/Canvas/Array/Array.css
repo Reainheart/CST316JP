@@ -1,24 +1,26 @@
-.array-container, .selected-array-container {
-    background-color: #373b3e;
+.array-container,
+.selected-array-container {
+    background-color: black;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px solid #bec8d1;
-    box-shadow: 0px 0px 8px rgba(190, 200, 209, 0.397);
+    border: 1px solid white;
+    box-shadow: 0px 0px 8px black;
     user-select: none;
     text-align: center;
     overflow: hidden;
     padding: 5px;
 }
 
-.array, .selected-array {
+.array,
+.selected-array {
     position: absolute;
-    background-color: #373b3e;
+    background-color: black;
     display: flex;
     flex-direction: column;
-    border: 1px solid #bec8d1;
-    box-shadow: 0px 0px 8px rgba(190, 200, 209, 0.397);
+    border: 1px solid black;
+    box-shadow: 0px 0px 8px black;
     overflow: hidden;
 }
 
@@ -29,7 +31,7 @@
 }
 
 h3 {
-    color: #137a7f;
+    color: white !important;
 }
 
 .array-options {
@@ -48,7 +50,8 @@ h3 {
     width: 30px;
     height: 30px;
     border: none;
-    background-color: #bec8d1;
+    background-color: white !important;
+    color: black !important;
     cursor: pointer;
     border-radius: 90%;
 }
@@ -65,13 +68,15 @@ h3 {
 }
 
 .arrayNodeIndex {
-    background-color: aqua;
+    background-color: black;
+    color: white;
+    border: 1px solid white;
 }
 .arrayNodeDisplay {
-    background-color: red;
-
+    background-color: black;
+    color: white;
 }
-.arrayNode:hover, .selected-arrayNode:hover {
-    background-color: #137a7f;
+.arrayNode:hover,
+.selected-arrayNode:hover {
+    background-color: white;
 }
-

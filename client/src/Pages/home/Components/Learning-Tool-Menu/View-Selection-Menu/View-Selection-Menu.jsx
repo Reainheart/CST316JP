@@ -1,6 +1,6 @@
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import "./View-Selection-Menu.css";
 
 const ViewSelectionMenu = ({ setSelectedView }) => {
@@ -19,6 +19,7 @@ const ViewSelectionMenu = ({ setSelectedView }) => {
                     className="btn btn-primary"
                     variant="secondary"
                     onClick={() => handleViewClick("Code View")}
+                    active={true}
                 >
                     Code View
                 </Button>
@@ -41,7 +42,7 @@ const ViewSelectionMenu = ({ setSelectedView }) => {
     );
 };
 ViewSelectionMenu.propTypes = {
-    setSelectedView: PropTypes.func
+    setSelectedView: PropTypes.func,
 };
 
 export default ViewSelectionMenu;

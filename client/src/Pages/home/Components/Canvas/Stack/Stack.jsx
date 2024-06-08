@@ -1,10 +1,19 @@
-import { useState, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
-import ArrayNode from '../Array/ArrayNode';
-import './Stack.css';
+import { useState, useEffect, useRef } from "react";
+import PropTypes from "prop-types";
+import ArrayNode from "../Array/ArrayNode";
+import "./Stack.css";
 
-const Stack = ({ name, x, y, text, getNewObject, selected, toggleSelection, getPointer, removeMe }) => {
-
+const Stack = ({
+    name,
+    x,
+    y,
+    text,
+    getNewObject,
+    selected,
+    toggleSelection,
+    getPointer,
+    removeMe,
+}) => {
     const [stackData, setStackData] = useState([]);
     const [StackedItems, setStackedItems] = useState(0);
     const [, setUpdate] = useState(0); // State to trigger re-renders
@@ -27,7 +36,7 @@ const Stack = ({ name, x, y, text, getNewObject, selected, toggleSelection, getP
     };
 
     const handleKeyDown = (e) => {
-        if (e.key === 'Enter') {
+        if (e.key === "Enter") {
             e.preventDefault(); // Prevents the default action of adding a new line
             setInputIsHidden(true);
         }
@@ -37,15 +46,15 @@ const Stack = ({ name, x, y, text, getNewObject, selected, toggleSelection, getP
         return selectedSubnodes.current.has(id);
     };
     const toggleSubnodeSelection = (id) => {
-        console.log('Stack::toggleSubnodeSelection::' + id);
+        console.log("Stack::toggleSubnodeSelection::" + id);
         if (selectedSubnodes.current.has(id)) {
             selectedSubnodes.current.delete(id);
-            console.log('Stack::toggleSubnodeSelection::Removed::' + id);
+            console.log("Stack::toggleSubnodeSelection::Removed::" + id);
         } else {
             selectedSubnodes.current.set(id, true);
-            console.log('Stack::toggleSubnodeSelection::Added::' + id);
+            console.log("Stack::toggleSubnodeSelection::Added::" + id);
         }
-        setUpdate(prev => prev + 1); // Force re-render
+        setUpdate((prev) => prev + 1); // Force re-render
     };
 
     const triggerEdit = (e) => {
@@ -54,8 +63,8 @@ const Stack = ({ name, x, y, text, getNewObject, selected, toggleSelection, getP
     };
 
     const pushToStack = () => {
-        const newStackNode = getNewObject(x, y, 'null', 'Stack');
-        newStackNode.text = `added ${StackedItems} items`
+        const newStackNode = getNewObject(x, y, "null", "Stack");
+        newStackNode.text = `added ${StackedItems} items`;
         setStackData([...stackData, newStackNode]);
         setStackedItems(StackedItems + 1);
     };
@@ -65,7 +74,9 @@ const Stack = ({ name, x, y, text, getNewObject, selected, toggleSelection, getP
     };
 
     const removeArrayNode = (remove_id) => {
-        setStackData(prevNodes => prevNodes.filter(node => node.id !== remove_id))
+        setStackData((prevNodes) =>
+            prevNodes.filter((node) => node.id !== remove_id)
+        );
     };
 
     return (
@@ -87,13 +98,15 @@ const Stack = ({ name, x, y, text, getNewObject, selected, toggleSelection, getP
                 onKeyDown={handleKeyDown}
             />
             <div
-                className={`stack ${selected ? 'selected-stack' : ''}`}
-                style={{ left: x, top: y, border: selected ? '2px solid blue' : '1px solid gray' }}
+                className={`stack ${selected ? "selected-stack" : ""}`}
+                style={{
+                    left: x,
+                    top: y,
+                    border: selected ? "4px solid white" : "1px solid gray",
+                }}
             >
-                <h3 onClick={handleStackClick}>
-                    {content}
-                </h3>
-                <div className='stack-functions'>
+                <h3 onClick={handleStackClick}>{content}</h3>
+                <div className="stack-functions">
                     <button onClick={pushToStack}>Push</button>
                     <button onClick={popFromStack}>Pop</button>
                 </div>
@@ -111,7 +124,6 @@ const Stack = ({ name, x, y, text, getNewObject, selected, toggleSelection, getP
                     ))}
                 </div>
             </div>
-
         </div>
     );
 };
