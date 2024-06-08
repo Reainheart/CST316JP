@@ -2,7 +2,7 @@
 .selected-stack-container {
     background-color: black;
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     justify-content: center;
     align-items: center;
     border: 1px solid white;
