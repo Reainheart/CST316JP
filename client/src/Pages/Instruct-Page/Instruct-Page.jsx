@@ -3,53 +3,73 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./Instruct-Page.css";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
+import Header from "./../header/Header";
 
 const InstructionalPage = () => {
+    const [selectedStructure, setSelectedStructure] = useState("");
+    const [structureInfo, setStructureInfo] = useState("");
+
+    useEffect(() => {
+        if (selectedStructure) {
+            console.log(
+                `http://localhost:3000/getLearnPageInfo?structure=About ${selectedStructure}`
+            );
+            fetch(
+                `http://localhost:3000/getLearnPageInfo?structure=About ${selectedStructure}s`
+            )
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data);
+                    if (data.length > 0) {
+                        setStructureInfo(data[0].information);
+                    } else {
+                        setStructureInfo("No information available");
+                    }
+                })
+                .catch((error) => console.error("Error fething data:", error));
+        }
+    }, [selectedStructure]);
+
+    const handleSelectStructure = (structure) => {
+        setSelectedStructure(structure);
+    };
+
     return (
-        <>
+        <div className="instruct-page-content">
+            <Header />
             <div>
                 <h1>Learn</h1>
-                <p>Instructions here</p>
 
                 <div className="button-group-container">
                     <div className="button-group">
-                        <Button size="large" variant="outline-dark">
-                            Node
-                        </Button>
-                        <Button size="large" variant="outline-dark">
-                            Standard Linked List
-                        </Button>
-                        <Button size="large" variant="outline-dark">
-                            Doubly Linked List
-                        </Button>
-                        <Button size="large" variant="outline-dark">
-                            Circlular Linked List
-                        </Button>
-                        <Button size="large" variant="outline-dark">
-                            Doubly Circular Linked List
-                        </Button>
-                        <Button size="large" variant="outline-dark">
-                            Binary Search Tree
-                        </Button>
-                        <Button size="large" variant="outline-dark">
-                            Binary Tree
-                        </Button>
-                        <Button size="large" variant="outline-dark">
-                            General Tree
-                        </Button>
-                        <Button size="large" variant="outline-dark">
-                            Red Black Tree
-                        </Button>
-                        <Button size="large" variant="outline-dark">
-                            Segment Tree
-                        </Button>
-                        <Button size="large" variant="outline-dark">
-                            Treap
-                        </Button>
+                        {[
+                            "Node",
+                            "Array",
+                            "Linked List",
+                            "Doubly Linked List",
+                            "Doubly Circular Linked List",
+                            "Binary Search Tree",
+                            "Binary Tree",
+                            "General Tree",
+                            "Red Black Tree",
+                        ].map((structure) => (
+                            <Button
+                                key={structure}
+                                size="large"
+                                variant="outline-dark"
+                                onClick={() => handleSelectStructure(structure)}
+                                active={selectedStructure === structure}
+                            >
+                                {structure}
+                            </Button>
+                        ))}
                     </div>
                 </div>
+                <div className="structure-info">
+                    {structureInfo && <p>{structureInfo}</p>}
+                </div>
             </div>
-        </>
+        </div>
     );
 };
 

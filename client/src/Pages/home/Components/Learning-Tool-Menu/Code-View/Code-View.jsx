@@ -1,25 +1,38 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./Code-View.css";
-import Card from "react-bootstrap/card";
-import CodeViewWindow from "./Code-View-Window/Code-View-Window";
-import CodeLanguageSelector from "./Code-Language-Selection-Menu/Code-Language-Selection-Menu";
+import CodeCard from "./Code-Card";
+import PropTypes from 'prop-types';
 
-const CodeView = () => {
-    //const canvasRef = useRef(null); // reference to the canvas element
-    const [selectedLanguage, setSelectedLanguage] = useState("C++");
+const CodeView = ({ CanvasObjects }) => {
+    const [structures, setStructures] = useState([]);
+
+    useEffect(() => {
+        setStructures(CanvasObjects);
+    }, [CanvasObjects])
+
+    const highlightAll = (closeStructure) => () => {
+        try{
+            
+            setStructures((prevStructures => prevStructures.filter((structure) => structure != closeStructure)))
+        }catch (err){
+            console.log(err)
+        }
+    }
 
     return (
-        <>
-            <Card>
-                <div className="card-header">
-                    <CodeLanguageSelector selectedLanguage={selectedLanguage} setSelectedLanguage={setSelectedLanguage} />
-                </div>
-                <div className="card-body">
-                    <CodeViewWindow selectedLanguage={selectedLanguage} />
-                </div>
-            </Card>
-        </>
+        <div className="CodeView">
+            {structures.map((structure, index) => (
+                <CodeCard
+                    key={index}
+                    structureName={structure}
+                    highlightAll={highlightAll(structure)}
+                />
+            ))}
+        </div>
     );
-}
+};
+CodeView.propTypes = {
+    CanvasObjects: PropTypes.any
+};
 
 export default CodeView;

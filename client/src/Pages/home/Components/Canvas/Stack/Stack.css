@@ -1,0 +1,79 @@
+.stack-container,
+.selected-stack-container {
+    background-color: black;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid white;
+    box-shadow: 0px 0px 8px black;
+    user-select: none;
+    text-align: center;
+    overflow: hidden;
+    padding: 5px;
+}
+
+.stack,
+.selected-stack {
+    position: absolute;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid;
+    box-shadow: 0px 0px 8px black;
+    overflow: hidden;
+}
+
+.changeContent {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+h3 {
+    color: white !important;
+}
+
+.stack-options {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.stack-node-options {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.stack-options button {
+    width: 30px;
+    height: 30px;
+    border: none;
+    background-color: white !important;
+    color: black !important;
+    cursor: pointer;
+    border-radius: 90%;
+}
+
+.stackNode {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+}
+
+.stackNodeDisplay {
+    margin: 10px;
+    box-sizing: content-box;
+}
+
+.stackNodeIndex {
+    background-color: white;
+}
+.stackNodeDisplay {
+    background-color: black;
+}
+.stackNode:hover,
+.selected-stackNode:hover {
+    background-color: white;
+}

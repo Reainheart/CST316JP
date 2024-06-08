@@ -1,0 +1,82 @@
+.array-container,
+.selected-array-container {
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid white;
+    box-shadow: 0px 0px 8px black;
+    user-select: none;
+    text-align: center;
+    overflow: hidden;
+    padding: 5px;
+}
+
+.array,
+.selected-array {
+    position: absolute;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    box-shadow: 0px 0px 8px black;
+    overflow: hidden;
+}
+
+.changeContent {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+h3 {
+    color: white !important;
+}
+
+.array-options {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.array-node-options {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.array-options button {
+    width: 30px;
+    height: 30px;
+    border: none;
+    background-color: white !important;
+    color: black !important;
+    cursor: pointer;
+    border-radius: 90%;
+}
+
+.arrayNode {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+}
+
+.arrayNodeDisplay {
+    margin: 10px;
+    box-sizing: content-box;
+}
+
+.arrayNodeIndex {
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+}
+.arrayNodeDisplay {
+    background-color: black;
+    color: white;
+}
+.arrayNode:hover,
+.selected-arrayNode:hover {
+    background-color: white;
+}

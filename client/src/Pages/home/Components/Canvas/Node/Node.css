@@ -1,0 +1,65 @@
+.node,
+.selected-node {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    text-align: center;
+    overflow: hidden;
+    border-radius: 100%;
+}
+
+.node {
+    background-color: black;
+    border: 1px solid black;
+    box-shadow: 0px 0px 8px black;
+}
+
+.selected-node {
+    background-color: white !important;
+    border: 1px solid white;
+    box-shadow: 0 0 10px black;
+}
+
+.nodeText {
+    line-height: 50px;
+    font-size: small;
+    margin: 0;
+    color: white;
+}
+
+.node-options {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.changeContent {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.node-options button {
+    width: 30px;
+    height: 30px;
+    border: none;
+    background-color: black;
+    cursor: pointer;
+    border-radius: 90%;
+    color: white;
+}
+
+.node:hover,
+.selected-node:hover {
+    background-color: white;
+    .nodeText {
+        color: black;
+    }
+}

@@ -1,0 +1,79 @@
+.queue-container,
+.selected-queue-container {
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid white;
+    box-shadow: 0px 0px 8px black;
+    user-select: none;
+    text-align: center;
+    overflow: hidden;
+    padding: 5px;
+}
+
+.queue,
+.selected-queue {
+    position: absolute;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    box-shadow: 0px 0px 8px black;
+    overflow: hidden;
+}
+
+.changeContent {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+h3 {
+    color: white !important;
+}
+
+.queue-options {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.queue-node-options {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.queue-options button {
+    width: 30px;
+    height: 30px;
+    border: none;
+    background-color: white !important;
+    color: black !important;
+    cursor: pointer;
+    border-radius: 90%;
+}
+
+.queueNode {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+}
+
+.queueNodeDisplay {
+    margin: 10px;
+    box-sizing: content-box;
+}
+
+.queueNodeIndex {
+    background-color: black;
+}
+.queueNodeDisplay {
+    background-color: white;
+}
+.queueNode:hover,
+.selected-queueNode:hover {
+    background-color: white;
+}
