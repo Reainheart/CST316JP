@@ -1,9 +1,18 @@
 // import React from 'react';
-import PropTypes from 'prop-types';
-import './Array.css'
+import PropTypes from "prop-types";
+import "./Array.css";
 import { useState, useEffect } from "react";
 
-const ArrayNode = ({ name, display_index, display_text, onDisplayClick, toggleSelection, selected, getPointer, removeMe }) => {
+const ArrayNode = ({
+    name,
+    display_index,
+    display_text,
+    onDisplayClick,
+    toggleSelection,
+    selected,
+    getPointer,
+    removeMe,
+}) => {
     const [content, setContent] = useState(display_text);
     const [inputIsHidden, setInputIsHidden] = useState(true);
     const handleArrayNodeClick = (event) => {
@@ -22,7 +31,7 @@ const ArrayNode = ({ name, display_index, display_text, onDisplayClick, toggleSe
     };
 
     const handleKeyDown = (e) => {
-        if (e.key === 'Enter') {
+        if (e.key === "Enter") {
             e.preventDefault(); // Prevents the default action of adding a new line
             setInputIsHidden(true);
         }
@@ -34,26 +43,25 @@ const ArrayNode = ({ name, display_index, display_text, onDisplayClick, toggleSe
     };
 
     return (
-        <div className='arrayNode'>
+        <div className="arrayNode">
             {selected && (
-                <div className="array-node-options" >
+                <div className="array-node-options">
                     <button onClick={triggerEdit}>✎</button>
                     <button onClick={() => removeMe(name)}>␥</button>
                     <button onClick={getPointer}>→</button>
                 </div>
             )}
             <div
-                className='arrayNodeDisplay'
+                className="arrayNodeDisplay"
                 onClick={onDisplayClick}
-                style={{ border: selected ? '2px solid blue' : '1px solid gray' }}
+                style={{
+                    border: selected ? "4px solid white" : "1px solid gray",
+                }}
             >
-                <div
-                    className='arrayNodeIndex'
-                    onClick={handleArrayNodeClick}
-                >
+                <div className="arrayNodeIndex" onClick={handleArrayNodeClick}>
                     {display_index}
                 </div>
-                <div className='arrayNodeDisplay'>
+                <div className="arrayNodeDisplay">
                     {content}
                     <input
                         hidden={inputIsHidden}
@@ -66,8 +74,8 @@ const ArrayNode = ({ name, display_index, display_text, onDisplayClick, toggleSe
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 ArrayNode.propTypes = {
     name: PropTypes.number,
     display_index: PropTypes.any,

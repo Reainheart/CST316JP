@@ -58,6 +58,7 @@ const InstructionalPage = () => {
                                 size="large"
                                 variant="outline-dark"
                                 onClick={() => handleSelectStructure(structure)}
+                                active={selectedStructure === structure}
                             >
                                 {structure}
                             </Button>
